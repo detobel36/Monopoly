@@ -1,1 +1,8 @@
+# Python
 __pycache__/
+
+# Latex
+*.log
+*.aux
+*.out
+*.tex.backup
