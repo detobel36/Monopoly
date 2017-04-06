@@ -22,7 +22,7 @@ utilisé respectivement pour l'interface graphique et les calculs matriciel.
 
 
 ### Compliation
-Seul le `LaTeX` doit être compilé.  Il est possible de le faire via le `Makefile` et la commande
+Seul le `LaTeX` doit être compilé.  Il est possible de le faire via le [`Makefile`](Makefile) et la commande
 suivante:
 ```
 make rapport
