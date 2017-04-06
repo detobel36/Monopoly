@@ -4,13 +4,13 @@ du Monopoly à travers des chaines de Markov et également les résultats obtenu
 "simulateur".
 
 ### Structure des fichiers
-![Folder](https://filepursuit.com/__ovh_icons/folder.png) **App**            
+[![Folder](https://filepursuit.com/__ovh_icons/folder.png) **App**](App)            
 L'application permettant de simuler l'évolution du monopoly.
 
-![Folder](https://filepursuit.com/__ovh_icons/folder.png) **Rapport**            
+[![Folder](https://filepursuit.com/__ovh_icons/folder.png) **Rapport**](Rapport)            
 Dossier contenant tous les fichiers permettant de générer le rapport.
 
-![Folder](https://filepursuit.com/__ovh_icons/folder.png) **Ressource**            
+[![Folder](https://filepursuit.com/__ovh_icons/folder.png) **Ressource**](Ressource)            
 Tous les documents (exclus donc ceux directement consulté sur internet) utilisé comme réference 
 pour la réalisation de ce projet (les autres références se trouvent dans le rapport).
 
