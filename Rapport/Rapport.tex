@@ -1,17 +1,15 @@
 \documentclass[letterpaper]{article}
-\usepackage{natbib}
-\usepackage{alifexi}
+
+\usepackage{natbib,alifexi}
 \usepackage{amsmath}
 \usepackage[french]{babel}
 \usepackage[utf8]{inputenc}
-
+\usepackage{hyperref}
 \usepackage{amsfonts}
 \usepackage{graphicx}
-\usepackage{hyperref}
 \usepackage{blkarray}
 \usepackage{tikz}
 \usetikzlibrary{automata, positioning}
-
 
 \newcommand{\colornode}[1][]{\node[state,
 	    align=center,
@@ -172,6 +170,7 @@ rdetobel@ulb.ac.be}
       termes par la somme de ceux-ci.
   
   \subsection{Cas concret}
+    \label{casconcret}
     Afin de rendre tous ces concepts plus concrèts, on va s'intéresser à un exemple décrivant
     l'état d'un avion.
     
@@ -319,7 +318,7 @@ rdetobel@ulb.ac.be}
     équiréparti.
     
   \subsection{Répartition des dés}
-    \label{repartition_des}
+    \label{repart_des}
     Lorsque l'on lance n dés, la somme des valeurs de chanque dés n'a pas la même probabilité
     d'apparaitre.  En effet, lorsque l'on lance 2 dés, il y a 3 manière différentes de formé
     un 4 (à savoir: $3+1$, $2+2$ et $1+3$) alors qu'il n'y a qu'une seule manière de formé un 
@@ -333,7 +332,7 @@ rdetobel@ulb.ac.be}
     Cette répartition peut être généralisé de la manière suivante:
     $$\sum\limits_{k=0}^{(s-n)/6} (-1)^k \begin{pmatrix}n \\ k\end{pmatrix} 
       \begin{pmatrix}s-6k-1 \\n-1\end{pmatrix}$$
-    Source: \url{http://villemin.gerard.free.fr/Wwwgvmm/Identite/Identxx2.htm\#formule}\\
+    Source: %\url{http://villemin.gerard.free.fr/Wwwgvmm/Identite/Identxx2.htm\#formule}\\
     Où $n$ est le nombre de dés et $s$ le nombre que l'on désire former.  Cette equation
     a été construite suite à la décomposition en polynome permettant de calculer des
     réparition.\\
@@ -354,7 +353,6 @@ rdetobel@ulb.ac.be}
     L'équation exprimé au début de ce point représente simplement le développement de 
     ce polynome.
     
-    
   \subsection{Case prison}
     Les règles du Monopoly stipulent que l'on peut sortir de prison de plusieurs manières 
     différentes: soit via une carte chance, soit en payant, soit en faisant un double.
@@ -365,18 +363,18 @@ rdetobel@ulb.ac.be}
     Afin de représenter ces différentes cas, la case prison sera ``triplée``.  On aura
     donc trois représentations de la case prison: au premier, second et troisième tour.
     La case ''aller en prison`` sera donc considérée comme une case prison de niveau 0 et
-    n'aura donc qu'une seule arrête visant la case ''prison premier tour``.
+    n'aura qu'une seule arrête visant la case ''prison premier tour``.
     Afin d'être le plus précis possible, on va calculer la probabilité de faire un double.
-    Comme vu dans le point \ref{repartition_des}, il y a 36 cas possible lorsque l'on lance 
+    Comme vu dans le point \ref{repart_des}, il y a 36 cas possible lorsque l'on lance 
     2 dés à 6 faces.  On sait qu'il y a 6 doubles.  On a donc 6 chance sur 36 de faire un
     double et chaque double: $2$, $4$, $6$, $8$, $10$ et $12$ ont chacun une chance sur 36
     d'apparaitre.  Si on ne fait pas de double (dans 5 cas sur 6), on doit relancer les 
-    dés (et donc avant ça, passé à la case prison ''suivante``).
+    dés (et donc avant ça, passer à la case prison ''suivante``).
     Chaque case ''prison`` (les 3 cases cités ci-dessus) auront donc 8 arrêtes différentes:
     \begin{itemize}
-     \item Payer et sortir de prison 
-     \item Faire un double (et avancer du résultat de ce double), il y a donc 6 choix possibles
-     \item Ne pas réussir à faire un double (et continuer attendre)
+     \item Payer et sortir de prison;
+     \item Faire un double (et avancer du résultat de ce double), il y a donc 6 choix possibles;
+     \item Ne pas réussir à faire un double (et continuer attendre).
     \end{itemize}
     
   \subsection{Case ''Chance``}
@@ -384,20 +382,20 @@ rdetobel@ulb.ac.be}
     présent sur le plateau de jeu.  C'est évidemment ce second comportement qui sera
     étudier ici.  Le Monopoly comporte 16 cartes chances ayant la répartition suivante:
     \begin{itemize}
-     \item 8 cartes faisant référence à des payements
-     \item une carte ''sortir de prison``
-     \item 7 cartes faisant référence à un déplacement
+     \item 8 cartes faisant référence à des payements;
+     \item une carte ''sortir de prison``;
+     \item 7 cartes faisant référence à un déplacement.
     \end{itemize}
     On peut donc en déduire que lorsqu'un joueur pioche une carte chance, il aura une 
     7 chance sur 16 de devoir déplacer son pion.  Ces déplacements sont les suivants:
     \begin{itemize}
-     \item Reculer de 3 cases
-     \item Se rendre à la case départ
-     \item Aller en prison
-     \item Se rendre à la 11ème case (où 0 est le départ)
-     \item Se rendre à la 15ème case
-     \item Se rendre à la 24ème case
-     \item Se rendre à la 36ème case (dernière case avant l'arrivée)
+     \item Reculer de 3 cases;
+     \item Se rendre à la case départ;
+     \item Aller en prison;
+     \item Se rendre à la 11ème case (où 0 est le départ);
+     \item Se rendre à la 15ème case;
+     \item Se rendre à la 24ème case;
+     \item Se rendre à la 36ème case (dernière case avant l'arrivée).
     \end{itemize}
     Dans les 9 autres cas on lancera simplement les dés.  Les cases chances ont donc 
     beaucoup d'arrêtes.
@@ -406,10 +404,12 @@ rdetobel@ulb.ac.be}
     Les cartes ''Caisse de communauté`` sont plus axé sur l'aspect financier du jeu.
     Cependant 3 cartes provoques également des déplacements des pions.
     \begin{itemize}
-     \item Se rendre à la case départ
-     \item Aller en prison
-     \item Se rendre sur le première case
+     \item Se rendre à la case départ;
+     \item Aller en prison;
+     \item Se rendre sur le première case.
     \end{itemize}
+    La modélisation des cartes ''caisse de communauté`` se fait de la même manière que 
+    les cartes ''Chance``.
     
   \subsection{Calcul de l'état stationnaire}
     Comme vu dans le point \ref{etat_stationnaire}, il est possible de calculer
@@ -579,34 +579,36 @@ rdetobel@ulb.ac.be}
     \subsubsection{Libraires utilisées}
       Pour manipuler plus facilement des matrices et résoudre les équations linéaire,
       la librairie ''numpy`` a été utilisé.  Concernant l'interface graphique, c'est
-      la librairie tKinter qui a été sélectionnée.
+      la librairie ''Tkinter`` qui a été sélectionnée.
     
 \section{Résultat}
 
 
 \section{Conclusion}
   
-    \begin{tikzpicture}
-      % Draw the states
-      \node[state,
-	    text=yellow,
-	    draw=none,
-	    fill=gray!50!black] (s) {Sunny};
-      \node[state,
-	    right=of s,
-	    text=blue!30!white, 
-	    draw=none, 
-	    fill=gray!50!black] (r) {Rainy};
-
-      % Connect the states with arrows
-      \draw[every loop]
-	  (s) edge[bend right] node {} (r)
-	  (r) edge[bend right] node {} (s)
-	  (s) edge[bend right, auto=left]  node {0.6} (r)
-	  (r) edge[bend right, auto=right] node {0.7} (s)
-	  (s) edge[loop above]             node {0.4} (s)
-	  (r) edge[loop above]             node {0.3} (r);
-    \end{tikzpicture}
+  
+%     ===== EXEMPLE =====
+%     \begin{tikzpicture}
+%       % Draw the states
+%       \node[state,
+% 	    text=yellow,
+% 	    draw=none,
+% 	    fill=gray!50!black] (s) {Sunny};
+%       \node[state,
+% 	    right=of s,
+% 	    text=blue!30!white, 
+% 	    draw=none, 
+% 	    fill=gray!50!black] (r) {Rainy};
+% 
+%       % Connect the states with arrows
+%       \draw[every loop]
+% 	  (s) edge[bend right] node {} (r)
+% 	  (r) edge[bend right] node {} (s)
+% 	  (s) edge[bend right, auto=left]  node {0.6} (r)
+% 	  (r) edge[bend right, auto=right] node {0.7} (s)
+% 	  (s) edge[loop above]             node {0.4} (s)
+% 	  (r) edge[loop above]             node {0.3} (r);
+%     \end{tikzpicture}
   
 
 \footnotesize
