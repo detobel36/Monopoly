@@ -82,7 +82,7 @@ class ConfigTour(tk.LabelFrame):
     """
     def __addNbrTourEntry(self):
         self._valeurEntry = tk.StringVar()
-        _entry = tk.Entry(self, textvariable=self._valeurEntry, justify='right', width=7)\
+        tk.Entry(self, textvariable=self._valeurEntry, justify='right', width=7)\
             .grid(row=1, column=0)
         self.__setNbrTourASimuler(0)
 

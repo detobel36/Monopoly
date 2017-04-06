@@ -9,6 +9,7 @@ from Constantes import *
 from Monopoly import Monopoly
 # Interface
 from interface.choixMonopoly import ChoixMonopoly
+from interface.parametres import Parametres
 from interface.statistiques import Statistiques
 from interface.configTour import ConfigTour
 
@@ -25,13 +26,16 @@ class FenetrePrincipal(tk.Tk):
         self.wm_title("Stats")
         self.config(padx=5, pady=5)
 
-        # Création de la fenêtre de gestion de tour
-        self._nbrTourFrame = ConfigTour(self)
-        self._nbrTourFrame.grid(row=0, column=1, sticky="n", padx=7)
+        # Choix des paramètres
+        self.__choixParametres()
 
         # Choix du monopoly
         self._selectedDataMonopoly = self.__choixDuMonopoly()
         self._selectedMonopoly = Monopoly(self._selectedDataMonopoly)
+
+        # Création de la fenêtre de gestion de tour
+        self._nbrTourFrame = ConfigTour(self)
+        self._nbrTourFrame.grid(row=0, column=1, sticky="n", padx=7)
 
         # Création de la fenêtre de statistique
         self._statFrame = Statistiques(self._selectedMonopoly.getResultatSimulation(), self)
@@ -54,6 +58,13 @@ class FenetrePrincipal(tk.Tk):
             print("[DEBUG] Monopoly sélectionné: " + selectedDataMonopoly.getNom())
 
         return selectedDataMonopoly
+
+    """
+        Permet de choisir les paramètres qui seront utilisé pour modéliser le Monopoly
+    """
+    def __choixParametres(self):
+        choixParametres = Parametres()
+        self.wait_window(choixParametres)
 
 
     """
