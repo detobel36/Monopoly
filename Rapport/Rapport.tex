@@ -25,6 +25,8 @@
 
 \newcommand{\drawedge}{\draw[every loop, line width=0.4mm, fill=gray, draw=gray]}
 
+\newcommand*{\fullref}[1]{\hyperref[{#1}]{\autoref*{#1} \nameref*{#1}}}
+
 
 \title{Etude du Monopoly via les chaînes de Markov}
 \author{Rémy Detobel\\
@@ -353,7 +355,30 @@ rdetobel@ulb.ac.be}
     L'équation exprimé au début de ce point représente simplement le développement de 
     ce polynome.
     
+  \subsection{Faire un double}
+    % TODO un nombre indéfinit de dés... toujours un double où tous les dés les mêmes ?
+    Les règles du Monopoly stipulent que lorsque l'on fait 3 doubles à la suite, on est
+    envoyé en prison.  Pour modéliser ce comportement via une chaine de Markov, il va 
+    falloir triplé le nombre d'état.  En effet, une case $i$ peut être visité après avoir
+    fait 0 double, 1 double ou 2 double.  Si de cette case $i$ on refaire encore un double,
+    on se retrouve en case prison.  Si par contre on fait un simple nombre, on se retrouve
+    de nouveau sur la case $i$ ``zero double''.  Il est assez simple de se rendre compte de
+    ça via la figure \ref{representation_double}.  Sur cette image, on peut donc voir en 
+    rouge les déplacements fait grace à des doubles.  Ces 3 lignes rouges montre
+    donc le déplacement d'un joueur qui aurait lancé les dés et fait consécutivement 3 doubles,
+    à savoir ici: $1+1$, $2+2$ et $6+6$.  Ce dernière double le conduit directement en prison.
+    Les flèches bleus montrent ce qu'il se passe lorsque l'on fait un simple déplacement (pas un double).
+    Elles vont toutes vers la même plateau (celui où on a encore fait zero double).
+    \begin{figure}[h]
+      \centering
+      \includegraphics[scale=0.4]{./Images/MonopolyVertical.png}
+	\caption{Déplacement en cas de double}
+	\label{representation_double}
+    \end{figure}
+    
+    
   \subsection{Case prison}
+    \label{case_prison}
     Les règles du Monopoly stipulent que l'on peut sortir de prison de plusieurs manières 
     différentes: soit via une carte chance, soit en payant, soit en faisant un double.
     Seule les deux dernières solutions seront utilisé dans cette modélisation.  En effet,
@@ -365,7 +390,7 @@ rdetobel@ulb.ac.be}
     La case ''aller en prison`` sera donc considérée comme une case prison de niveau 0 et
     n'aura qu'une seule arrête visant la case ''prison premier tour``.
     Afin d'être le plus précis possible, on va calculer la probabilité de faire un double.
-    Comme vu dans le point \ref{repart_des}, il y a 36 cas possible lorsque l'on lance 
+    Comme vu dans la \fullref{repart_des}, il y a 36 cas possible lorsque l'on lance 
     2 dés à 6 faces.  On sait qu'il y a 6 doubles.  On a donc 6 chance sur 36 de faire un
     double et chaque double: $2$, $4$, $6$, $8$, $10$ et $12$ ont chacun une chance sur 36
     d'apparaitre.  Si on ne fait pas de double (dans 5 cas sur 6), on doit relancer les 
