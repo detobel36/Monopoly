@@ -3,7 +3,7 @@
 
 # Tkinter and External
 import tkinter as tk
-from copy import deepcopy
+from collections import OrderedDict
 # Utils
 from Constantes import *
 from Monopoly import Monopoly
@@ -43,7 +43,8 @@ class FenetrePrincipal(tk.Tk):
         self._nbrTourFrame.grid(row=0, column=1, padx=7, sticky=tk.N+tk.E+tk.W)
 
         # Création de la fenêtre de statistique
-        self._statFrame = Statistiques(self._selectedMonopoly.getResultatSimulation(), self)
+        caseData = self.__sumSameCase(self._selectedMonopoly.getResultatSimulation())
+        self._statFrame = Statistiques(caseData, self)
         self._statFrame.grid(row=0, column=0, rowspan=2)
 
         # self.wait_window(self) TODO
@@ -117,8 +118,35 @@ class FenetrePrincipal(tk.Tk):
             newData = self._selectedMonopoly.simulerDesTours(nbrTour)
             newData = self._selectedMonopoly.getResultatSimulation()
 
+        newData = self.__sumSameCase(newData)
         self._statFrame.updateCanvas(newData)
 
 
+    """
+        Permet d'additionné la probabilité de tomber sur deux cases ayant le même ID.  Il s'agit
+        des cases "dupliqué" pour permettre de prendre en compte la règle de triples doubles
 
+        @param listeCase dictionnaire contenant en clef les cases et en valeur la probabilitéde 
+            s'y trouver
+        @return un dictionnaire (identique à celui passé en entré) mais en ayant retiré les doublons
+    """
+    def __sumSameCase(self, listeCase):
+        if(VIEW_ALL_CASE_DOUBLE):
+            res = listeCase
+        else:
+            res = OrderedDict()
+            saveIndexCase = {}
+
+            for case in listeCase:
+                probabilite = listeCase[case]
+                position = case.getPosition()
+
+                if(position in saveIndexCase):
+                    res[saveIndexCase[position]] += probabilite
+
+                else:
+                    res[case] = probabilite
+                    saveIndexCase[position] = case
+
+        return res
 

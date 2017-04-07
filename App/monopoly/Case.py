@@ -149,6 +149,10 @@ class Case:
 
         return nouvelleCase
 
+    # def __eq__(self, other):
+    #     if isinstance(other, self.__class__):
+    #         return self._position == other.getPosition()
+    #     return False
 
 
 ############################ Initialisation ############################
