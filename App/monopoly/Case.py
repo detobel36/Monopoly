@@ -84,7 +84,7 @@ class Case:
     """
     def getCasesSuivanteDes(self, dataMonopoly, proportionAjouter = 1):
         res = {}
-        resRepartition = getRepartitionDes(NBR_DES)
+        resRepartition = getRepartitionDes(self._parent.getNbrDeDes())
         for elem in resRepartition:
             probabilite = resRepartition[elem]
             nouvelleCase = dataMonopoly.getCase(self._position+elem)
@@ -92,6 +92,14 @@ class Case:
             res[nouvelleCase] = probabilite*proportionAjouter
 
         return res
+
+    """
+        Permet de définir le "DataMonopoly" pour lequel cette case a été créé
+
+        @param parent le DataMonopoly auquel appartient cette case
+    """
+    def setParentDataMonopoly(self, parent):
+        self._parent = parent
 
 
 

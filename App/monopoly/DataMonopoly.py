@@ -36,7 +36,8 @@ class DataMonopoly:
     """
     def initMonopoly(self):
         self._listCase = [getCaseDepart()] + self._defaultListCase + self.__initDefaultCase()
-        
+        for case in self._listCase:
+            case.setParentDataMonopoly(self)
 
     """
         Permet de récupérer les cases par défaut qui doivent être rajouté aux informations
@@ -101,8 +102,19 @@ class DataMonopoly:
 
     ##### Définition des paramètres pouvant changé la configuration du monpoly #####
 
+    def getMaxTourPrison(self):
+        return self._maxTourPrison
+
     def setMaxTourPrison(self, nbrMaxTour):
         self._maxTourPrison = nbrMaxTour
+
+    def getNbrDeDes(self):
+        return self._nbrDeDes
+
+    def setNbrDeDes(self, nbrDeDes):
+        self._nbrDeDes = nbrDeDes
+
+
 
 
 

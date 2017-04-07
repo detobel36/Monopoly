@@ -49,14 +49,14 @@ class CasePrison(Case):
 
         # Si on est pas obligé de payé
         if(proportionPayer < 1):
+            nbrDeDes = self._parent.getNbrDeDes()
+
             # => Lancer les dés
-            nbrArangementPossible = pow(6, NBR_DES)
-
-            # TODO le dé n'est pas équiréparti pour les doubles
-
+            nbrArangementPossible = pow(6, nbrDeDes)
+            
             # Faire un double
             proportionJouer = 1-proportionPayer
-            for i in range(NBR_DES, NBR_DES*6+1, NBR_DES):
+            for i in range(nbrDeDes, nbrDeDes*6+1, nbrDeDes):
                 res[dataMonopoly.getCase(self._position+i)] = (1/nbrArangementPossible)*proportionJouer
 
             # Aucun double n'a été fait
@@ -75,7 +75,7 @@ class CasePrison(Case):
         res = None # Resultat
         currentPos = self.getPosition()
 
-        if(currentPos < (DECALAGE_PRISON+MAX_TOUR_PRISON)):
+        if(currentPos < (DECALAGE_PRISON+self._parent.getMaxTourPrison())):
             res = dataMonopoly.getCase(currentPos+1, True)
 
         return res

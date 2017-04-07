@@ -79,6 +79,11 @@ class FenetrePrincipal(tk.Tk):
         nbrMaxTourPrison = self._choixParametres.getNbrTourMaxPrison()
         probSortirPrison = self._choixParametres.getProbPayerSortirPrison()
 
+        if(DEBUG):
+            print("[DEBUG] Paramètres: nombre de dés: " + str(nbrDes))
+            print("[DEBUG] Paramètres: nombre max de tour en prison: " + str(nbrMaxTourPrison))
+
+        self._selectedDataMonopoly.setNbrDeDes(nbrDes)
         self._selectedDataMonopoly.setMaxTourPrison(nbrMaxTourPrison)
 
 
