@@ -42,18 +42,18 @@ class CasePrison(Case):
             proportionPayer = 1
         # Sinon ça va dépendre de ce que le joueur à décidé
         else:
-            proportionPayer = CHOOSE_PAYE/100
+            proportionPayer = self._parent.getProbSortirPrison()
 
         # => Payer pour sortir
         res[dataMonopoly.getCase(10)] = proportionPayer # Retour sur "prison visite seulement"
 
-        # Si on est pas obligé de payé
+        # Si on est pas obligé de payer
         if(proportionPayer < 1):
             nbrDeDes = self._parent.getNbrDeDes()
 
             # => Lancer les dés
             nbrArangementPossible = pow(6, nbrDeDes)
-            
+
             # Faire un double
             proportionJouer = 1-proportionPayer
             for i in range(nbrDeDes, nbrDeDes*6+1, nbrDeDes):

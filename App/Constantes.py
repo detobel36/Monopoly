@@ -8,10 +8,3 @@ DEBUG = True
 # cette valeur
 # Type: int
 DECALAGE_PRISON = 50
-
-
-# Chance en pourcent que le joueur paye sa sortie de prison (chaque tour est indépendant)
-# Donc 50 représente le fait que le joueur à une chance sur deux de payer OU de lancer les dés
-# Type: nombre
-CHOOSE_PAYE = 50
-

@@ -82,9 +82,12 @@ class FenetrePrincipal(tk.Tk):
         if(DEBUG):
             print("[DEBUG] Paramètres: nombre de dés: " + str(nbrDes))
             print("[DEBUG] Paramètres: nombre max de tour en prison: " + str(nbrMaxTourPrison))
+            print("[DEBUG] Paramètres: probabilité de payer pour sortir de prison: " + \
+                str(probSortirPrison))
 
         self._selectedDataMonopoly.setNbrDeDes(nbrDes)
         self._selectedDataMonopoly.setMaxTourPrison(nbrMaxTourPrison)
+        self._selectedDataMonopoly.setProbSortirPrison(probSortirPrison)
 
 
     """

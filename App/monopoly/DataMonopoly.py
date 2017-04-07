@@ -114,7 +114,11 @@ class DataMonopoly:
     def setNbrDeDes(self, nbrDeDes):
         self._nbrDeDes = nbrDeDes
 
+    def getProbSortirPrison(self):
+        return self._probSortirPrison
 
+    def setProbSortirPrison(self, probSortirPrison):
+        self._probSortirPrison = probSortirPrison
 
 
 
