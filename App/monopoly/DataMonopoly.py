@@ -100,26 +100,25 @@ class DataMonopoly:
 
         @param numeroCase le numero de la case à récupérer
         @param nbrDoubleDe le nombre de double que le joueur à du faire pour arriver à cette case
+            (facultatif: 0 par défaut)
         @return la case (ou None si pas trouvé)
     """
     def getCase(self, numeroCase, nbrDoubleDe = 0):
         numeroCase = numeroCase % self._nbrCaseClassique # On fait en sorte que ça ne dépasse pas du plateau
-
-        for case in self._listCase:
-            if(case.getPosition() == numeroCase and case.getNbrDeDouble() == nbrDoubleDe):
-                return case
-        return None
+        return self.__getExactCase(numeroCase, nbrDoubleDe)
 
 
     """
         Permet de récupérer un numero de case très précis.  Aucune vérification n'est faite
 
         @param numeroCase le numero de case à récupérer
+        @param nbrDoubleDe nombre de double des qu'aura du faire le joueur pour atteindre cette case
+            (facultatif: 0 par défaut)
         @return la case (ou None si pas trouvé)
     """
-    def getExactCase(self, numeroCase):
+    def __getExactCase(self, numeroCase, nbrDoubleDe = 0):
         for case in self._listCase:
-            if(case.getPosition() == numeroCase):
+            if(case.getPosition() == numeroCase and case.getNbrDeDouble() == nbrDoubleDe):
                 return case
         return None
 
@@ -130,7 +129,7 @@ class DataMonopoly:
         @return la Case prison correspondant au premier tour
     """
     def getCasePrison(self, nbrTourEnPrison = 0):
-        return self.getExactCase(self._nbrCaseClassique+nbrTourEnPrison)
+        return self.__getExactCase(self._nbrCaseClassique+nbrTourEnPrison)
 
 
     """
@@ -139,7 +138,7 @@ class DataMonopoly:
         @return la case "prison visite uniquement"
     """
     def getPrisonVisiteUniquement(self):
-        return self.getCase(10)
+        return self.getCase(CASE_PRISON_VISITE_SIMPLE)
 
 
     """

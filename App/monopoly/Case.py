@@ -72,6 +72,16 @@ class Case:
 
 
     """
+        Permet d'indiquer que cette case est seulement accèssible si le joueur à faire un nombre 
+        précis de "double" consécutif
+
+        @param nombreDeDouble qu'a fait le joueur pour se retrouver sur cette case
+    """
+    def setNbrDeDouble(self, nombreDeDouble):
+        self._nbrDeDouble = nombreDeDouble
+
+
+    """
         Permet de récupérer les cases accèssibles depuis la case actuelle
 
         @param dataMonopoly les informations liées au plateau monopoly (permettant de récupérer 
@@ -88,7 +98,7 @@ class Case:
 
         @param dataMonopoly les informations liées au plateau monopoly (permattant de récupérer les 
             autres cases)
-        @param proportionAjouter proportion à ajouter pour lancer les dés
+        @param proportionAjouter proportion à ajouter pour lancer les dés (facultatif, par défaut 1)
         @return un dictionnaire avec en clef la Case accèssible et avec comme valeur la probabilité 
         de rejoindre cette case
     """
@@ -138,17 +148,6 @@ class Case:
             nouvelleCase = dataMonopoly.getCase(self._position+indexRelatif)
 
         return nouvelleCase
-
-
-
-    """
-        Permet d'indiquer que cette case est seulement accèssible si le joueur à faire un nombre 
-        précis de "double" consécutif
-
-        @param nombreDeDouble qu'a fait le joueur pour se retrouver sur cette case
-    """
-    def setNbrDeDouble(self, nombreDeDouble):
-        self._nbrDeDouble = nombreDeDouble
 
 
 

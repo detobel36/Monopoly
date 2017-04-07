@@ -20,3 +20,15 @@ DECALAGE_PLATEAU = 100
 # Type: int
 NOMBRE_DOUBLE = 3
 
+
+# Le numero de la case "prison visible simple".  Il s'agit dans tous les jeux monopoly de la 10ème
+# case du plateau
+# Type: int
+CASE_PRISON_VISITE_SIMPLE = 10
+
+
+# Permet d'indiquer si on veut afficher ou non les cases créé pour gérer les triples doubles
+# (si masqué, les valeurs iront simplement s'additionner aux autres)
+# /!\ Surtout utilisé pour le débug ! (affichage pas génial quand)
+# Type: boolean
+VIEW_ALL_CASE_DOUBLE = False

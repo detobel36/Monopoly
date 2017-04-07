@@ -46,29 +46,51 @@ class CasePrison(Case):
 
         # Case "prison visite uniquement"
         casePrisonVisiteUniquement = dataMonopoly.getPrisonVisiteUniquement()
-        posCasePrisonVisite = casePrisonVisiteUniquement.getPosition()
         
         # => Payer pour sortir
         res[casePrisonVisiteUniquement] = proportionPayer # Retour sur "prison visite seulement"
 
         # Si on est pas obligé de payer
         if(proportionPayer < 1):
-            nbrDeDes = dataMonopoly.getNbrDeDes()
-
-            # => Lancer les dés
-            nbrArangementPossible = pow(6, nbrDeDes)
-
-            # Faire un double
             proportionJouer = 1-proportionPayer
-            nombreDeDouble = 0
-            for i in range(nbrDeDes, nbrDeDes*6+1, nbrDeDes):
-                res[dataMonopoly.getCase(posCasePrisonVisite+i)] = (1/nbrArangementPossible)*proportionJouer
-                nombreDeDouble += 1
-
-            # Aucun double n'a été fait
-            res[nextPrison] = ((nbrArangementPossible-nombreDeDouble)/nbrArangementPossible)*proportionJouer
-
+            self.__getCaseSuivanteLanceDes(res, dataMonopoly, nextPrison, \
+                                casePrisonVisiteUniquement, proportionJouer)
+            
         return res
+
+
+    """
+        Permet de calculer la probabilité de tomber sur les cases suivante en lancant les dés
+
+        @param res permet de stocker le résultat
+        @param dataMonopoly les informations liées au plateau monopoly (permettant de récupérer 
+            les autres cases)
+        @param nextPrison case indiquant la prison suivante (un tour de plus)
+        @param caseVisitePrison case a partir de laquelle on commence à compté lorsqu'on sort de prison
+        @param probabiliteJouer quel est la probabilité que le joueur joue (à la place de payer)
+        @return liste des objets cases étant accèssibles
+    """
+    def __getCaseSuivanteLanceDes(self, res, dataMonopoly, nextPrison, caseVisitePrison, \
+                            probabiliteJouer):
+        # Nombre de dés utilisé pour la partie
+        nbrDeDes = dataMonopoly.getNbrDeDes()
+
+        # Récupère la position de la case "visite simple"
+        posCasePrisonVisite = caseVisitePrison.getPosition()
+
+        # => Lancer les dés
+        nbrLancePossible = pow(6, nbrDeDes) # Nombre de combinaisont possible
+
+        # Faire un double
+        nombreDeDouble = 0
+        for i in range(nbrDeDes, nbrDeDes*6+1, nbrDeDes):
+            res[dataMonopoly.getCase(posCasePrisonVisite+i)] = (1/nbrLancePossible)*probabiliteJouer
+            nombreDeDouble += 1
+
+        # Aucun double n'a été fait
+        res[nextPrison] = ((nbrLancePossible-nombreDeDouble)/nbrLancePossible)*probabiliteJouer
+
+
 
     """
         Permet de récupérer la case prison juste après la case actuelle (si elle n'existe pas, 
