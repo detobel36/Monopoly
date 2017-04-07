@@ -84,7 +84,7 @@ class ConfigTour(tk.LabelFrame):
         self._valeurEntry = tk.StringVar()
         tk.Entry(self, textvariable=self._valeurEntry, justify='right', width=7)\
             .grid(row=1, column=0)
-        self.__setNbrTourASimuler(0)
+        self.__setNbrTourASimuler(1)
 
 
     """

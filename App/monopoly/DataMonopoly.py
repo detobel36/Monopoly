@@ -38,6 +38,8 @@ class DataMonopoly:
         self._listCase = [getCaseDepart()] + self._defaultListCase + self.__initDefaultCase()
         for case in self._listCase:
             case.setParentDataMonopoly(self)
+        
+
 
     """
         Permet de récupérer les cases par défaut qui doivent être rajouté aux informations

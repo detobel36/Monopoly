@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
+from copy import deepcopy
+
 
 """
     Permet de représenter une chaine de markov.
@@ -35,7 +37,16 @@ class Markov:
         @param nbrDeplacement nombre de déplacement/changement d'état à faire
     """
     def ajouterDeplacement(self, nbrDeplacement):
-        self._matDeplacement = np.linalg.matrix_power(self._matDeplacement, nbrDeplacement+1)
+        if(nbrDeplacement in self._cacheExpoMatDepl):
+            res = self._cacheExpoMatDepl[nbrDeplacement]
+        else:
+            initMatDeplacement = self._cacheExpoMatDepl[1]
+            res = np.linalg.matrix_power(initMatDeplacement, nbrDeplacement)
+            self._cacheExpoMatDepl[nbrDeplacement] = res
+
+        self._matDeplacement = res
+
+        return res
 
 
     """
@@ -44,23 +55,25 @@ class Markov:
         @return la matrice représentant les déplacements possibles
     """
     def getMatriceDeplacement(self):
-        return self._matDeplacement
+        return self._cacheExpoMatDepl[1]
         
 
     """
         Permet de trouver les points fix à partir d'un point de départ précis
     """
     def trouverPointFix(self):
+        matriceDeplacement = self._cacheExpoMatDepl[1]
+
         # Le but final du calcul est de faire:
         # (P-I)^T w = (0, ..., 0, 1)
         # Où p est la matrice de déplacement et w la matrice que l'on cherche
 
-        nbrLigne = len(self._matDeplacement)
-        nbrColonne = len(self._matDeplacement[0])
+        nbrLigne = len(matriceDeplacement)
+        nbrColonne = len(matriceDeplacement[0])
 
         # Matrice avec laquelle on va travailler (histoire de ne pas modifier par erreur)
         # la matrice de déplacement
-        matriceTravail = self._matDeplacement
+        matriceTravail = deepcopy(matriceDeplacement)
 
         if(nbrLigne != nbrColonne):
             print("[WARNING] Le nombre de ligne n'est pas le même que le nombre de colonne " \
@@ -84,7 +97,8 @@ class Markov:
 
         return solution[0]
 
-    # TODO changer avec le bon nom xD
+
+    # TODO changer avec le bon nom
     def multiplicationInitiatialeDeplacement(self):
         return np.dot(self._matInit, self._matDeplacement)
-        # return self._matInit.multiplication(self._matDeplacement)
+

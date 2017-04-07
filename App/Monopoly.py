@@ -67,6 +67,7 @@ class Monopoly:
         Permet de simuler des tours sur le Monopoly actuelle
 
         @param nbrTour que l'on veut simuler
+
     """
     def simulerDesTours(self, nbrTour = 1):
         self._markov.ajouterDeplacement(nbrTour)

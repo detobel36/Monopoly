@@ -105,16 +105,17 @@ class FenetrePrincipal(tk.Tk):
     def updateNewTour(self, pointFixe = False):
         nbrTour = self._nbrTourFrame.getNbrTourASimuler()
 
-        newDataMonopoly = deepcopy(self._selectedDataMonopoly)
-        # TODO clarifier tout ça
-
-        newMonopoly = Monopoly(newDataMonopoly)
-
         if(pointFixe):
-            newData = newMonopoly.simulerInfini()
+            newData = self._selectedMonopoly.simulerInfini()
+            if(DEBUG):
+                print("[DEBUG] Simulation des points fixe")
+
         else:
-            newMonopoly.simulerDesTours(nbrTour)
-            newData = newMonopoly.getResultatSimulation()
+            if(DEBUG):
+                print("[DEBUG] Simulation de " + str(nbrTour))
+
+            newData = self._selectedMonopoly.simulerDesTours(nbrTour)
+            newData = self._selectedMonopoly.getResultatSimulation()
 
         self._statFrame.updateCanvas(newData)
 
