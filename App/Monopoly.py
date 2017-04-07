@@ -19,6 +19,7 @@ class Monopoly:
         @param markov (facultatif) il permet de définir manuellement la chaine de markov du Monopoly
     """
     def __init__(self, dataMonoply):
+        dataMonoply.initMonopoly()
         self._dataMonopoly = dataMonoply
         self._matDeplacement = self.__creerMatriceDeplacementMonopoly()
         self._matInit = self.__creerMatriceInitialMonopoly()

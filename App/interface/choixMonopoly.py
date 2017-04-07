@@ -5,27 +5,33 @@ import tkinter as tk
 import monopoly.DataMonopoly as dataMonopoly
 
 
-class ChoixMonopoly:
+class ChoixMonopoly(tk.Toplevel):
 
     """
         Construction
     """
     def __init__(self):
-        self._listMonopolyDisponible = dataMonopoly.getAllDataMonopoly()
 
+        self.__loadAllMonopoly()
         if(len(self._listMonopolyDisponible) > 1):
+            self._selectedMonopoly = None
+            tk.Toplevel.__init__(self)
             self.ouvrirFenetreChoix()
-
         else:
             self._selectedMonopoly = self._listMonopolyDisponible[0]
-            
+
+
+    """
+        Permet de récupérer la liste de tous les Monopoly
+    """
+    def __loadAllMonopoly(self):
+        self._listMonopolyDisponible = dataMonopoly.getAllDataMonopoly()
 
     """
         Initialisation de la fenêtre permettant de choisir le monopoly
     """
     def ouvrirFenetreChoix(self):
-        self._fenetre = tk.Tk() # Création de la fenêtre
-        self._fenetre.wm_title("Choix du Monopoly")
+        self.title("Choix du Monopoly")
 
         # Création de la liste des choix
         self._liste = tk.Listbox(self._fenetre)
@@ -38,9 +44,6 @@ class ChoixMonopoly:
 
         # Ajout d'un bouton à cette fenêtre
         tk.Button(self._fenetre, text='Sélectionner', command=self.__selectMonopoly).pack()
-
-        # Attente de la fin de l'event
-        self._fenetre.mainloop()
         
 
     """
@@ -51,9 +54,15 @@ class ChoixMonopoly:
             indexSelect = self._liste.curselection()[0]
 
             self._selectedMonopoly = self._listMonopolyDisponible[indexSelect]
-            # Femeture de la fenêtre
-            self._fenetre.quit()
-            self._fenetre.destroy()
+            __closeChoixMonopoly()
+
+
+    """
+        Permet de fermer la fenêtre de choix du Monopoly
+    """
+    def __closeChoixMonopoly(self):
+        self.quit()
+        self.destroy()
 
 
     """
@@ -61,6 +70,6 @@ class ChoixMonopoly:
 
         @return le monopoly sélectionné
     """
-    def getResult(self):
+    def getSelectedMonopoly(self):
         return self._selectedMonopoly
 

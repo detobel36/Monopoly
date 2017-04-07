@@ -9,7 +9,6 @@ import tkinter as tk
 """
 class Statistiques(tk.LabelFrame):
 
-
     """
         Création de la fenêtre de statistique
 

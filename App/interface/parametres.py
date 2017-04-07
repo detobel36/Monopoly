@@ -69,13 +69,13 @@ class Parametres(tk.Toplevel):
 
 
     def __addSubmitButton(self):
-        tk.Button(self, text='Valider', command=self.__submitParametres).pack(pady=10)
+        tk.Button(self, text='Valider', command=self.__closeParametres).pack(pady=10)
 
 
     """
         Fonction appellé lorsque l'on a totalement fini de parametré
     """
-    def __submitParametres(self):
+    def __closeParametres(self):
         self.quit()
         self.destroy()
 

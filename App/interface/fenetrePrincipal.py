@@ -20,7 +20,6 @@ from interface.configTour import ConfigTour
 """
 class FenetrePrincipal(tk.Tk):
 
-
     def __init__(self):
         tk.Tk.__init__(self)
         self.wm_title("Stats")
@@ -31,6 +30,7 @@ class FenetrePrincipal(tk.Tk):
 
         # Choix du monopoly
         self._selectedDataMonopoly = self.__choixDuMonopoly()
+        self.__applyParamOnDataMonopoly()
         self._selectedMonopoly = Monopoly(self._selectedDataMonopoly)
 
         # Création de la fenêtre de gestion de tour
@@ -41,7 +41,7 @@ class FenetrePrincipal(tk.Tk):
         self._statFrame = Statistiques(self._selectedMonopoly.getResultatSimulation(), self)
         self._statFrame.grid(row=0, column=0)
 
-
+        # self.wait_window(self) TODO
         self.mainloop()
 
 
@@ -52,19 +52,34 @@ class FenetrePrincipal(tk.Tk):
     """
     def __choixDuMonopoly(self):
         choixMonopoly = ChoixMonopoly()
-        selectedDataMonopoly = choixMonopoly.getResult();
+        selectedDataMonopoly = choixMonopoly.getSelectedMonopoly();
+
+        if(selectedDataMonopoly == None):
+            self.wait_window(choixMonopoly)
 
         if(DEBUG):
             print("[DEBUG] Monopoly sélectionné: " + selectedDataMonopoly.getNom())
 
         return selectedDataMonopoly
 
+
     """
         Permet de choisir les paramètres qui seront utilisé pour modéliser le Monopoly
     """
     def __choixParametres(self):
-        choixParametres = Parametres()
-        self.wait_window(choixParametres)
+        self._choixParametres = Parametres()
+        self.wait_window(self._choixParametres)
+
+
+    """
+        Permet d'appliqué les choix fait lors du paramétrage sur le Monopoly
+    """
+    def __applyParamOnDataMonopoly(self):
+        nbrDes = self._choixParametres.getNbrDeDes()
+        nbrMaxTourPrison = self._choixParametres.getNbrTourMaxPrison()
+        probSortirPrison = self._choixParametres.getProbPayerSortirPrison()
+
+        self._selectedDataMonopoly.setMaxTourPrison(nbrMaxTourPrison)
 
 
     """

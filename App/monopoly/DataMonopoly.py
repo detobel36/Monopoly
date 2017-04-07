@@ -23,21 +23,20 @@ class DataMonopoly:
         @param listCase liste (dans l'ordre) des cases (la case départ est ajoutée automatiquement)
     """
     def __init__(self, nom, displayNom, listCase):
-        self.__initParam()
         self._nom = nom
         self._displayNom = displayNom
-        self._listCase = [getCaseDepart()] + listCase + self.__initDefaultCase()
+        self._defaultListCase = listCase
 
         _allDataMonopoly.append(self)
 
 
     """
-        Permet d'initialiser tous les champs qui pourront être modifié
+        Permet d'initialiser correctement un Monopoly et de créé a proprement parlé
+        l'ensemble des cases où le joueur peut aller
     """
-    def __initParam(self):
-        self._maxTourPrison = MAX_TOUR_PRISON
-        # TODO ne peut pas fonctionner dans l'état actuelle
-
+    def initMonopoly(self):
+        self._listCase = [getCaseDepart()] + self._defaultListCase + self.__initDefaultCase()
+        
 
     """
         Permet de récupérer les cases par défaut qui doivent être rajouté aux informations
@@ -99,6 +98,11 @@ class DataMonopoly:
     def getListeCases(self):
         return self._listCase
 
+
+    ##### Définition des paramètres pouvant changé la configuration du monpoly #####
+
+    def setMaxTourPrison(self, nbrMaxTour):
+        self._maxTourPrison = nbrMaxTour
 
 
 
