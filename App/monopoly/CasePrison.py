@@ -20,8 +20,9 @@ class CasePrison(Case):
 
         @param numero de la case prison (représentant le nombre de tour passé sur cette case)
     """
-    def __init__(self, numero):
-        super().__init__("Prison " + str(numero), DECALAGE_PRISON+numero, "black", -1)
+    def __init__(self, decalage, numero):
+        super().__init__("Prison " + str(numero+1), decalage+numero, "black", -1)
+        self._tourEnPrison = numero
 
 
     """
@@ -37,30 +38,35 @@ class CasePrison(Case):
 
         # On récupère la prison suivante
         nextPrison = self.__getNextCasePrison(dataMonopoly)
-        # Si il n'y en a pas, on est obligé de payé
-        if(nextPrison == None):
-            proportionPayer = 1
-        # Sinon ça va dépendre de ce que le joueur à décidé
-        else:
-            proportionPayer = self._parent.getProbSortirPrison()
 
+        if(nextPrison == None): # Si il n'y en a pas, on est obligé de payé
+            proportionPayer = 1
+        else: # Sinon ça va dépendre de ce que le utilisateur à décidé
+            proportionPayer = dataMonopoly.getProbSortirPrison()
+
+        # Case "prison visite uniquement"
+        casePrisonVisiteUniquement = dataMonopoly.getPrisonVisiteUniquement()
+        posCasePrisonVisite = casePrisonVisiteUniquement.getPosition()
+        
         # => Payer pour sortir
-        res[dataMonopoly.getCase(10)] = proportionPayer # Retour sur "prison visite seulement"
+        res[casePrisonVisiteUniquement] = proportionPayer # Retour sur "prison visite seulement"
 
         # Si on est pas obligé de payer
         if(proportionPayer < 1):
-            nbrDeDes = self._parent.getNbrDeDes()
+            nbrDeDes = dataMonopoly.getNbrDeDes()
 
             # => Lancer les dés
             nbrArangementPossible = pow(6, nbrDeDes)
 
             # Faire un double
             proportionJouer = 1-proportionPayer
+            nombreDeDouble = 0
             for i in range(nbrDeDes, nbrDeDes*6+1, nbrDeDes):
-                res[dataMonopoly.getCase(self._position+i)] = (1/nbrArangementPossible)*proportionJouer
+                res[dataMonopoly.getCase(posCasePrisonVisite+i)] = (1/nbrArangementPossible)*proportionJouer
+                nombreDeDouble += 1
 
             # Aucun double n'a été fait
-            res[nextPrison] = ((nbrArangementPossible-6)/nbrArangementPossible)*proportionJouer
+            res[nextPrison] = ((nbrArangementPossible-nombreDeDouble)/nbrArangementPossible)*proportionJouer
 
         return res
 
@@ -73,9 +79,9 @@ class CasePrison(Case):
     """
     def __getNextCasePrison(self, dataMonopoly):
         res = None # Resultat
-        currentPos = self.getPosition()
 
-        if(currentPos < (DECALAGE_PRISON+self._parent.getMaxTourPrison())):
-            res = dataMonopoly.getCase(currentPos+1, True)
+        # Si ce n'est pas notre dernier tour en prison
+        if(self._tourEnPrison < dataMonopoly.getMaxTourPrison()):
+            res = dataMonopoly.getCasePrison(self._tourEnPrison+1)
 
         return res

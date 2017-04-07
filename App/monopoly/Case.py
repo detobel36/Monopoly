@@ -23,6 +23,7 @@ class Case:
         self._position = position
         self._couleur = couleur
         self._prix = prix
+        self._nbrDeDouble = 0
 
 
     """
@@ -62,6 +63,15 @@ class Case:
 
 
     """
+        Permet de savoir combien de double il faut pour attendre cette case
+
+        @return le nombre de double qu'il faut
+    """
+    def getNbrDeDouble(self):
+        return self._nbrDeDouble
+
+
+    """
         Permet de récupérer les cases accèssibles depuis la case actuelle
 
         @param dataMonopoly les informations liées au plateau monopoly (permettant de récupérer 
@@ -84,23 +94,61 @@ class Case:
     """
     def getCasesSuivanteDes(self, dataMonopoly, proportionAjouter = 1):
         res = {}
-        resRepartition = getRepartitionDes(self._parent.getNbrDeDes())
-        for elem in resRepartition:
-            probabilite = resRepartition[elem]
-            nouvelleCase = dataMonopoly.getCase(self._position+elem)
+        # On récupère la répartition des dés
+        resRepartition = getRepartitionDes(dataMonopoly.getNbrDeDes())
+        for elem in resRepartition: # Pour chaque case accèssibles
+            probabilite = resRepartition[elem] # On récupère la probabilité
 
-            res[nouvelleCase] = probabilite*proportionAjouter
+            # Récupéréation de la case correspondante
+            nouvelleCase = self.__getReelCaseFromRelativeIndex(dataMonopoly, elem)
+
+            if(nouvelleCase in res):
+                res[nouvelleCase] += probabilite*proportionAjouter
+            else:
+                res[nouvelleCase] = probabilite*proportionAjouter
 
         return res
 
-    """
-        Permet de définir le "DataMonopoly" pour lequel cette case a été créé
 
-        @param parent le DataMonopoly auquel appartient cette case
     """
-    def setParentDataMonopoly(self, parent):
-        self._parent = parent
+        Permet de récupére la case réelle en fonction de l'index relatif à la case actuelle.  Les
+        index négatif indique qu'il s'agit d'un double
 
+        @param indexRelatif l'index relatif à la case actuelle
+        @return la case correspondante à l'index
+    """
+    def __getReelCaseFromRelativeIndex(self, dataMonopoly, indexRelatif):
+        # Si la case accèsible est négative, c'est que c'est un double
+        if(indexRelatif < 0):
+            indexRelatif = -indexRelatif # On ré inverse le signe
+
+            # Si les triples doubles sont désactivé
+            if(dataMonopoly.getNbrDeDouble() <= 0):
+                nouvelleCase = dataMonopoly.getCase(self._position+indexRelatif)
+
+            # Si on a fait trop de double
+            elif(self._nbrDeDouble+1 >= dataMonopoly.getNbrDeDouble()):
+                nouvelleCase = dataMonopoly.getCasePrison()
+
+            # Sinon, on change juste
+            else:
+                nouvelleCase = dataMonopoly.getCase(self._position+indexRelatif, self._nbrDeDouble+1)
+
+        else:
+            nouvelleCase = dataMonopoly.getCase(self._position+indexRelatif)
+
+        return nouvelleCase
+
+
+
+    """
+        Permet d'indiquer que cette case est seulement accèssible si le joueur à faire un nombre 
+        précis de "double" consécutif
+
+        @param nombreDeDouble qu'a fait le joueur pour se retrouver sur cette case
+    """
+    def setNbrDeDouble(self, nombreDeDouble):
+        self._nbrDeDouble = nombreDeDouble
 
 
 
@@ -118,7 +166,8 @@ def getCaseDepart():
     de dé
 
     @param nbrDes nombre de dé avec lequel on veut la répartition
-    @return un dictionnaire avec les nombres accèssible et leur probabilité
+    @return un dictionnaire avec les nombres accèssible et leur probabilité. Les nombres négatif
+        sont des doubles qui doivent être géré différemment
 """
 def getRepartitionDes(nbrDes):
     res = {}
@@ -128,6 +177,8 @@ def getRepartitionDes(nbrDes):
         res = cacheRepratitionDes[nbrDes]
 
     else:
+        nbrChoixPossible = pow(6, nbrDes)
+
         # "s" est les nombre que l'on peut atteindre
         for s in range(nbrDes, (nbrDes*6)+1):
             total = 0
@@ -137,7 +188,12 @@ def getRepartitionDes(nbrDes):
                 sousTotal *= combinatoire(nbrDes, k) * combinatoire(s-6*k-1, nbrDes-1)
                 total += sousTotal
 
-            res[s] = total/pow(6, nbrDes)
+            if(s % nbrDes == 0):
+                total -= 1
+                res[-s] = 1/nbrChoixPossible
+
+            if(total > 0):
+                res[s] = total/nbrChoixPossible
 
         cacheRepratitionDes[nbrDes] = res
 

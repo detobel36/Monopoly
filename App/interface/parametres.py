@@ -13,21 +13,28 @@ class Parametres(tk.Toplevel):
 
     def __init__(self):
         tk.Toplevel.__init__(self)
-        self.ouvrirFenetreParametres()
+        self.title("Paramètres")
+        self.initAllParametres()
+        self.initEventParametres()
 
 
     """
         Permet d'initialiser la fenêtre graphique
     """
-    def ouvrirFenetreParametres(self):
-        self.title("Paramètres")
-
+    def initAllParametres(self):
         self.__addNombreDeDes()
         self.__addNombreTourMaxPrison()
         self.__addProbPayerSortirPrison()
 
         # Ajout d'un bouton à cette fenêtre
         self.__addSubmitButton()
+
+
+    """
+        Permet d'initialiser les events
+    """
+    def initEventParametres(self):
+        self.bind("<Return>", self.__closeParametres)
 
 
     """
@@ -75,7 +82,7 @@ class Parametres(tk.Toplevel):
     """
         Fonction appellé lorsque l'on a totalement fini de parametré
     """
-    def __closeParametres(self):
+    def __closeParametres(self, event = None):
         self.quit()
         self.destroy()
 

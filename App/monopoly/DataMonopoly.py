@@ -4,6 +4,7 @@ from monopoly.CaseChance import CaseChance
 from monopoly.CaseCommunaute import CaseCommunaute
 from monopoly.CaseGoToPrison import CaseGoToPrison
 from monopoly.CasePrison import CasePrison
+from copy import deepcopy
 
 
 # Liste de tous les DataMonopoly
@@ -26,6 +27,9 @@ class DataMonopoly:
         self._nom = nom
         self._displayNom = displayNom
         self._defaultListCase = listCase
+        self._nbrCaseClassique = -1     # Nombre de case "normal" du monopoly
+        # TODO pas utilisé
+        # self._nbrCaseUnPlateau = 0      # Nombre de case que prend un "plateau" complet
 
         _allDataMonopoly.append(self)
 
@@ -35,19 +39,42 @@ class DataMonopoly:
         l'ensemble des cases où le joueur peut aller
     """
     def initMonopoly(self):
-        self._listCase = [getCaseDepart()] + self._defaultListCase + self.__initDefaultCase()
-        for case in self._listCase:
-            case.setParentDataMonopoly(self)
-        
+        self._listCase = self.__initAllCases(0)
+
+        # Initialisation des cases prisons
+        self._nbrCaseClassique = len(self._listCase)
+        self._listCase += self.__initPrisonCases()
+
+        # Nombre maximum de case que peut prendre un "plateau"
+        # self._nbrCaseUnPlateau = len(self._listCase) 
+
+        # Règle des triples doubles
+        for i in range(self.getNbrDeDouble()-1):
+            self._listCase += self.__initAllCases(i+1)
 
 
     """
-        Permet de récupérer les cases par défaut qui doivent être rajouté aux informations
+        Permet d'initialiser toutes les cases d'un plateau
 
-        @return une liste de case ajouté par défaut
+        @param nombreDeDouble le nombre de double pour pouvoir atteindre les cases que l'on est
+            entrain de créer
     """
-    def __initDefaultCase(self):
-        return [CasePrison(i+1) for i in range(self._maxTourPrison)]
+    def __initAllCases(self, nombreDeDouble):
+        res = [getCaseDepart()] + deepcopy(self._defaultListCase)
+
+        for case in res:
+            case.setNbrDeDouble(nombreDeDouble)
+
+        return res
+
+
+    """
+        Permet d'initialiser le nombre de case prison nécessaire
+
+        @return une liste de case prison en fonction des paramètres (définit plus tôt)
+    """
+    def __initPrisonCases(self):
+        return [CasePrison(self._nbrCaseClassique, i) for i in range(self._maxTourPrison)]
 
 
     """
@@ -69,28 +96,50 @@ class DataMonopoly:
 
 
     """
-        Permet de récupérer une case en fonction de son numero
+        Permet de récupérer une case en fonction de son numéro sur le plateau
 
         @param numeroCase le numero de la case à récupérer
-        @param true pour éviter de vérifier que l'on est bien dans le plateau de jeu
+        @param nbrDoubleDe le nombre de double que le joueur à du faire pour arriver à cette case
         @return la case (ou None si pas trouvé)
     """
-    def getCase(self, numeroCase, no_limit = False):
-        if(not no_limit):
-            numeroCase = numeroCase % len(self._listCase)
+    def getCase(self, numeroCase, nbrDoubleDe = 0):
+        numeroCase = numeroCase % self._nbrCaseClassique # On fait en sorte que ça ne dépasse pas du plateau
 
+        for case in self._listCase:
+            if(case.getPosition() == numeroCase and case.getNbrDeDouble() == nbrDoubleDe):
+                return case
+        return None
+
+
+    """
+        Permet de récupérer un numero de case très précis.  Aucune vérification n'est faite
+
+        @param numeroCase le numero de case à récupérer
+        @return la case (ou None si pas trouvé)
+    """
+    def getExactCase(self, numeroCase):
         for case in self._listCase:
             if(case.getPosition() == numeroCase):
                 return case
         return None
+
 
     """
         Permet de récupérer la case prison (celle correspondant au premier tour du joueur)
 
         @return la Case prison correspondant au premier tour
     """
-    def getCasePrison(self):
-        return self.getCase(DECALAGE_PRISON+1, True)
+    def getCasePrison(self, nbrTourEnPrison = 0):
+        return self.getExactCase(self._nbrCaseClassique+nbrTourEnPrison)
+
+
+    """
+        Permet de récupérer la case "prison visite uniquement"
+
+        @return la case "prison visite uniquement"
+    """
+    def getPrisonVisiteUniquement(self):
+        return self.getCase(10)
 
 
     """
@@ -122,6 +171,9 @@ class DataMonopoly:
     def setProbSortirPrison(self, probSortirPrison):
         self._probSortirPrison = probSortirPrison
 
+    def getNbrDeDouble(self):
+        # TODO changer par un paramètre
+        return NOMBRE_DOUBLE
 
 
 ############################ STATIC ############################
@@ -197,3 +249,5 @@ DataMonopoly("MONOPOLY_70", "Monopoly édition 70è anniversaire", [
     Case("Taxe de Luxe", 38),
     Case("Bruxelles Rue Neuve", 39, "dark slate blue")
     ])
+
+

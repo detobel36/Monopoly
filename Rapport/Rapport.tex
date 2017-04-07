@@ -375,7 +375,15 @@ rdetobel@ulb.ac.be}
 	\caption{Déplacement en cas de double}
 	\label{representation_double}
     \end{figure}
-    
+    % TODO question: lorsque l'on a fait 2 doubles et qu'on a une carte chance qui nous déplace... On a
+    % toujours 2 doubles à notre actif ou pas ?
+    Pour savoir si un nombre est un double, il suffit de vérifier que le nombre est divisible
+    par le nombre de dés.  Il faut cependant bien tenir compte du fait qu'il y a plusieurs
+    moyen de former un nombre.  Par exemple, avec deux dés, il y a trois manières différentes
+    de former un 4: $1+3$, $2+2$ et $3+1$.  Il y a donc 3 chance sur 36 de faire un 4 mais
+    seulement une sur 36 de faire un double et 2 sur 36 de faire un simple 4 avec deux dés
+    différents.
+    Dans le point \ref{re}
     
   \subsection{Case prison}
     \label{case_prison}

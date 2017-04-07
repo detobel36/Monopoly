@@ -13,5 +13,10 @@ DECALAGE_PRISON = 1000
 # La règle permettant d'envoyer un joueur faisant 3 doubles consécutifs nécessite la duplication du
 # plateau de jeu.  On décalle les cases de se second plateau de jeu en fonction de la valeur suivante
 # Type: int
-DECALAGE_PLATEU = 100
+DECALAGE_PLATEAU = 100
+
+
+# Permet de définir à partir de combien de double on se retrouve automatiquement en prison
+# Type: int
+NOMBRE_DOUBLE = 3
 
