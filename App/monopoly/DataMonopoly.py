@@ -28,8 +28,6 @@ class DataMonopoly:
         self._displayNom = displayNom
         self._defaultListCase = listCase
         self._nbrCaseClassique = -1     # Nombre de case "normal" du monopoly
-        # TODO pas utilisé
-        # self._nbrCaseUnPlateau = 0      # Nombre de case que prend un "plateau" complet
 
         _allDataMonopoly.append(self)
 
@@ -44,9 +42,6 @@ class DataMonopoly:
         # Initialisation des cases prisons
         self._nbrCaseClassique = len(self._listCase)
         self._listCase += self.__initPrisonCases()
-
-        # Nombre maximum de case que peut prendre un "plateau"
-        # self._nbrCaseUnPlateau = len(self._listCase) 
 
         # Règle des triples doubles
         for i in range(self.getNbrDeDouble()-1):
