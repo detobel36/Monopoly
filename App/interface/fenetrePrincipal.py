@@ -62,6 +62,7 @@ class FenetrePrincipal(tk.Tk):
 
         if(selectedDataMonopoly == None):
             self.wait_window(choixMonopoly)
+            selectedDataMonopoly = choixMonopoly.getSelectedMonopoly();
 
         if(DEBUG):
             print("[DEBUG] Monopoly sélectionné: " + selectedDataMonopoly.getNom())

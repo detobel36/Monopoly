@@ -34,7 +34,7 @@ class ChoixMonopoly(tk.Toplevel):
         self.title("Choix du Monopoly")
 
         # Création de la liste des choix
-        self._liste = tk.Listbox(self._fenetre)
+        self._liste = tk.Listbox(self)
         index = 0 # Numero des choix
         for monopoly in self._listMonopolyDisponible:
             self._liste.insert(index, monopoly.getDisplayNom())
@@ -43,7 +43,7 @@ class ChoixMonopoly(tk.Toplevel):
         self._liste.pack()
 
         # Ajout d'un bouton à cette fenêtre
-        tk.Button(self._fenetre, text='Sélectionner', command=self.__selectMonopoly).pack()
+        tk.Button(self, text='Sélectionner', command=self.__selectMonopoly).pack()
         
 
     """
@@ -54,7 +54,8 @@ class ChoixMonopoly(tk.Toplevel):
             indexSelect = self._liste.curselection()[0]
 
             self._selectedMonopoly = self._listMonopolyDisponible[indexSelect]
-            __closeChoixMonopoly()
+            print("Monopoly choisi: " + str(self._selectedMonopoly))
+            self.__closeChoixMonopoly()
 
 
     """

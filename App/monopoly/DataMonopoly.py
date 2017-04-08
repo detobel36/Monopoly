@@ -244,4 +244,44 @@ DataMonopoly("MONOPOLY_70", "Monopoly édition 70è anniversaire", [
     Case("Bruxelles Rue Neuve", 39, "dark slate blue")
     ])
 
-
+DataMonopoly("MERVEILLES_MONDE", "Monopoly Merveilles du monde", [
+    Case("Les Chutes du Niagara", 1, "orchid", 60), 
+    CaseCommunaute(2),
+    Case("L'Everest", 3, "orchid", 60),
+    Case("Assurance Voyage", 4, "beige", 200),
+    Case("Amsterdam Schiphol", 5, "white", 200), # TODO couleur
+    Case("La Grande Barrière de Corail", 6, "deep sky blue", 100),
+    CaseChance(7),
+    Case("Le Grand Canyon", 8, "deep sky blue", 100),
+    Case("Les chutes Angel", 9, "deep sky blue", 120),
+    Case("Prison simple visite", 10),
+    Case("Le Christ Rédempteur", 11, "dark slate blue", 140),
+    Case("Bureau de Change", 12, "ivory", 150),
+    Case("La Tour Eiffel", 13, "dark slate blue", 140),
+    Case("Le Colisée", 14, "dark slate blue", 160),
+    Case("Paris Charles de Gaulle", 15, "white", 200),
+    Case("Les ruines de Stonehenge", 16, "dark orange", 180),
+    CaseCommunaute(17),
+    Case("Le Taj Mahal", 18, "dark orange", 180),
+    Case("Les statues Moai", 19, "dark orange", 200),
+    Case("Parking", 20),
+    Case("Machu Picchu", 21, "orange red", 220),
+    CaseChance(22),
+    Case("Le temple Angkor Wat", 23, "orange red", 220),
+    Case("Pétra", 24, "orange red", 240),
+    Case("Rhein-Main Frankfurt", 25), # TODO
+    Case("La grande Muraille de Chine", 26, "gold", 260),
+    Case("Le phare d'Alexandrie", 27, "gold", 260),
+    Case("Agent de voyages", 28, "ivory", 150),
+    Case("Le colosse de Rhodes", 29, "gold", 280),
+    CaseGoToPrison(30),
+    Case("Le mausolée, Halicarnasse", 31, "sea green", 300),
+    Case("La statue de Zeus, Olympie", 32, "sea green", 300),
+    CaseCommunaute(33),
+    Case("Le temple d'Artémis à Ephèse", 34, "sea green", 320),
+    Case("London Heathrow", 35), # TODO
+    CaseChance(36),
+    Case("Les jardins suspendus de Babylone", 37, "dark slate blue", 350),
+    Case("Taxe de Luxe", 38, "black", 100),
+    Case("La grande Pyramide de Gizeh", 39, "dark slate blue", 400)
+    ])
