@@ -31,6 +31,8 @@ class FenetrePrincipal(tk.Tk):
 
         # Choix du monopoly
         self._selectedDataMonopoly = self.__choixDuMonopoly()
+        if(self._selectedDataMonopoly == None): # Si on ne chosi aucun Monopoly
+            return
         self.__applyParamOnDataMonopoly()
         self._selectedMonopoly = Monopoly(self._selectedDataMonopoly)
 
@@ -63,6 +65,11 @@ class FenetrePrincipal(tk.Tk):
         if(selectedDataMonopoly == None):
             self.wait_window(choixMonopoly)
             selectedDataMonopoly = choixMonopoly.getSelectedMonopoly();
+
+            # Si même après avoir attendu on a toujours un Monopoly vide
+            if(selectedDataMonopoly == None):
+                print("[WARNING] Aucun Monopoly n'a été choisi. Arrête du programme")
+                return None
 
         if(DEBUG):
             print("[DEBUG] Monopoly sélectionné: " + selectedDataMonopoly.getNom())

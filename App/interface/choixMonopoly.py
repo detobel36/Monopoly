@@ -27,23 +27,37 @@ class ChoixMonopoly(tk.Toplevel):
     def __loadAllMonopoly(self):
         self._listMonopolyDisponible = dataMonopoly.getAllDataMonopoly()
 
+
     """
         Initialisation de la fenêtre permettant de choisir le monopoly
     """
     def ouvrirFenetreChoix(self):
         self.title("Choix du Monopoly")
+        self.__addListBox()
+        self.__addSelectButton()
 
+
+    """
+        Permet d'ajouter la liste des Monopoly disponibles
+    """
+    def __addListBox(self):
         # Création de la liste des choix
-        self._liste = tk.Listbox(self)
+        self._liste = tk.Listbox(self, width=30)
         index = 0 # Numero des choix
         for monopoly in self._listMonopolyDisponible:
             self._liste.insert(index, monopoly.getDisplayNom())
             index += 1
-        # Ajout de la liste sur la fenêtre
-        self._liste.pack()
 
-        # Ajout d'un bouton à cette fenêtre
-        tk.Button(self, text='Sélectionner', command=self.__selectMonopoly).pack()
+        # Ajout de la liste sur la fenêtre
+        self._liste.pack(fill=tk.BOTH, expand=1)
+
+
+    """
+        Ajout d'un button permettant de valider son choix
+    """
+    def __addSelectButton(self):
+        tk.Button(self, text='Sélectionner', command=self.__selectMonopoly, height=2)\
+            .pack(fill=tk.BOTH, expand=1)
         
 
     """
