@@ -20,7 +20,7 @@ class CaseChance(Case):
         @param position de la case sur le plateau de jeu
     """
     def __init__(self, position):
-        super().__init__("Chance", position, "white", -1)
+        super().__init__("Chance", position, "RosyBrown1", 0, False)
 
 
     """

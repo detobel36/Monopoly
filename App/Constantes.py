@@ -31,4 +31,4 @@ CASE_PRISON_VISITE_SIMPLE = 10
 # (si masqué, les valeurs iront simplement s'additionner aux autres)
 # /!\ Surtout utilisé pour le débug ! (affichage pas génial quand)
 # Type: boolean
-VIEW_ALL_CASE_DOUBLE = True
+VIEW_ALL_CASE_DOUBLE = False

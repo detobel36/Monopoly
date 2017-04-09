@@ -21,7 +21,7 @@ class CasePrison(Case):
         @param numero de la case prison (représentant le nombre de tour passé sur cette case)
     """
     def __init__(self, decalage, numero):
-        super().__init__("Prison " + str(numero+1), decalage+numero, "black", -1)
+        super().__init__("Prison " + str(numero+1), decalage+numero, "black", 0, False)
         self._tourEnPrison = numero
 
 

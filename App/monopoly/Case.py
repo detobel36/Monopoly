@@ -16,9 +16,13 @@ class Case:
         @param nom de la case
         @param position sur le plateau de jeu (-1 pour indiqué que ce n'est pas une case accessible)
         @param couleur de la case (par défaut "black")
+            (Par défaut: noir)
         @param prix pour acheter la case (-1 pour une case qui ne peut pas être achetée)
+            (Par défaut: 0)
+        @param vendre permet de savoir si une case est a vendre où pas (si elle peut être achtée)
+            (Par défaut: True)
     """
-    def __init__(self, nom, position, couleur = "black", prix = 0):
+    def __init__(self, nom, position, couleur = "black", prix = 0, vendre = True):
         self._nom = nom
         self._position = position
         self._couleur = couleur
