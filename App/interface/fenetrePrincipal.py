@@ -8,9 +8,11 @@ from collections import OrderedDict
 from Constantes import *
 from Monopoly import Monopoly
 # Interface
+from interface.scrollFrame import scrollFrame
 from interface.choixMonopoly import ChoixMonopoly
 from interface.parametres import Parametres
 from interface.statistiques import Statistiques
+from interface.viewMarkov import viewMarkov
 from interface.configTour import ConfigTour
 from interface.viewParametres import ViewParametres
 
@@ -19,12 +21,12 @@ from interface.viewParametres import ViewParametres
 """
     FenetrePrincipal qui hérite de tkinter.Tk et contenant toutes les autres fenêtres à afficher
 """
-class FenetrePrincipal(tk.Tk):
+class FenetrePrincipal(scrollFrame):
 
     def __init__(self):
-        tk.Tk.__init__(self)
+        scrollFrame.__init__(self)
         self.wm_title("Stats")
-        self.config(padx=5, pady=5)
+        self.config(padx=5, pady=5) # TODO check que c'est bon
 
         # Init attributs
         self._selectedDataMonopoly = None
@@ -41,17 +43,22 @@ class FenetrePrincipal(tk.Tk):
             return
 
         # Affichage des paramètres choisi
-        self._viewParam = ViewParametres(self, self._selectedDataMonopoly)
+        self._viewParam = ViewParametres(self.getMainFrame(), self._selectedDataMonopoly)
         self._viewParam.grid(row=1, column=1, padx=7, sticky=tk.N+tk.S+tk.E+tk.W)
 
         # Création de la fenêtre de gestion de tour
-        self._nbrTourFrame = ConfigTour(self)
+        self._nbrTourFrame = ConfigTour(self.getMainFrame())
         self._nbrTourFrame.grid(row=0, column=1, padx=7, sticky=tk.N+tk.E+tk.W)
 
-        # Création de la fenêtre de statistique
+        # Permet de récupérer toutes les informations sur les cases
         caseData = self.__sumSameCase(self._selectedMonopoly.getResultatSimulation())
-        self._statFrame = Statistiques(caseData, self)
+
+        # Création de la fenêtre de statistique
+        self._statFrame = Statistiques(caseData, self.getMainFrame())
         self._statFrame.grid(row=0, column=0, rowspan=2)
+
+        self._markovFrame = viewMarkov(self.getMainFrame(), caseData)
+        self._markovFrame.grid(row=2, column=0)
 
         # Création de la bar de menu
         self.__createMenuBar()
