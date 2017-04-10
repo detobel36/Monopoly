@@ -9,13 +9,14 @@ class Parametres(tk.Toplevel):
     DEFAULT_DES = 2
     DEFAULT_TOUR_PRISON = 3
     DEFAULT_PROB_SORTIR_PRISON = 0.5
+    DEFAULT_NBR_DOUBLE_PRISON = 3
 
 
     def __init__(self):
         tk.Toplevel.__init__(self)
         self.title("Paramètres")
         self.initAllParametres()
-        self.initEventParametres()
+        self.__initEventParametres()
 
 
     """
@@ -25,6 +26,7 @@ class Parametres(tk.Toplevel):
         self.__addNombreDeDes()
         self.__addNombreTourMaxPrison()
         self.__addProbPayerSortirPrison()
+        self.__addNbrDeDoublePrison()
 
         # Ajout d'un bouton à cette fenêtre
         self.__addSubmitButton()
@@ -33,7 +35,7 @@ class Parametres(tk.Toplevel):
     """
         Permet d'initialiser les events
     """
-    def initEventParametres(self):
+    def __initEventParametres(self):
         self.bind("<Return>", self.__closeParametres)
 
 
@@ -73,6 +75,18 @@ class Parametres(tk.Toplevel):
         _entry = tk.Entry(self, textvariable=self._entryProbPayerSortirPrison, justify='right', width=7)\
             .pack()
         self._entryProbPayerSortirPrison.set(str(Parametres.DEFAULT_PROB_SORTIR_PRISON))
+
+
+    """
+        Permet de choisir combien de double on pourra faire avant de se retrouver en prison
+    """
+    def __addNbrDeDoublePrison(self):
+        tk.Label(self, text="Nombre de double avant d'aller en prison:").pack()
+
+        self._entryNbrDeDoublePrison = tk.StringVar()
+        _entry = tk.Entry(self, textvariable=self._entryNbrDeDoublePrison, justify='right', width=7)\
+            .pack()
+        self._entryNbrDeDoublePrison.set(str(Parametres.DEFAULT_NBR_DOUBLE_PRISON))
 
 
     def __addSubmitButton(self):
@@ -131,13 +145,31 @@ class Parametres(tk.Toplevel):
         probabilite = float(self._entryProbPayerSortirPrison.get())
         # La probabilité doit être comprise entre 0 et 1
         if(probabilite < 0):
-            probabilite = 0
             print("[WARNING] La probabilité doit toujours être suppérieure ou égale à 0 " \
-                "(actuellement: " + str(probabilite) + ")")
+                "(actuellement: " + str(probabilite) + " (mis automatiquement à 0))")
+            probabilite = 0
 
         elif(probabilite > 1):
-            probabilite = 1
             print("[WARNING] La probabilité doit toujours être inférieur ou égale à 1 " \
-                "(actuellement: " + str(probabilite) + ")")
+                "(actuellement: " + str(probabilite) + " (mis automatiquement à 1))")
+            probabilite = 1
 
         return probabilite
+
+
+    """
+        Permet de récupérer le nombre de double que l'on peut faire avant de se retrouver en prison.
+        Par défaut donc, après 3 doubles un joueur se retrouve automatiquement en prison
+        (Par défaut: 3)
+
+        @return le nombre de double maximum que l'on peut faire
+    """
+    def getNbrDeDoublePrison(self):
+        nbrDeDouble = int(self._entryNbrDeDoublePrison.get())
+        if(nbrDeDouble < 0):
+            print("[WARNING] Le nombre de double pour aller en prison doit toujours être positif " \
+                "(0 pour désactiver) (actuellement: " + str(nbrDeDouble) + ")")
+            nbrDeDouble = 0
+
+        return nbrDeDouble
+

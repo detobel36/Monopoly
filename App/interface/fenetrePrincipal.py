@@ -26,15 +26,18 @@ class FenetrePrincipal(tk.Tk):
         self.wm_title("Stats")
         self.config(padx=5, pady=5)
 
+        # Init attributs
+        self._selectedDataMonopoly = None
+        self._nbrTourFrame = None
+
         # Choix des paramètres
         self.__choixParametres()
 
         # Choix du monopoly
-        self._selectedDataMonopoly = self.__choixDuMonopoly()
-        if(self._selectedDataMonopoly == None): # Si on ne chosi aucun Monopoly
+        try:
+            self.__choixMonopoly()
+        except TypeError:
             return
-        self.__applyParamOnDataMonopoly()
-        self._selectedMonopoly = Monopoly(self._selectedDataMonopoly)
 
         # Affichage des paramètres choisi
         self._viewParam = ViewParametres(self, self._selectedDataMonopoly)
@@ -49,16 +52,53 @@ class FenetrePrincipal(tk.Tk):
         self._statFrame = Statistiques(caseData, self)
         self._statFrame.grid(row=0, column=0, rowspan=2)
 
-        # self.wait_window(self) TODO
-        self.mainloop()
+        # Création de la bar de menu
+        self.__createMenuBar()
+
+        self.wait_window(self)
+        # self.mainloop()
 
 
     """
-        Permet de choisir le Monopoly à utiliser
+        Permet de créer la bar de menu en haut de la fenêtre
+    """
+    def __createMenuBar(self):
+        menubar = tk.Menu(self)
+
+        paramMenu = tk.Menu(menubar, tearoff=0)
+        paramMenu.add_command(label="Changer les paramètres", command=self.__choixParametres)
+        paramMenu.add_command(label="Changer de Monopoly", command=self.__choixMonopoly)
+        paramMenu.add_separator()
+        paramMenu.add_command(label="Quitter", command=self.quit)
+
+        menubar.add_cascade(label="Options", menu=paramMenu)
+
+        # Afficher le mneu menu
+        self.config(menu=menubar)
+
+
+    """
+        Permet de choisir le Monopoly que l'on veut simuler
+    """
+    def __choixMonopoly(self):
+        newDataMonopoly = self.__displayChoixDuMonopoly()
+
+        # Si on ne chosi aucun Monopoly
+        if(newDataMonopoly == None and self._selectedDataMonopoly == None):
+            raise TypeError('Aucun Monopoly sélectionné')
+
+        if(newDataMonopoly != self._selectedDataMonopoly):
+            self._selectedDataMonopoly = newDataMonopoly
+            self.__refrechMonopolyData()
+
+
+    """
+        Permet d'afficher la fenêtre permettant de choisir le Monopoly à utiliser et récupèré 
+        proprement le résultat
 
         @return l'objet DataMonopoly contenant toutes les informations du Monopoly choisi
     """
-    def __choixDuMonopoly(self):
+    def __displayChoixDuMonopoly(self):
         choixMonopoly = ChoixMonopoly()
         selectedDataMonopoly = choixMonopoly.getSelectedMonopoly();
 
@@ -68,7 +108,7 @@ class FenetrePrincipal(tk.Tk):
 
             # Si même après avoir attendu on a toujours un Monopoly vide
             if(selectedDataMonopoly == None):
-                print("[WARNING] Aucun Monopoly n'a été choisi. Arrête du programme")
+                print("[WARNING] Aucun Monopoly n'a été choisi.")
                 return None
 
         if(DEBUG):
@@ -83,6 +123,8 @@ class FenetrePrincipal(tk.Tk):
     def __choixParametres(self):
         self._choixParametres = Parametres()
         self.wait_window(self._choixParametres)
+        if(self._selectedDataMonopoly != None):
+            self.__refrechMonopolyData()
 
 
     """
@@ -92,16 +134,20 @@ class FenetrePrincipal(tk.Tk):
         nbrDes = self._choixParametres.getNbrDeDes()
         nbrMaxTourPrison = self._choixParametres.getNbrTourMaxPrison()
         probSortirPrison = self._choixParametres.getProbPayerSortirPrison()
+        nbrDeDoublePrison = self._choixParametres.getNbrDeDoublePrison()
 
         if(DEBUG):
             print("[DEBUG] Paramètres: nombre de dés: " + str(nbrDes))
             print("[DEBUG] Paramètres: nombre max de tour en prison: " + str(nbrMaxTourPrison))
             print("[DEBUG] Paramètres: probabilité de payer pour sortir de prison: " + \
                 str(probSortirPrison))
+            print("[DEBUG] Paramètres: nombre de double avant d'aller en prison: " + \
+                str(nbrDeDoublePrison))
 
         self._selectedDataMonopoly.setNbrDeDes(nbrDes)
         self._selectedDataMonopoly.setMaxTourPrison(nbrMaxTourPrison)
         self._selectedDataMonopoly.setProbSortirPrison(probSortirPrison)
+        self._selectedDataMonopoly.setNbrDeDoublePrison(nbrDeDoublePrison)
 
 
     """
@@ -158,3 +204,12 @@ class FenetrePrincipal(tk.Tk):
 
         return res
 
+    """
+        Permet de mettre à jour l'affichage des statistiques en fonction des paramètres et du 
+        Monopoly choisi
+    """
+    def __refrechMonopolyData(self):
+        self.__applyParamOnDataMonopoly()
+        self._selectedMonopoly = Monopoly(self._selectedDataMonopoly)
+        if(self._nbrTourFrame != None):
+            self.updateNewTour()

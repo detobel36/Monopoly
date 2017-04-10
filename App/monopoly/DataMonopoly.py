@@ -166,8 +166,10 @@ class DataMonopoly:
         self._probSortirPrison = probSortirPrison
 
     def getNbrDeDouble(self):
-        # TODO changer par un paramètre
-        return NOMBRE_DOUBLE
+        return self._nbrDeDoublePrison
+
+    def setNbrDeDoublePrison(self, nbrDeDouble):
+        self._nbrDeDoublePrison = nbrDeDouble
 
 
 ############################ STATIC ############################

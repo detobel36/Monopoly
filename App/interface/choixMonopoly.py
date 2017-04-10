@@ -16,7 +16,7 @@ class ChoixMonopoly(tk.Toplevel):
         if(len(self._listMonopolyDisponible) > 1):
             self._selectedMonopoly = None
             tk.Toplevel.__init__(self)
-            self.ouvrirFenetreChoix()
+            self.__ouvrirFenetreChoix()
         else:
             self._selectedMonopoly = self._listMonopolyDisponible[0]
 
@@ -31,10 +31,19 @@ class ChoixMonopoly(tk.Toplevel):
     """
         Initialisation de la fenêtre permettant de choisir le monopoly
     """
-    def ouvrirFenetreChoix(self):
+    def __ouvrirFenetreChoix(self):
         self.title("Choix du Monopoly")
         self.__addListBox()
         self.__addSelectButton()
+
+        self.__initEventParametres()
+
+
+    """
+        Permet d'initialiser les events
+    """
+    def __initEventParametres(self):
+        self.bind("<Return>", self.__selectMonopoly)
 
 
     """
@@ -47,6 +56,7 @@ class ChoixMonopoly(tk.Toplevel):
         for monopoly in self._listMonopolyDisponible:
             self._liste.insert(index, monopoly.getDisplayNom())
             index += 1
+        self._liste.select_set(0) # Force à sélectionner le premier
 
         # Ajout de la liste sur la fenêtre
         self._liste.pack(fill=tk.BOTH, expand=1)
@@ -63,7 +73,7 @@ class ChoixMonopoly(tk.Toplevel):
     """
         Fonction appellé lorsque l'on confirme le monopoly choisi
     """
-    def __selectMonopoly(self):
+    def __selectMonopoly(self, event = None):
         if(len(self._liste.curselection()) > 0):
             indexSelect = self._liste.curselection()[0]
 

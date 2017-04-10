@@ -26,9 +26,20 @@ class ViewParametres(tk.LabelFrame):
         self._parent = fenetre
         self._monopolyData = selectMonopolyData
 
+        self.__addLabelNom()
         self.__addLabelNbrDeDes()
         self.__addLabelNbrMaxPrisonTour()
         self.__addLabelProbSotirPrison()
+        self.__addLabelNbrDoublePrison()
+
+
+    """
+        Permet d'ajouer un label avec le nom du Monopoly actuellement affiché
+    """
+    def __addLabelNom(self):
+        nomMonopoly = self._monopolyData.getDisplayNom()
+        tk.Label(self, text=nomMonopoly, anchor="n", wraplength=130, \
+            justify=tk.CENTER).pack(pady=5)
 
 
     """
@@ -56,3 +67,14 @@ class ViewParametres(tk.LabelFrame):
         probSotirPrison = self._monopolyData.getProbSortirPrison()
         tk.Label(self, text="Probabilité de payer pour sortir de prison: " + str(probSotirPrison), \
             anchor="n", wraplength=130, justify=tk.LEFT).pack(pady=5)
+
+
+    """
+        Permet d'ajouter un label permettant d'afficher le nombre de double que le joueuer peut faire
+        avant de se retrouver automatiquement en prison
+    """
+    def __addLabelNbrDoublePrison(self):
+        nbrDoublePrison = self._monopolyData.getNbrDeDouble()
+        tk.Label(self, text="Nombre de double avant d'aller en prison: " + str(nbrDoublePrison), \
+            anchor="n", wraplength=130, justify=tk.LEFT).pack(pady=5)
+
