@@ -29,6 +29,7 @@ class FenetrePrincipal(tk.Tk):
         # Init attributs
         self._selectedDataMonopoly = None
         self._nbrTourFrame = None
+        self._viewParam = None
 
         # Choix des paramètres
         self.__choixParametres()
@@ -213,3 +214,6 @@ class FenetrePrincipal(tk.Tk):
         self._selectedMonopoly = Monopoly(self._selectedDataMonopoly)
         if(self._nbrTourFrame != None):
             self.updateNewTour()
+
+        if(self._viewParam != None):
+            self._viewParam.setNewMonopolyData(self._selectedDataMonopoly)
