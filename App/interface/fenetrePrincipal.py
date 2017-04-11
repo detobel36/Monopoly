@@ -64,7 +64,7 @@ class FenetrePrincipal(scrollFrame):
         self.__createMenuBar()
 
         self.wait_window(self)
-        # self.mainloop()
+
 
 
     """

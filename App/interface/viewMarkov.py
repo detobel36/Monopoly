@@ -55,7 +55,7 @@ class viewMarkov(tk.LabelFrame):
     """
     def __initLimitAndBorder(self):
         self._width = 1000
-        self._height = 2000
+        self._height = 800
         self._borderX = 25
         self._borderY = 25
 
