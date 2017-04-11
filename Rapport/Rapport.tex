@@ -30,6 +30,7 @@
 
 \title{Etude du Monopoly via les chaînes de Markov}
 \author{Rémy Detobel\\
+Mickael Randour\\
 \mbox{}\\
 Université Libre de Bruxelles, Bruxelles, Belgique \\
 rdetobel@ulb.ac.be}
@@ -39,32 +40,54 @@ rdetobel@ulb.ac.be}
 \maketitle
 
 \begin{abstract}
-  Etude du Monopoly à travers un modèle simple de processus probabiliste 
-  que sont les chaines de Markov.  Les conceptes principaux de ce modèle
-  seront présenté et expliqué.  Une adptation de cette chaine sera 
-  également effectuée pour correspondre au fonctionnement du Monopoly 
-  (un jeu de plateau classique).\\
-  Un algorithme a également été créé pour mettre en application les chaines
-  de Markov et calculer les terrains les plus rentables, les plus fréquentés.
+  Modélisation et étude du Monopoly à travers les chaînes de Markov.
+  Les concepts principaux de ce modèle qu'est une chaîne de Markov,
+  seront présentés et expliqués.  Les différents choix choix permettant 
+  d'adapter le Monopoly afin qu'il puisse être modélisé comme une chaîne 
+  de Markov seront également expliqués.  Enfin, une description de 
+  l'application et des résultats récupéré par l'implémentation de cette 
+  modélisation sera également fait et permettra de déterminer les cases 
+  les plus fréquentés ainsi que les cases les plus rentables.
 \end{abstract}
 
 \section{Introduction}
-%   \citep{BTW87,BTW88}
-  Contrairement aux idées reçues, les cases du Monopoly ne sont pas équiréparties.  Pour
-  pouvoir décrire la probabiliter de tombé sur chaque case, on va utiliser les chaînes
-  de Markov.  Ce document définira donc les chaines de Markov ainsi que d'autres 
-  notions utiles pour résoudre ce problème.  Des choix devront également être fait pour 
-  permettre de modéliser ce problème et le rendre totalement compatible avec la structure
-  des chaines de Markov.
+  Contrairement aux idées reçues, chaque case du Monopoly n'a pas la même
+  probabilité d'être visitée.  Il est donc intéressant d'étudier quels sont
+  les cases les plus fréquentés mais également quels seraient les cases
+  les plus rentables.  Dans cette idée, il est possible de modéliser
+  le Monopoly à travers les chaînes de Markov.  Mais avant cela, il est 
+  important de bien définir les chaînes de Markov ainsi que leurs propriété.
+  Cette article se base donc essentiellement sur le cours: \citep{COURS}.
+  Pour pouvoir être modélisé comme une chaîne de Markov, les règles du
+  Monopoly doivent être clairement définit et certains choix doivent être
+  fait pour permettre cette modélisation.  Une fois ces choix posé, cette
+  article décrira les résultats obtenu grâce à l'implémentation à proprement
+  parlé du Monopoly en chaîne de Markov.  Ces résultats permettrons de définir
+  clairement quelles sont les cases les plus visitées mais également les
+  cases les plus rentables.
   % TODO ajouter des informations à l'intro
   
 \section{Approche théorique}
   
-  \subsection{Les chaines de Markov}
-    Une chaîne de Markov est une représentation graphique permettant 
-    de modéliser l'état d'un système en se basant uniquement sur l'état précédent. La
-    structure utilisée dans ce rapport sera toujours considérée en temps discret.
-    Une chaine de Markov est composée de noeud et d'arrête reliant ces noeuds.  Chaque
+  \subsection{Les chaînes de Markov}
+    Une chaîne de Markov est une structure de données qui permet de modéliser l'évolution
+    de l'état d'un système aléatoire.  Les chaînes de Markov sont basés sur le 
+    fait que l'état actuel du système dépend uniquement de l'état précédent.
+    Cette propriété peut-être appellé ``propriété de Markov''.  Une chaîne de
+    Markov est donc composé d'état et de lien entre ses différents états caractérisé
+    par une certaine probabilité de passer d'un état A à un état B.
+    Cette probabilité sera décrit plus en détail dans le point \ref{probabilite}.
+    Il est possible de représenter une chaîne de Markov de manière matricielle ou
+    même graphiquement.  Dans le cas matricielle, chaque colonne et chaque ligne
+    correspond à un état.  Les éléments de cette matrice représente donc la probabilité
+    de passer d'un état à un autre (respecivement l'état correspondant à la ligne vers
+    l'état correspondant à la colonne).
+    
+    % TODO continuer en plus formel
+    Une chaîne de Markov est une structure de donnée permettant de modéliser l'état 
+    d'un système en se basant uniquement sur l'état précédent. La structure utilisée 
+    dans ce rapport sera toujours considérée en temps discret.
+    Une chaîne de Markov est composée de noeud et d'arrête reliant ces noeuds.  Chaque
     noeud représente un état du système tendis qu'une arrête permet d'indiquer les 
     diférents liens entre ces états.  Chaque arrête à un poid représentant la probabilité 
     que ce changement d'état se produise.\\
@@ -95,7 +118,8 @@ rdetobel@ulb.ac.be}
     utiles dans cet article.\\
     
   \subsection{Probabilité}
-    Dans une chaine de Markov, on s'intéresse à la ``probabilité'' de se trouver dans un certain 
+    \label{probabilite}
+    Dans une chaîne de Markov, on s'intéresse à la ``probabilité'' de se trouver dans un certain 
     état ou la probabilité de passé d'un état à un autre.  Définir formellement une probabilité
     est un travail long et complexe, il ne sera donc pas fait dans ce document.  Cependant, 
     on peut se représenter une probabilité comme étant la ``chance'' de passer d'un état à un autre.
@@ -156,7 +180,7 @@ rdetobel@ulb.ac.be}
     
     \subsubsection{Calcul de la distribution stationnaire}
       \label{etat_stationnaire}
-      Il existe différentes façon de calculer l'état stationnaire d'une chaine de Markov.
+      Il existe différentes façon de calculer l'état stationnaire d'une chaîne de Markov.
       Plusieurs méthodes sont décrite dans le livre ``Introduction to Probability'' (\citep{IP}) 
       dans le chapitre 11.\\
       On sait que la somme des composants du vecteur $v$ décrivant la distribution stationnaire 
@@ -183,7 +207,7 @@ rdetobel@ulb.ac.be}
       sur 10 que l'avion ne passe pas le controle et soit considéré comme hors service.
       
     \subsubsection{Représentation Graphique}
-      Voici donc la chaine de Markov décrivant cette situation:
+      Voici donc la chaîne de Markov décrivant cette situation:
       \begin{center}
 	\begin{tikzpicture}
 	  % Draw the states
@@ -211,7 +235,7 @@ rdetobel@ulb.ac.be}
       \end{center}
       
     \subsubsection{Représentation matricielle}
-      Une chaine de Markov peut également être vue comme une matrice où chaque ligne et chaque 
+      Une chaîne de Markov peut également être vue comme une matrice où chaque ligne et chaque 
       colonne représente un état.  Les valeurs au sein de la matrice représente le passage
       de la ligne (en lien avec cette valeur) et la colonne associée à cette même valeur.
       Avant de faire cela, il faut énoncer les différents état possible:
@@ -223,7 +247,7 @@ rdetobel@ulb.ac.be}
 	\text{Controle}\\
 	\text{Hors service}\end{pmatrix}$$
       C'est donc l'ordre de cette matrice qui sera utilisé afin de constitué la matrice 
-      représentant la chaine de Markov:
+      représentant la chaîne de Markov:
       $$
 	\begin{blockarray}{ccccccc}
 	& \text{Vol} & \text{Dec.} & \text{Att.} & \text{Sol} & \text{Ctr.} & \text{H.S.} \\
@@ -253,15 +277,15 @@ rdetobel@ulb.ac.be}
       $$
     
     \subsubsection{Caractéristiques}
-      La chaine de Markov résultant de cette exemple à plusieurs propriété.  Tout
-      d'abord, cette chaine de Markov contient plusieurs sous partie fortement
+      La chaîne de Markov résultant de cette exemple à plusieurs propriété.  Tout
+      d'abord, cette chaîne de Markov contient plusieurs sous partie fortement
       connexe comme par exemple l'ensemble: \{en vol, attérissage, décollage,
       au sol\}.  Cette ensemble reste fortemment connexe si l'on ajoute l'état
       ``controle''.  On a donc l'ensemble: \{en vol, attérissage, décollage,
       au sol, controle\} qui en plus d'être fortemment connexe est un SCC.
-      Cette chaine contient également un BSCC formé uniquement de l'état 
+      Cette chaîne contient également un BSCC formé uniquement de l'état 
       ``Hors Service''.\\
-      Pour faire en sorte que toute la chaine de Markov soit un BSCC, il suffirait
+      Pour faire en sorte que toute la chaîne de Markov soit un BSCC, il suffirait
       par exemple de permettre à l'état ``Hors service'' de rejoindre à nouveau l'état
       ``controle''.  On pourrait par exemple imaginer qu'il y a une chance sur 100 qu'un
       avion hors service soit repris au controle et soit de nouveau utilisable.
@@ -269,7 +293,7 @@ rdetobel@ulb.ac.be}
 \section{Modélisation}
 
   \subsection{Plateau de jeux}
-    Les plateaux de jeux peuvent être vu comme des chaines de Markov.  En effet, on peut 
+    Les plateaux de jeux peuvent être vu comme des chaînes de Markov.  En effet, on peut 
     voir la position d'un point comme l'état d'un système.  Dans ce type de jeu (comme 
     par exemple le jeu de l'oie) la position du pion dépendra seulement de la case où il 
     se trouvait précédemment et du nombre de case qu'il doit parcourrir (dû par exemple 
@@ -279,9 +303,9 @@ rdetobel@ulb.ac.be}
     au long de la partie, peuvent être vu comme des BSCC.  
   
   \subsection{Modélisation}
-    Le Monopoly peut en effet être vu comme une chaine de Markov.  En effet, comme décrit
+    Le Monopoly peut en effet être vu comme une chaîne de Markov.  En effet, comme décrit
     ci-dessus, on peut voir la position d'un point comme l'état d'un système.  Plus 
-    concrètement, chaque case sera numérotée et représentera un état de la chaine de Markov.
+    concrètement, chaque case sera numérotée et représentera un état de la chaîne de Markov.
     \begin{figure}[h]
       \centering
       \includegraphics[scale=0.4]{./Images/Monopoly.png}
@@ -358,7 +382,7 @@ rdetobel@ulb.ac.be}
   \subsection{Faire un double}
     % TODO un nombre indéfinit de dés... toujours un double où tous les dés les mêmes ?
     Les règles du Monopoly stipulent que lorsque l'on fait 3 doubles à la suite, on est
-    envoyé en prison.  Pour modéliser ce comportement via une chaine de Markov, il va 
+    envoyé en prison.  Pour modéliser ce comportement via une chaîne de Markov, il va 
     falloir triplé le nombre d'état.  En effet, une case $i$ peut être visité après avoir
     fait 0 double, 1 double ou 2 double.  Si de cette case $i$ on refaire encore un double,
     on se retrouve en case prison.  Si par contre on fait un simple nombre, on se retrouve
@@ -383,7 +407,7 @@ rdetobel@ulb.ac.be}
     de former un 4: $1+3$, $2+2$ et $3+1$.  Il y a donc 3 chance sur 36 de faire un 4 mais
     seulement une sur 36 de faire un double et 2 sur 36 de faire un simple 4 avec deux dés
     différents.
-    Dans le point \ref{re}
+    Dans le point % TODO
     
   \subsection{Case prison}
     \label{case_prison}
