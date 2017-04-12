@@ -42,11 +42,11 @@ rdetobel@ulb.ac.be}
 \begin{abstract}
   Modélisation et étude du Monopoly à travers les chaînes de Markov.
   Les concepts principaux de ce modèle qu'est une chaîne de Markov,
-  seront présentés et expliqués.  Les différents choix choix permettant 
+  seront présentés et expliqués.  Les différents choix permettant 
   d'adapter le Monopoly afin qu'il puisse être modélisé comme une chaîne 
   de Markov seront également expliqués.  Enfin, une description de 
-  l'application et des résultats récupéré par l'implémentation de cette 
-  modélisation sera également fait et permettra de déterminer les cases 
+  l'application et des résultats récupérés par l'implémentation de cette 
+  modélisation sera également faite et permettra de déterminer les cases 
   les plus fréquentés ainsi que les cases les plus rentables.
 \end{abstract}
 
@@ -56,71 +56,89 @@ rdetobel@ulb.ac.be}
   les cases les plus fréquentés mais également quels seraient les cases
   les plus rentables.  Dans cette idée, il est possible de modéliser
   le Monopoly à travers les chaînes de Markov.  Mais avant cela, il est 
-  important de bien définir les chaînes de Markov ainsi que leurs propriété.
-  Cette article se base donc essentiellement sur le cours: \citep{COURS}.
-  Pour pouvoir être modélisé comme une chaîne de Markov, les règles du
-  Monopoly doivent être clairement définit et certains choix doivent être
-  fait pour permettre cette modélisation.  Une fois ces choix posé, cette
-  article décrira les résultats obtenu grâce à l'implémentation à proprement
-  parlé du Monopoly en chaîne de Markov.  Ces résultats permettrons de définir
-  clairement quelles sont les cases les plus visitées mais également les
-  cases les plus rentables.
+  important de bien définir les chaînes de Markov ainsi que leurs propriétés.
+  Cet article se base donc essentiellement sur le cours: \citep{COURS}.
+  Pour pouvoir modéliser le Monopoly comme étant une chaîne de Markov, 
+  les règles du jeu doivent être clairement définies et des choix doivent
+  être faits.  Ceux-ci seront donc expliqués et justifiés dans cet article.
+  Les résultats trouvés suite à cette modélisation seront présentés afin
+  de trouver, au final, les cases les plus visitées mais également les cases
+  les plus rentables.
   % TODO ajouter des informations à l'intro
-  
 \section{Approche théorique}
   
   \subsection{Les chaînes de Markov}
     Une chaîne de Markov est une structure de données qui permet de modéliser l'évolution
-    de l'état d'un système aléatoire.  Les chaînes de Markov sont basés sur le 
+    de l'état d'un système aléatoire.  Les chaînes de Markov sont basées sur le 
     fait que l'état actuel du système dépend uniquement de l'état précédent.
-    Cette propriété peut-être appellé ``propriété de Markov''.  Une chaîne de
-    Markov est donc composé d'état et de lien entre ses différents états caractérisé
+    Cette propriété peut-être appelé ``propriété de Markov''.  Une chaîne de
+    Markov est donc composée d'états et de liens entre ses différents états caractérisés
     par une certaine probabilité de passer d'un état A à un état B.
-    Cette probabilité sera décrit plus en détail dans le point \ref{probabilite}.
-    Il est possible de représenter une chaîne de Markov de manière matricielle ou
-    même graphiquement.  Dans le cas matricielle, chaque colonne et chaque ligne
-    correspond à un état.  Les éléments de cette matrice représente donc la probabilité
-    de passer d'un état à un autre (respecivement l'état correspondant à la ligne vers
-    l'état correspondant à la colonne).
-    
-    % TODO continuer en plus formel
-    Une chaîne de Markov est une structure de donnée permettant de modéliser l'état 
-    d'un système en se basant uniquement sur l'état précédent. La structure utilisée 
-    dans ce rapport sera toujours considérée en temps discret.
-    Une chaîne de Markov est composée de noeud et d'arrête reliant ces noeuds.  Chaque
-    noeud représente un état du système tendis qu'une arrête permet d'indiquer les 
-    diférents liens entre ces états.  Chaque arrête à un poid représentant la probabilité 
-    que ce changement d'état se produise.\\
-    \begin{center}
-      \begin{tikzpicture}
-	% Draw the states
-	\colornode (e1) {Etat 1};
-	\colornode[right=of e1] (e2) {Etat 2};
-
-	% Connect the states with arrows
-        \drawedge
-  	  (e1) edge[bend right, auto=right] node {Arrête 1} (e2)
-  	  (e2) edge[bend right, auto=right] node {Arrête 2} (e1)
-  	  (e2) edge[loop above]             node {Arrête 3} (e2);
-      \end{tikzpicture}
-    \end{center}
-    
-    Par définition, la somme des poids des arrêtes partant d'un poid doivent valoir 1.  
-    De manière plus formel, les chaînes de Markov sont réprésentées via la formule 
-    mathématique suivante:
+    Cette probabilité sera décrite plus en détail dans le point \ref{probabilite}.
+    Il est possible de représenter une chaîne de Markov de plusieurs manières différentes.
+    Dans la litérature, on utilisera plus souvant la notation matricel, qui définit la
+    chaîne de Markov $\mathcal{M}$ tel que:
     $$\mathcal{M} = (S, \mathbf{P}, \iota_{init})$$
-    Où $S$ représente l'ensemble de tous les états possible, $P$ une matrice $S \times S$
+    Où $S$ représente l'ensemble de tous les états possibles, $\mathbf{P}$ une matrice $S \times S$
     où chaque élément est compris entre 0 et 1 et où cette valeur représente la probabilité 
-    de passé d'un état à un autre (respectivement, l'état correspondant à la ligne et à la colonne).
+    de passer d'un état à un autre (respectivement, l'état correspondant à la ligne et à la colonne).
     $\iota_{init}$ est une matrice colonne où chaque ligne représente un état et la valeur
     associée représente la probabilité de commencer par cet état.  On peut retrouver d'autres
-    variables dans la litérature (comme $AP$ et $L$ par exemple) mais celles-ci ne seront pas 
-    utiles dans cet article.\\
+    variables dans la litérature (comme $AP$ et $L$ par exemple pour associer des propositions 
+    atomiques aux états) mais celles-ci ne seront pas utiles dans cet article.
+    Nottons également que les chaînes de Markov peuvent être utilisé
+    dans un temps discret ou dans un temps continu.  Cependant, la modélisation
+    du Monopoly n'inclura pas de temps continu et cet article traitera donc uniquement
+    du temps discret.
+    Il est également possible de représenter une chaîne de Markov sous forme
+    d'un graphe dirigé où chaque noeud représente un état et chaque arrête est pondéré
+    en fonction de la probabilité de passé d'un état à un autre.
+    
+    \subsubsection{Exemple}
+      Afin d'illustrer les notions liées aux chaînes de Markov, on va se baser sur 
+      les différentes états que peut avoir un avion.  On va donc ici considérer 
+      qu'un avion pourra avoir 6 états différents: en vol, attérissage, décollage, 
+      au sol, contrôle et hors service.
+      On va considérer que lors de l'attérissage, il y a une chance sur 3 pour qu'un
+      voyant indique au pilote qu'un contrôle est nécessaire. On remarque également 
+      qu'il y a une chance sur 10 que l'avion ne passe pas le contrôle et soit considéré 
+      comme hors service.
+      \begin{center}
+	\begin{tikzpicture}
+	  % Draw the states
+	  \colornode[text width=1.7cm] (vol) {En vol};
+	  
+	  \colornode[below left=of vol] (att) {Attérissage};
+	  \bigcolornode[below right=of vol] (dec) {Décollage};
+	  
+	  \bigcolornode[below right=of att] (sol) {Au sol};
+
+	  \bigcolornode[below left=of sol] (ctr) {Controle};
+	  \colornode[right=of ctr] (hs) {Hors service};
+
+	  % Connect the states with arrows
+	  \drawedge
+	    (vol) edge[bend right, auto=right] node {1} (att)
+	    (dec) edge[bend right, auto=right] node {1} (vol)
+	    (sol) edge[bend right, auto=right] node {1} (dec)
+	    (att) edge[bend right, auto=right] node {2/3} (sol)
+	    (att) edge[bend right, auto=right] node {1/3} (ctr)
+	    (ctr) edge[bend right, auto=left] node {9/10} (sol)
+	    (ctr) edge[bend right, auto=right] node {1/10} (hs)
+	    (hs) edge[loop right] node {1} (hs);
+	\end{tikzpicture}
+      \end{center}
+    % TODO replacer au bon endroit: 
+    % Par définition, la somme des poids des arrêtes partant d'un poid doivent valoir 1.  
     
   \subsection{Probabilité}
     \label{probabilite}
     Dans une chaîne de Markov, on s'intéresse à la ``probabilité'' de se trouver dans un certain 
-    état ou la probabilité de passé d'un état à un autre.  Définir formellement une probabilité
+    état ou la probabilité de passer d'un état à un autre.  De manière intuitive, une probabilité
+    peut être représenté comme étant la ``chance'' qu'un évenemment se produisse.
+    % TODO expliquer les difficultés de définir une probabilité
+    
+    Définir formellement une probabilité
     est un travail long et complexe, il ne sera donc pas fait dans ce document.  Cependant, 
     on peut se représenter une probabilité comme étant la ``chance'' de passer d'un état à un autre.
     Par exemple, si une arrête reliant l'état $s$ à $s'$ à une probabilité de $0.5$, on peut en 
@@ -201,38 +219,11 @@ rdetobel@ulb.ac.be}
     l'état d'un avion.
     
     \subsubsection{Contexte}
-      Dans cet exemple, on va considérer que l'avion pourra avoir 6 états différents: en vol,
-      attérissage, décollage, au sol, controle et hors service.  On va considérer qu'en moyenne
-      après 3 vol un avion doit passer au controle.  On remarque également qu'il y a une chance
-      sur 10 que l'avion ne passe pas le controle et soit considéré comme hors service.
+      
       
     \subsubsection{Représentation Graphique}
       Voici donc la chaîne de Markov décrivant cette situation:
-      \begin{center}
-	\begin{tikzpicture}
-	  % Draw the states
-	  \colornode[text width=1.7cm] (vol) {En vol};
-	  
-	  \colornode[below left=of vol] (att) {Attérissage};
-	  \bigcolornode[below right=of vol] (dec) {Décollage};
-	  
-	  \bigcolornode[below right=of att] (sol) {Au sol};
-
-	  \bigcolornode[below left=of sol] (ctr) {Controle};
-	  \colornode[right=of ctr] (hs) {Hors service};
-
-	  % Connect the states with arrows
-	  \drawedge
-	    (vol) edge[bend right, auto=right] node {1} (att)
-	    (dec) edge[bend right, auto=right] node {1} (vol)
-	    (sol) edge[bend right, auto=right] node {1} (dec)
-	    (att) edge[bend right, auto=right] node {2/3} (sol)
-	    (att) edge[bend right, auto=right] node {1/3} (ctr)
-	    (ctr) edge[bend right, auto=left] node {9/10} (sol)
-	    (ctr) edge[bend right, auto=right] node {1/10} (hs)
-	    (hs) edge[loop right] node {1} (hs);
-	\end{tikzpicture}
-      \end{center}
+      
       
     \subsubsection{Représentation matricielle}
       Une chaîne de Markov peut également être vue comme une matrice où chaque ligne et chaque 
@@ -281,14 +272,14 @@ rdetobel@ulb.ac.be}
       d'abord, cette chaîne de Markov contient plusieurs sous partie fortement
       connexe comme par exemple l'ensemble: \{en vol, attérissage, décollage,
       au sol\}.  Cette ensemble reste fortemment connexe si l'on ajoute l'état
-      ``controle''.  On a donc l'ensemble: \{en vol, attérissage, décollage,
-      au sol, controle\} qui en plus d'être fortemment connexe est un SCC.
+      ``contrôle''.  On a donc l'ensemble: \{en vol, attérissage, décollage,
+      au sol, contrôle\} qui en plus d'être fortemment connexe est un SCC.
       Cette chaîne contient également un BSCC formé uniquement de l'état 
       ``Hors Service''.\\
       Pour faire en sorte que toute la chaîne de Markov soit un BSCC, il suffirait
       par exemple de permettre à l'état ``Hors service'' de rejoindre à nouveau l'état
-      ``controle''.  On pourrait par exemple imaginer qu'il y a une chance sur 100 qu'un
-      avion hors service soit repris au controle et soit de nouveau utilisable.
+      ``contrôle''.  On pourrait par exemple imaginer qu'il y a une chance sur 100 qu'un
+      avion hors service soit repris au contrôle et soit de nouveau utilisable.
       
 \section{Modélisation}
 
