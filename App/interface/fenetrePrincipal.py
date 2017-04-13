@@ -57,7 +57,8 @@ class FenetrePrincipal(scrollFrame):
         self._statFrame = Statistiques(caseData, self.getMainFrame())
         self._statFrame.grid(row=0, column=0, rowspan=2)
 
-        self._markovFrame = viewMarkov(self.getMainFrame(), caseData)
+        self._markovFrame = viewMarkov(self.getMainFrame(), \
+            self._selectedDataMonopoly.getListeCases(), self._selectedMonopoly.getMatriceDeplacement())
         self._markovFrame.grid(row=2, column=0)
 
         # Création de la bar de menu

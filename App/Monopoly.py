@@ -111,6 +111,14 @@ class Monopoly:
 
         return self.__generateOrderDictFromData(valeurCase)
 
+    """
+        Permet de récupérer la matrice de déplacement
+
+        @return la matrice de déplacement
+    """
+    def getMatriceDeplacement(self):
+        return self._markov.getMatriceDeplacement()
+
 
 
 """
