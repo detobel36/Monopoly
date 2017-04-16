@@ -36,6 +36,12 @@ Université Libre de Bruxelles, Bruxelles, Belgique \\
 rdetobel@ulb.ac.be}
 
 
+% =-=-=-=-=-=-=-=-= TODO GENERAL =-=-=-=-=-=-=-=-=
+% - Bibliographie (revoir l'affichage, la mise en page)
+% - Résultats
+% - Conclusion
+
+
 \begin{document}
 \maketitle
 
@@ -50,6 +56,7 @@ rdetobel@ulb.ac.be}
   les plus fréquentés ainsi que les cases les plus rentables.
 \end{abstract}
 
+%%%%%%%%%%%%%% SECTION %%%%%%%%%%%%%%
 \section{Introduction}
   Contrairement aux idées reçues, chaque case du Monopoly n'a pas la même
   probabilité d'être visitée.  Il est donc intéressant d'étudier quels sont
@@ -57,21 +64,26 @@ rdetobel@ulb.ac.be}
   les plus rentables.  Dans cette idée, il est possible de modéliser
   le Monopoly à travers les chaînes de Markov.  Mais avant cela, il est 
   important de bien définir les chaînes de Markov ainsi que leurs propriétés.
-  Cet article se base donc essentiellement sur le cours: \citep{COURS}.
+  Les explications concernant ce modèle sont en grande partie basé 
+  sur le cours \citep{COURS}.
   Pour pouvoir modéliser le Monopoly comme étant une chaîne de Markov, 
   les règles du jeu doivent être clairement définies et des choix doivent
   être faits.  Ceux-ci seront donc expliqués et justifiés dans cet article.
   Les résultats trouvés suite à cette modélisation seront présentés afin
   de trouver, au final, les cases les plus visitées mais également les cases
   les plus rentables.
-  % TODO ajouter des informations à l'intro
+  % TODO ajouter des informations à l'intro (peut être plus conséquent)
+  
+  
+%%%%%%%%%%%%%% SECTION %%%%%%%%%%%%%%
 \section{Approche théorique}
   
   \subsection{Les chaînes de Markov}
+    \label{def_chaine_markov}
     Une chaîne de Markov est une structure de données qui permet de modéliser l'évolution
     de l'état d'un système aléatoire.  Les chaînes de Markov sont basées sur le 
     fait que l'état actuel du système dépend uniquement de l'état précédent.
-    Cette propriété peut-être appelé ``propriété de Markov''.  Une chaîne de
+    Cette propriété peut être appelé ``propriété de Markov''.  Une chaîne de
     Markov est donc composée d'états et de liens entre ses différents états caractérisés
     par une certaine probabilité de passer d'un état A à un état B.
     Cette probabilité sera décrite plus en détail dans le point \ref{probabilite}.
@@ -82,27 +94,65 @@ rdetobel@ulb.ac.be}
     Où $S$ représente l'ensemble de tous les états possibles, $\mathbf{P}$ une matrice $S \times S$
     où chaque élément est compris entre 0 et 1 et où cette valeur représente la probabilité 
     de passer d'un état à un autre (respectivement, l'état correspondant à la ligne et à la colonne).
+    On appelera cette matrice $\mathbf{P}$ la \textit{matrice de transition}.
     $\iota_{init}$ est une matrice colonne où chaque ligne représente un état et la valeur
     associée représente la probabilité de commencer par cet état.  On peut retrouver d'autres
     variables dans la litérature (comme $AP$ et $L$ par exemple pour associer des propositions 
     atomiques aux états) mais celles-ci ne seront pas utiles dans cet article.
-    Nottons également que les chaînes de Markov peuvent être utilisé
+    Nottons également que les chaînes de Markov peuvent être utilisée
     dans un temps discret ou dans un temps continu.  Cependant, la modélisation
     du Monopoly n'inclura pas de temps continu et cet article traitera donc uniquement
     du temps discret.
     Il est également possible de représenter une chaîne de Markov sous forme
     d'un graphe dirigé où chaque noeud représente un état et chaque arrête est pondéré
-    en fonction de la probabilité de passé d'un état à un autre.
+    en fonction de la probabilité de passer d'un état à un autre.
     
-    \subsubsection{Exemple}
-      Afin d'illustrer les notions liées aux chaînes de Markov, on va se baser sur 
-      les différentes états que peut avoir un avion.  On va donc ici considérer 
-      qu'un avion pourra avoir 6 états différents: en vol, attérissage, décollage, 
-      au sol, contrôle et hors service.
-      On va considérer que lors de l'attérissage, il y a une chance sur 3 pour qu'un
-      voyant indique au pilote qu'un contrôle est nécessaire. On remarque également 
-      qu'il y a une chance sur 10 que l'avion ne passe pas le contrôle et soit considéré 
-      comme hors service.
+  \subsection{Exemple de chaîne de Markov}
+    Afin d'illustrer les notions liées aux chaînes de Markov, on va se baser sur 
+    les différents états que peut avoir un avion.  On va donc ici considérer 
+    qu'un avion pourra avoir 6 états différents: en vol, attérissage, décollage, 
+    au sol, contrôle et hors service.
+    On va considérer que lors de l'attérissage, il y a une chance sur 3 pour qu'un
+    voyant indique au pilote qu'un contrôle est nécessaire. On remarque également 
+    qu'il y a une chance sur 10 que l'avion ne passe pas le contrôle et soit considéré 
+    comme hors service.  On considèrera également que tous les avions commencent
+    avec l'état ``au sol''.
+    
+    \subsubsection{Représentation matriciel}
+      Comme vu au point \ref{def_chaine_markov}, il est possible de représenter une
+      chaine de Markov comme étant:
+      $$\mathcal{M} = (S, \mathbf{P}, \iota_{init})$$
+      Pour notre exemple on aura donc:
+      $$S = \{vol, dec., att., sol, ctr., h.s.\} $$
+      $$ \mathbf{P} = 
+	\begin{blockarray}{ccccccc}
+	& vol & dec. & att. & sol & ctr. & h.s. \\
+	  \begin{block}{c(cccccc)}
+	    vol  & 0 & 0 & 1 & 0    & 0   & 0    \\
+	    dec. & 1 & 0 & 0 & 0    & 0   & 0    \\
+	    att. & 0 & 0 & 0 & 2/3  & 1/3 & 0    \\
+	    sol  & 0 & 1 & 0 & 0    & 0   & 0    \\
+	    ctr. & 0 & 0 & 0 & 9/10 & 0   & 1/10 \\
+	    h.s. & 0 & 0 & 0 & 0    & 0   & 1    \\
+	  \end{block}
+	\end{blockarray}
+      $$
+      $$\iota_{init} = 
+	\begin{blockarray}{cc}
+	  \begin{block}{( c ) c}
+	    0 & vol \\
+	    0 & dec.\\
+	    0 & att.\\
+	    1 & sol\\
+	    0 & ctr.\\
+	    0 & h.s.\\
+	  \end{block}
+	\end{blockarray}
+      $$
+      
+    \subsubsection{Représentation graphique}
+      Il est également possible de représenter une chaîne de Markov comme
+      état un graphe dirigé (cfr point \ref{def_chaine_markov}):
       \begin{center}
 	\begin{tikzpicture}
 	  % Draw the states
@@ -126,6 +176,7 @@ rdetobel@ulb.ac.be}
 	    (ctr) edge[bend right, auto=left] node {9/10} (sol)
 	    (ctr) edge[bend right, auto=right] node {1/10} (hs)
 	    (hs) edge[loop right] node {1} (hs);
+	  \draw [->, line width=0.4mm, fill=gray, draw=gray] (1.6,-5.4) -- (sol);
 	\end{tikzpicture}
       \end{center}
     % TODO replacer au bon endroit: 
@@ -133,25 +184,94 @@ rdetobel@ulb.ac.be}
     
   \subsection{Probabilité}
     \label{probabilite}
-    Dans une chaîne de Markov, on s'intéresse à la ``probabilité'' de se trouver dans un certain 
-    état ou la probabilité de passer d'un état à un autre.  De manière intuitive, une probabilité
-    peut être représenté comme étant la ``chance'' qu'un évenemment se produisse.
+    % Début version 4
+    Il existe de nombreux articles et livres décrivant la notion de probabilité 
+    (comme par exemple \citep{IP}).  Cependant, il n'est pas utile dans cet
+    article de définir précisément et de manière détaillée ce qu'est une 
+    probabilité.  En effet, il est possible de définir intuitivement une
+    probabilité en partant d'un exemple: lancer une pièce de monnaie.
+    Imaginons que l'on cherche à prédire le nombre de fois que la pièce
+    va tomber sur le côté ``pile``.  Cette action (le fait de tomber d'un 
+    côté précis de la pièce) s'appelle un évènement.  Pour calculer
+    le nombre de fois que cet évènement peut se produire, on va donc
+    lancer une première fois la pièce qui peut soit tomber
+    sur ''face``, soit sur ''pile``.  Si elle tombe sur ''pile'', 
+    on dira que l'évènement a eu lieu.  On peut voir cette première
+    action sous forme mathématique comme étant le nombre de fois
+    que l'évènement c'est produit sur le nombre de lancer.  Dans le cas
+    présent on aura: $1/1$ ou $0/1$.  Si on lance une seconde fois
+    la pièce.  On pourra à nouveau écrire ce ratio.  Qui pourra donc 
+    prendre 3 valeurs différentes: $0/2$, $1/2$ ou $2/2$.  Si on ne se
+    limite qu'à cette vision des choses et que l'on obtient le résultat
+    $2/2$, on pourrait croire que la pièce tombe dans 100\% des cas
+    sur ``pile''.  À contrario, si l'on obtient $0/2$, on pourrait
+    dire que l'on a 0\% de chance de tomber sur ``pile''.\\
+    Cependant, ici nous nous sommes arrêté à 2 lancers de dés.  Que se
+    passe-t-il lorsqu'on lance une infinité de fois cette pièce ?
+    Plusieurs personnes ont effectué cette expérience un très grand
+    nombre de fois et tombe sur les mêmes résultats que les personnes
+    ayant faits ce raisonnement de manière mathématique: $1/2$.
+    Lorsque l'on lance une pièce, il y a une chance sur deux pour que
+    ce soit ``pile''.  C'est ce nombre qui définit la probabilité.
+    En d'autres mots, la probabilité de faire ``pile'' lorsque l'on 
+    lance une pièce est de $1/2 = 0.5$.
+    
+    
+    % Début version 3
+%     La notion de probabilité est un sujet large et long à définit de manière complète 
+%     et précise.  Il est cependant possible de définir ce qu'est une probabilité et
+%     quelques conceptes basique lié à celle-ci.  Pour cela, on va s'intéresser à
+%     l'occuerence d'un événemment.  En effet, dans un système, on peut définir un 
+%     événement comme étant le résultat d'une action bien précise.  Par exemple,
+%     tomber sur la face ``pile'' lorsqu'on lance une pièce de monaie est un événemment
+%     aléatoire.  En opposition, la pièce pourrait tomber sur ``face'' et il s'agirait
+%     alors d'un second événemment.
+    
+    
+    % Début version 2
+%     Dans une chaîne de Markov, on s'intéresse à la ``probabilité'' de se trouver dans un certain 
+%     état ou la probabilité de passer d'un état à un autre.  De manière intuitive, une probabilité
+%     peut être représenté comme étant la ``chance'' qu'un évenemment se produisse.
     % TODO expliquer les difficultés de définir une probabilité
     
-    Définir formellement une probabilité
-    est un travail long et complexe, il ne sera donc pas fait dans ce document.  Cependant, 
-    on peut se représenter une probabilité comme étant la ``chance'' de passer d'un état à un autre.
-    Par exemple, si une arrête reliant l'état $s$ à $s'$ à une probabilité de $0.5$, on peut en 
-    déduire qu'il y a une ``chance'' sur deux que le système passe de l'état $s$ à $s'$.
-    Cette exemple sera noté plus formellement de la manière suivante:
-    $$\mathbf{P}(s, s') = 0.5$$
-    Où $s$ et $s'$ sont des états et $0.5$ la probabilité de passer du premier état au second 
-    état (respectivement donc $s$ et $s'$).\\
-    Il n'est pas toujours simple de mesurer une probabilité.  Une technique assez intuitive est 
-    de reproduire une expérience (chaque expérience doit être indépendante des précédentes) 
+    % Version 1
+%     Définir formellement une probabilité
+%     est un travail long et complexe, il ne sera donc pas fait dans ce document.  Cependant, 
+%     on peut se représenter une probabilité comme étant la ``chance'' de passer d'un état à un autre.
+%     Par exemple, si une arrête reliant l'état $s$ à $s'$ à une probabilité de $0.5$, on peut en 
+%     déduire qu'il y a une ``chance'' sur deux que le système passe de l'état $s$ à $s'$.
+%     Cette exemple sera noté plus formellement de la manière suivante:
+%     $$\mathbf{P}(s, s') = 0.5$$
+%     Où $s$ et $s'$ sont des états et $0.5$ la probabilité de passer du premier état au second 
+%     état (respectivement donc $s$ et $s'$).\\
+%     Il n'est pas toujours simple de mesurer une probabilité.  Une technique assez intuitive est 
+%     de reproduire une expérience (chaque expérience doit être indépendante des précédentes) 
     
-  \subsection{Propriété}
-    Comme vu précédemment, la somme des poids des arrêtes partant d'un noeud vallent un.
+    
+  \subsection{Caractéristiques d'une chaîne de Markov}
+    On peut remarquer que la somme de tous les éléments de chaque ligne de la
+    matrice de transition font $1$.  Ce phénomène peut également être vu
+    sur la représentation graphique de la chaîne de Markov où la somme de chaque
+    arrête quittant un noeud (un état donc) vaut $1$.  Par exemple, si l'on se
+    concentre sur l'état ``att.'' (sur la représentation matriciel il s'agit donc 
+    de la 3ème ligne), on a bien: $2/3 + 1/3 + 0$ qui vaut bien $1$.  De manière 
+    plus formel, cette caractéristique peut être notée tel que pour un état $s \in S$:
+    $$\sum\limits_{s' \in S} \mathbf{P}(s, s') = 1$$
+    Où $\mathbf{P}(s, s')$ représente la probabilité (présente dans la matrice de
+    transition) de passe de l'état $s$ à l'état $s'$.  Cette caractéristique est
+    toujours vrai par défintion d'une chaîne de Markov mais également par définition
+    d'une probabilité.\\
+    En effet, chaque ligne de la matrice représente tous les états accèssible depuis
+    l'état correspondant à la ligne courante.  Cette corrélation est encore plus
+    visible sur la représentation graphique où chaque arrête partant de l'état courrant
+    est la représentation d'une valeur positive dans la matrice.  Ces valeurs 
+    représente la probabilité d'aller d'un état à un autre.  Les arrêtes sur le
+    graphique et les valeurs dans la matrice représente tous les états accèssible
+    depuis l'état actuel.  Il est donc normal que la probabilité d'aller de l'état
+    actuelle à n'importe quel autre état de la chaine de Markov ait une probabilité de 1.
+    
+  
+    Comme vu précédemment, la somme des poids des arrêtes partant d'un noeud vaut un.
     Soit pour tous $s \in S$:
     $$\sum\limits_{s' \in S} \mathbf{P}(s, s') = 1$$
     Il en va de même pour la somme des éléments de la matrice de distribution initiale:
@@ -218,55 +338,6 @@ rdetobel@ulb.ac.be}
     Afin de rendre tous ces concepts plus concrèts, on va s'intéresser à un exemple décrivant
     l'état d'un avion.
     
-    \subsubsection{Contexte}
-      
-      
-    \subsubsection{Représentation Graphique}
-      Voici donc la chaîne de Markov décrivant cette situation:
-      
-      
-    \subsubsection{Représentation matricielle}
-      Une chaîne de Markov peut également être vue comme une matrice où chaque ligne et chaque 
-      colonne représente un état.  Les valeurs au sein de la matrice représente le passage
-      de la ligne (en lien avec cette valeur) et la colonne associée à cette même valeur.
-      Avant de faire cela, il faut énoncer les différents état possible:
-      $$\begin{pmatrix}
-	\text{En vol}\\
-	\text{Décollage}\\
-	\text{Attérissage}\\
-	\text{Au sol}\\
-	\text{Controle}\\
-	\text{Hors service}\end{pmatrix}$$
-      C'est donc l'ordre de cette matrice qui sera utilisé afin de constitué la matrice 
-      représentant la chaîne de Markov:
-      $$
-	\begin{blockarray}{ccccccc}
-	& \text{Vol} & \text{Dec.} & \text{Att.} & \text{Sol} & \text{Ctr.} & \text{H.S.} \\
-	  \begin{block}{c(cccccc)}
-	    \text{Vol}  & 0 & 0 & 1 & 0    & 0   & 0    \\
-	    \text{Dec.} & 1 & 0 & 0 & 0    & 0   & 0    \\
-	    \text{Att.} & 0 & 0 & 0 & 2/3  & 1/3 & 0    \\
-	    \text{Sol}  & 0 & 1 & 0 & 0    & 0   & 0    \\
-	    \text{Ctr.} & 0 & 0 & 0 & 9/10 & 0   & 1/10 \\
-	    \text{H.S.} & 0 & 0 & 0 & 0    & 0   & 1    \\
-	  \end{block}
-	\end{blockarray}
-      $$
-      Si on considère que lorsqu'un avion est mis en service il se trouve dans l'état
-      ``au sol'', on peut écrire la matrice initiale de la manière suivante:
-      $$
-	\begin{blockarray}{cc}
-	  \begin{block}{c (c)}
-	    \text{Vol}  & 0 \\
-	    \text{Dec.} & 0 \\
-	    \text{Att.} & 0 \\
-	    \text{Sol}  & 1 \\
-	    \text{Ctr.} & 0 \\
-	    \text{H.S.} & 0 \\
-	  \end{block}
-	\end{blockarray}
-      $$
-    
     \subsubsection{Caractéristiques}
       La chaîne de Markov résultant de cette exemple à plusieurs propriété.  Tout
       d'abord, cette chaîne de Markov contient plusieurs sous partie fortement
@@ -280,7 +351,9 @@ rdetobel@ulb.ac.be}
       par exemple de permettre à l'état ``Hors service'' de rejoindre à nouveau l'état
       ``contrôle''.  On pourrait par exemple imaginer qu'il y a une chance sur 100 qu'un
       avion hors service soit repris au contrôle et soit de nouveau utilisable.
-      
+  
+  
+%%%%%%%%%%%%%% SECTION %%%%%%%%%%%%%%
 \section{Modélisation}
 
   \subsection{Plateau de jeux}
@@ -336,7 +409,7 @@ rdetobel@ulb.ac.be}
     
   \subsection{Répartition des dés}
     \label{repart_des}
-    Lorsque l'on lance n dés, la somme des valeurs de chanque dés n'a pas la même probabilité
+    Lorsque l'on lance $n$ dés, la somme des valeurs de chaque dés n'a pas la même probabilité
     d'apparaitre.  En effet, lorsque l'on lance 2 dés, il y a 3 manière différentes de formé
     un 4 (à savoir: $3+1$, $2+2$ et $1+3$) alors qu'il n'y a qu'une seule manière de formé un 
     2 (à savoir: $1+1$), comme illustré par la figure \ref{tableau_repartition_des}.
