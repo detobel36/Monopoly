@@ -88,8 +88,9 @@ rdetobel@ulb.ac.be}
     par une certaine probabilité de passer d'un état A à un état B.
     Cette probabilité sera décrite plus en détail dans le point \ref{probabilite}.
     Il est possible de représenter une chaîne de Markov de plusieurs manières différentes.
-    Dans la litérature, on utilisera plus souvant la notation matricel, qui définit la
-    chaîne de Markov $\mathcal{M}$ tel que:
+    Dans la litérature (comme par exemple dans le cours \citep{COURS}), on utilisera 
+    plus souvant la notation matricel, qui définit la chaîne de Markov $\mathcal{M}$ 
+    tel que:
     $$\mathcal{M} = (S, \mathbf{P}, \iota_{init})$$
     Où $S$ représente l'ensemble de tous les états possibles, $\mathbf{P}$ une matrice $S \times S$
     où chaque élément est compris entre 0 et 1 et où cette valeur représente la probabilité 
@@ -106,6 +107,7 @@ rdetobel@ulb.ac.be}
     Il est également possible de représenter une chaîne de Markov sous forme
     d'un graphe dirigé où chaque noeud représente un état et chaque arrête est pondéré
     en fonction de la probabilité de passer d'un état à un autre.
+    % TODO voir pour définir AP et L en 2 phrases
     
   \subsection{Exemple de chaîne de Markov}
     Afin d'illustrer les notions liées aux chaînes de Markov, on va se baser sur 
@@ -179,73 +181,32 @@ rdetobel@ulb.ac.be}
 	  \draw [->, line width=0.4mm, fill=gray, draw=gray] (1.6,-5.4) -- (sol);
 	\end{tikzpicture}
       \end{center}
-    % TODO replacer au bon endroit: 
-    % Par définition, la somme des poids des arrêtes partant d'un poid doivent valoir 1.  
     
   \subsection{Probabilité}
     \label{probabilite}
-    % Début version 4
-    Il existe de nombreux articles et livres décrivant la notion de probabilité 
-    (comme par exemple \citep{IP}).  Cependant, il n'est pas utile dans cet
-    article de définir précisément et de manière détaillée ce qu'est une 
-    probabilité.  En effet, il est possible de définir intuitivement une
-    probabilité en partant d'un exemple: lancer une pièce de monnaie.
-    Imaginons que l'on cherche à prédire le nombre de fois que la pièce
-    va tomber sur le côté ``pile``.  Cette action (le fait de tomber d'un 
-    côté précis de la pièce) s'appelle un évènement.  Pour calculer
-    le nombre de fois que cet évènement peut se produire, on va donc
-    lancer une première fois la pièce qui peut soit tomber
-    sur ''face``, soit sur ''pile``.  Si elle tombe sur ''pile'', 
-    on dira que l'évènement a eu lieu.  On peut voir cette première
-    action sous forme mathématique comme étant le nombre de fois
-    que l'évènement c'est produit sur le nombre de lancer.  Dans le cas
-    présent on aura: $1/1$ ou $0/1$.  Si on lance une seconde fois
-    la pièce.  On pourra à nouveau écrire ce ratio.  Qui pourra donc 
-    prendre 3 valeurs différentes: $0/2$, $1/2$ ou $2/2$.  Si on ne se
-    limite qu'à cette vision des choses et que l'on obtient le résultat
-    $2/2$, on pourrait croire que la pièce tombe dans 100\% des cas
-    sur ``pile''.  À contrario, si l'on obtient $0/2$, on pourrait
-    dire que l'on a 0\% de chance de tomber sur ``pile''.\\
-    Cependant, ici nous nous sommes arrêté à 2 lancers de dés.  Que se
-    passe-t-il lorsqu'on lance une infinité de fois cette pièce ?
-    Plusieurs personnes ont effectué cette expérience un très grand
-    nombre de fois et tombe sur les mêmes résultats que les personnes
-    ayant faits ce raisonnement de manière mathématique: $1/2$.
-    Lorsque l'on lance une pièce, il y a une chance sur deux pour que
-    ce soit ``pile''.  C'est ce nombre qui définit la probabilité.
-    En d'autres mots, la probabilité de faire ``pile'' lorsque l'on 
-    lance une pièce est de $1/2 = 0.5$.
-    
-    
-    % Début version 3
-%     La notion de probabilité est un sujet large et long à définit de manière complète 
-%     et précise.  Il est cependant possible de définir ce qu'est une probabilité et
-%     quelques conceptes basique lié à celle-ci.  Pour cela, on va s'intéresser à
-%     l'occuerence d'un événemment.  En effet, dans un système, on peut définir un 
-%     événement comme étant le résultat d'une action bien précise.  Par exemple,
-%     tomber sur la face ``pile'' lorsqu'on lance une pièce de monaie est un événemment
-%     aléatoire.  En opposition, la pièce pourrait tomber sur ``face'' et il s'agirait
-%     alors d'un second événemment.
-    
-    
-    % Début version 2
-%     Dans une chaîne de Markov, on s'intéresse à la ``probabilité'' de se trouver dans un certain 
-%     état ou la probabilité de passer d'un état à un autre.  De manière intuitive, une probabilité
-%     peut être représenté comme étant la ``chance'' qu'un évenemment se produisse.
-    % TODO expliquer les difficultés de définir une probabilité
-    
-    % Version 1
-%     Définir formellement une probabilité
-%     est un travail long et complexe, il ne sera donc pas fait dans ce document.  Cependant, 
-%     on peut se représenter une probabilité comme étant la ``chance'' de passer d'un état à un autre.
-%     Par exemple, si une arrête reliant l'état $s$ à $s'$ à une probabilité de $0.5$, on peut en 
-%     déduire qu'il y a une ``chance'' sur deux que le système passe de l'état $s$ à $s'$.
-%     Cette exemple sera noté plus formellement de la manière suivante:
-%     $$\mathbf{P}(s, s') = 0.5$$
-%     Où $s$ et $s'$ sont des états et $0.5$ la probabilité de passer du premier état au second 
-%     état (respectivement donc $s$ et $s'$).\\
-%     Il n'est pas toujours simple de mesurer une probabilité.  Une technique assez intuitive est 
-%     de reproduire une expérience (chaque expérience doit être indépendante des précédentes) 
+    % Version 5
+    La notion de probabilité peut se définir de plusieurs manières différentes 
+    et de nombreux ouvrages (comme par exemple \citep{IP}) décrivent 
+    de manière très détaillé la notion de probabilité.  Lorsque l'on veut
+    traiter des espaces de probabilité, une approche très abstraite et
+    rigoureuses est fondamentale.  Cependant dans cet article, l'approche
+    fréquentielle inspirée des statitistiques est suffisante.
+    On définit donc la probabilité d'un événement aléatoire par la limite
+    de la fréquence d'occurence d'un événement pour un nombre d'expériences
+    tendant vers l'infini.  De manière plus formel, on peut décrire ce
+    comportement comme $X$ étant une expérience aléatoire ayant
+    $$X_i \mid i \in I $$
+    pour résultats possibles, avec $I$ un ensemble d'indices (qui peuvent 
+    être fini, infini dénombrable ou infini non-dénombrable).  On définit
+    la probabilité du résultat $X_i$ pour $i \in I$ par:
+    $$\lim_{n \to \infty}\frac {X_i(n)}n,$$
+    avec $X_i(n)$, le nombre d'occurences du résultat $X_i$ lors de
+    $n$ itérations de l'expérience $X$.  On note cette valeur
+    $\mathbb P[X = X_i]$, si cette limite existe.
+    % QUESTION Randour: ajouter ceci ?
+    % Remarque : il est important de demander que la limite existe, par exemple 
+    % si le nombre d'occurrences est sous la forme $X(n) = n\cos(n)$, on remarque 
+    % qu'il est impossible de définir une probabilité, alors qu'une fréquence a un sens.
     
     
   \subsection{Caractéristiques d'une chaîne de Markov}
@@ -268,19 +229,22 @@ rdetobel@ulb.ac.be}
     représente la probabilité d'aller d'un état à un autre.  Les arrêtes sur le
     graphique et les valeurs dans la matrice représente tous les états accèssible
     depuis l'état actuel.  Il est donc normal que la probabilité d'aller de l'état
-    actuelle à n'importe quel autre état de la chaine de Markov ait une probabilité de 1.
-    
-  
-    Comme vu précédemment, la somme des poids des arrêtes partant d'un noeud vaut un.
-    Soit pour tous $s \in S$:
-    $$\sum\limits_{s' \in S} \mathbf{P}(s, s') = 1$$
-    Il en va de même pour la somme des éléments de la matrice de distribution initiale:
+    actuelle à n'importe quel autre état de la chaine de Markov ait une probabilité de 1.\\
+    Avec ce même raisonnement, il est logique de se rendre compte que la matrice
+    de distribution initiale:
     $$\sum\limits_{s \in S} \iota_{init}(s) = 1$$
-    Pour qu'un état $s'$ soit le successeur d'un état $s$, il faut que 
-    $$\mathbf{P}(s, s') > 0$$
-    L'idée est équivalente concernant les chemins (arrêtes).
     
   \subsection{Comportement des chaînes des Markov}
+    % TODO texte introductif
+    \subsubsection{Fortement connexe}
+      Dans une chaîne de Markov, un ensemble d'état $T$ est définit comme fortement
+      connexe si tous les noeuds présent dans $T$ peuvent être atteint depuis
+      n'importe quel autre noeud également présent dans cette ensemble $T$. En
+      d'autres mots, pour une chaîne de Markov $\mathcal{M} = (S, \mathbf{P}, 
+      \iota_{init})$, le vecteur d'état $T \in S$ est dit fortement connexe 
+      lorsqu'il existe: $\forall s, s' \in T$ tel que:
+      $$\mathbf{P}$$
+  
     Les chaînes de Markov peuvent avoir différentes caractéristiques en fonction 
     de leurs structures et des valeurs qu'elles contiennent.  
     Nous en distinguerons 3:
@@ -357,7 +321,7 @@ rdetobel@ulb.ac.be}
 \section{Modélisation}
 
   \subsection{Plateau de jeux}
-    Les plateaux de jeux peuvent être vu comme des chaînes de Markov.  En effet, on peut 
+    Les plateaux de jeux peuvent être modélisé comme des chaînes de Markov.  En effet, on peut 
     voir la position d'un point comme l'état d'un système.  Dans ce type de jeu (comme 
     par exemple le jeu de l'oie) la position du pion dépendra seulement de la case où il 
     se trouvait précédemment et du nombre de case qu'il doit parcourrir (dû par exemple 
@@ -379,9 +343,10 @@ rdetobel@ulb.ac.be}
     Chaque déplacement du piont (c'est-à-dire à chaque fois que l'on lance le dé) sera 
     traduit par un changement d'état.
     Dans un premier temps, on modélise donc le Monopoly par 40 cases où chaque case est
-    relié aux $6*n-(n-1)$ cases suivantes, où $n$ est le nombre de dé.  Dans le cas précis
-    des règles du Monopoly, chaque case pourra donc accéder à 11 autres cases.  En effet,
-    le résultat le plus petit pouvant être produit par $n$ dés est de $n$ (tous les dé à 1).
+    relié aux $6*n-(n-1)$ cases suivante à partir de la case $n-1$, où $n$ est le 
+    nombre de dé.  Dans le cas précis des règles du Monopoly, chaque case pourra 
+    donc accéder à 11 autres cases.  En effet, le résultat le plus petit pouvant être 
+    produit par $n$ dés est de $n$ (tous les dé à 1).
     On devra donc élminer toutes les $n-1$ cases juste après la case actuelle et le résultat
     le plus grand pouvant être produit par $n$ dés est de $6*n$ (pour un dé à 6 faces).
     \begin{center}
@@ -442,6 +407,10 @@ rdetobel@ulb.ac.be}
     de former un 4.\\
     L'équation exprimé au début de ce point représente simplement le développement de 
     ce polynome.
+    % TODO Robin (remarque)
+%     Le raisonnement sur les polynômes est assez clair, mais l'explication est un peu confuse : 
+%     l'idée est d'utiliser les fonctions génératrices afin de trouver le nombre de combinaisons relatives à la somem des dés.
+%     « Le résultat final nous montre que lorsque l’on lance 2 de ces dés de 9 faces. » La phrase n'est pas complète. ;)
     
   \subsection{Faire un double}
     % TODO un nombre indéfinit de dés... toujours un double où tous les dés les mêmes ?
@@ -547,16 +516,18 @@ rdetobel@ulb.ac.be}
     equation de la façon suivante:
     $$(P-I)^{T} w^{T} = 0$$
     Qui sera plus simple à implémenté dans un langage informatique.\\
+    % TODO expliquer pourquoi ce sera plus simple (résolution linéaire)
     On peut également rajouter une colonne de 1 permettant d'intégrer directement la 
     contrainte suivante dans l'équation:
     $$\sum\limits_{i \in w} i = 1$$
     Cette équation part du simple principe que le vecteur résultat sera la distribution 
     de probabilité de chaque état.  Il faut donc que leur somme corresponde à 1 vu 
-    que l'on exprime la probabilité de se trouver sur tous les états accèssibles, il y 
-    a donc 100\% de ''chance`` de se trouver sur les états présent dans le vecteur résultat 
+    que l'on exprime la probabilité de se trouver sur tous les états accèssibles, il y
+    a donc une probabilié 1 de se trouver sur les états présent dans le vecteur résultat 
     (plus d'informations dans le point \ref{etat_stationnaire}).
     \paragraph{Avec un exemple concret}
     Prenons la matrice de déplacement suivante:
+    % TODO exemple très mauvais !!!  Ce n'est pas une chaine de markov !
     \begin{align*} 
       wP = w\\ 
       % === NEW LINE ===
