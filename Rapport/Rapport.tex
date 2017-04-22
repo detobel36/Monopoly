@@ -64,8 +64,8 @@ rdetobel@ulb.ac.be}
   les plus rentables.  Dans cette idée, il est possible de modéliser
   le Monopoly à travers les chaînes de Markov.  Mais avant cela, il est 
   important de bien définir les chaînes de Markov ainsi que leurs propriétés.
-  Les explications concernant ce modèle sont en grande partie basé 
-  sur le cours \citep{COURS}.
+  Les explications concernant ce modèle sont en grande partie basées 
+  sur le cours de \citet{COURS}.
   Pour pouvoir modéliser le Monopoly comme étant une chaîne de Markov, 
   les règles du jeu doivent être clairement définies et des choix doivent
   être faits.  Ceux-ci seront donc expliqués et justifiés dans cet article.
@@ -88,7 +88,7 @@ rdetobel@ulb.ac.be}
     par une certaine probabilité de passer d'un état A à un état B.
     Cette probabilité sera décrite plus en détail dans le point \ref{probabilite}.
     Il est possible de représenter une chaîne de Markov de plusieurs manières différentes.
-    Dans la litérature (comme par exemple dans le cours \citep{COURS}), on utilisera 
+    Dans la litérature (comme par exemple dans le cours \citet{COURS}), on utilisera 
     plus souvant la notation matricel, qui définit la chaîne de Markov $\mathcal{M}$ 
     tel que:
     $$\mathcal{M} = (S, \mathbf{P}, \iota_{init})$$
@@ -100,20 +100,20 @@ rdetobel@ulb.ac.be}
     associée représente la probabilité de commencer par cet état.  On peut retrouver d'autres
     variables dans la litérature (comme $AP$ et $L$ par exemple pour associer des propositions 
     atomiques aux états) mais celles-ci ne seront pas utiles dans cet article.
+    Il est également possible de représenter une chaîne de Markov sous forme
+    d'un graphe dirigé où chaque noeud représente un état et chaque arrête est pondéré
+    en fonction de la probabilité de passer d'un état à un autre.
     Nottons également que les chaînes de Markov peuvent être utilisée
     dans un temps discret ou dans un temps continu.  Cependant, la modélisation
     du Monopoly n'inclura pas de temps continu et cet article traitera donc uniquement
     du temps discret.
-    Il est également possible de représenter une chaîne de Markov sous forme
-    d'un graphe dirigé où chaque noeud représente un état et chaque arrête est pondéré
-    en fonction de la probabilité de passer d'un état à un autre.
     % TODO voir pour définir AP et L en 2 phrases
     
   \subsection{Exemple de chaîne de Markov}
-    Afin d'illustrer les notions liées aux chaînes de Markov, on va se baser sur 
-    les différents états que peut avoir un avion.  On va donc ici considérer 
-    qu'un avion pourra avoir 6 états différents: en vol, attérissage, décollage, 
-    au sol, contrôle et hors service.
+    Afin d'illustrer les notions liées aux chaînes de Markov, cet article se 
+    basera sur un exemple représentant les différents état que peut avoir 
+    un avion.  On va donc ici considérer qu'un avion pourra avoir 6 états 
+    différents: en vol, attérissage, décollage, au sol, contrôle et hors service.
     On va considérer que lors de l'attérissage, il y a une chance sur 3 pour qu'un
     voyant indique au pilote qu'un contrôle est nécessaire. On remarque également 
     qu'il y a une chance sur 10 que l'avion ne passe pas le contrôle et soit considéré 
@@ -184,7 +184,6 @@ rdetobel@ulb.ac.be}
     
   \subsection{Probabilité}
     \label{probabilite}
-    % Version 5
     La notion de probabilité peut se définir de plusieurs manières différentes 
     et de nombreux ouvrages (comme par exemple \citep{IP}) décrivent 
     de manière très détaillé la notion de probabilité.  Lorsque l'on veut
@@ -207,6 +206,35 @@ rdetobel@ulb.ac.be}
     % Remarque : il est important de demander que la limite existe, par exemple 
     % si le nombre d'occurrences est sous la forme $X(n) = n\cos(n)$, on remarque 
     % qu'il est impossible de définir une probabilité, alors qu'une fréquence a un sens.
+    
+  \subsection{Simuler les changements d'état}
+    Une chaîne de Markov permet donc d'estimer la probabilité de l'état
+    future d'un système uniquement en se basant sur l'état actuel du système.
+    Dans cette idée, la matrice de transition $\mathbf{P}$ représente tous les
+    déplacements d'une unité possibles.  Si maintenant on veut connaitre
+    les états accèssibles depuis notre état actuel après deux unités de temps,
+    il suffit d'élevé la matrice de transition au carré.  Si l'on reprend
+    notre exemple, on aura donc:
+    \begin{align*}
+    \mathbf{P}^2 &= 
+      \begin{pmatrix}
+	0 & 0 & 1 & 0    & 0   & 0    \\
+	1 & 0 & 0 & 0    & 0   & 0    \\
+	0 & 0 & 0 & 2/3  & 1/3 & 0    \\
+	0 & 1 & 0 & 0    & 0   & 0    \\
+	0 & 0 & 0 & 9/10 & 0   & 1/10 \\
+	0 & 0 & 0 & 0    & 0   & 1    \\
+      \end{pmatrix}^2\\
+      &= 
+      \begin{pmatrix}
+        0 & 0    & 0 & 2/3  & 1/3 & 0    \\
+	0 & 0    & 1 & 0    & 0   & 0    \\
+	0 & 2/3  & 0 & 3/10 & 0   & 1/30 \\
+	1 & 0    & 0 & 0    & 0   & 0    \\
+	0 & 9/10 & 0 & 0    & 0   & 1/10 \\
+	0 & 0    & 0 & 0    & 0   & 1    \\
+      \end{pmatrix}
+    \end{align*}
     
     
   \subsection{Caractéristiques d'une chaîne de Markov}
@@ -235,6 +263,27 @@ rdetobel@ulb.ac.be}
     $$\sum\limits_{s \in S} \iota_{init}(s) = 1$$
     
   \subsection{Comportement des chaînes des Markov}
+    % ROBIN
+% Pour composé connexe, habituellement, en français on parle de composante connexe, ni composé, ni composant. ;)
+
+% Sinon j'ai un souci avec ta définition de SCC : elle laisse sous-entendre qu'il n'y a qu'une seule SCC (quote: un ensemble $T$ est un composé fortement connexe s'il est le plus grand ensemble [...]), or le principe de composate fortement connexe, c'est qu'il n'y en a qu'une seule si et seulement si le graphe est fortement connexe. Mais s'il ne l'est pas, alors il y a plusieurs SCCs.
+% 
+% La définition usuelle d'une composante (fortement) connexe est la suivante (pour $Q$ l'ensemble des états) :
+% 
+% Pour $q \in Q$, on définit la composante (fortement) connexe $T \subset Q$de $q$ [dans le graphe/dans la chaine/dans ...] lorsque $T$ est le plus grand sous-ensemble de $Q$ (au sens de l'inclusion) tel que $q \in T$ et $T$ est (fortement) connexe.
+% 
+% Cette définition sus-entend que les composantes connexes sont des classes d'équivalences pour une relation d'équivalence correspondant au fait que $q_1$ et $q_2$ dans $Q$ sont en relations lorsqu'il existe un chemin (au sens graphe ou digraphe en fonction de la situation) reliant $q_1$ à $q_2$.
+% 
+% On peut (de manière plus simple ?) définir une composante (fortement) connexe par un sous-ensemble $T \subset Q$ tel que pour tout $W \subset Q$, si $T \subsetneqq Q$, alors $Q$ n'est pas (fortement) connexe.
+% 
+% Dans la remarque juste après la définition de BSCC, il y a une formulation qui me chipotte :
+% « On a donc une probabilité 1 de se retrouver dans ce BSCC après une infinité de changement. »
+% 
+% La définition est même plus forte que cela : elle dit que pour tout $n \in \mathbb N$, après $n$ unités de temps discret, le système se trouve dans un état de la BSCC avec probabilité 1.
+% 
+% La raison pour laquelle j'insiste sur ça même si ça semble bizarre, c'est parce que tu peux avoir des situations où ta probabilité de sortir de ta composante (fortement) connexe tend vers 0 pour $n$ qui tend vers l'infini, mais qui n'est pas nulle à $n$ fixé. Et donc après un nombre inifni d'étapes, tu es avec probabilité 1 dans la BSCC, mais tu as pu en sortir une infinité de fois. (Du coup ça devient assez abstrait, j'en conviens, mais faut faire gafffe.)
+  
+  
     % TODO texte introductif
     \subsubsection{Fortement connexe}
       Dans une chaîne de Markov, un ensemble d'état $T$ est définit comme fortement
@@ -242,8 +291,9 @@ rdetobel@ulb.ac.be}
       n'importe quel autre noeud également présent dans cette ensemble $T$. En
       d'autres mots, pour une chaîne de Markov $\mathcal{M} = (S, \mathbf{P}, 
       \iota_{init})$, le vecteur d'état $T \in S$ est dit fortement connexe 
-      lorsqu'il existe: $\forall s, s' \in T$ tel que:
-      $$\mathbf{P}$$
+      si $\forall s, s' \in T$, il existe un chemin entre $s$ et $s'$.  C'est
+      a dire qu'il existe un $n$ tel que 
+      $$\mathbf{P}^n (s, s') > 0$$
   
     Les chaînes de Markov peuvent avoir différentes caractéristiques en fonction 
     de leurs structures et des valeurs qu'elles contiennent.  
@@ -254,7 +304,7 @@ rdetobel@ulb.ac.be}
       autre noeud également présent dans ce même ensemble.  En d'autres mots, on peut dire 
       que dans un ensemble $T$ il existe un chemin entre l'état $s'$ et $s$ tel que 
       $s$ et $s' \in T$
-     \item \textbf{Composant fortement connexe}: un ensemble $T$ est un composé fortement
+     \item \textbf{Composant fortement connexe}: un ensemble $T$ est un composante fortement
       connexe s'il est le plus grand ensemble fortement connexe d'une chaîne de Markov.  
       Les compostants fortements connexes sont notés ``SCC'' (qui sont les initiales de
       ``Strongly Connected Component'').
