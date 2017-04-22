@@ -47,7 +47,7 @@ class FenetrePrincipal(scrollFrame):
         self._viewParam.grid(row=1, column=1, padx=7, sticky=tk.N+tk.S+tk.E+tk.W)
 
         # Création de la fenêtre de gestion de tour
-        self._nbrTourFrame = ConfigTour(self.getMainFrame())
+        self._nbrTourFrame = ConfigTour(self.getMainFrame(), self)
         self._nbrTourFrame.grid(row=0, column=1, padx=7, sticky=tk.N+tk.E+tk.W)
 
         # Permet de récupérer toutes les informations sur les cases

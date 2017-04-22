@@ -19,11 +19,11 @@ class ConfigTour(tk.LabelFrame):
 
         @param fenetre parent
     """
-    def __init__(self, fenetre):
+    def __init__(self, fenetre, parent):
         tk.LabelFrame.__init__(self, fenetre, text="Gestion des tours", padx=3, pady=3, labelanchor="n", \
                 relief=tk.RAISED)
 
-        self._parent = fenetre
+        self._parent = parent
 
         self.__addLabelNbrTour()
         self.__addNbrTourEntry()
