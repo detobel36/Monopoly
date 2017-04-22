@@ -270,7 +270,7 @@ rdetobel@ulb.ac.be}
     de distribution initiale possède les mêmes caractéristiques:
     $$\sum\limits_{s \in S} \iota_{init}(s) = 1$$
     
-  \subsection{Caractéristiques des chaînes des Markov}
+  \subsection{Notation des chaînes des Markov}
     % ROBIN
 % Pour composé connexe, habituellement, en français on parle de composante connexe, ni composé, ni composant. ;)
 
@@ -290,41 +290,37 @@ rdetobel@ulb.ac.be}
 % La définition est même plus forte que cela : elle dit que pour tout $n \in \mathbb N$, après $n$ unités de temps discret, le système se trouve dans un état de la BSCC avec probabilité 1.
 % 
 % La raison pour laquelle j'insiste sur ça même si ça semble bizarre, c'est parce que tu peux avoir des situations où ta probabilité de sortir de ta composante (fortement) connexe tend vers 0 pour $n$ qui tend vers l'infini, mais qui n'est pas nulle à $n$ fixé. Et donc après un nombre inifni d'étapes, tu es avec probabilité 1 dans la BSCC, mais tu as pu en sortir une infinité de fois. (Du coup ça devient assez abstrait, j'en conviens, mais faut faire gafffe.)
-  
-  
+    Certaines chaînes de Markov ont des caractéristiques particulières
+    et sont donc notés via différentes abréviations.  Ces différentes
+    abréviations et concepts sont utilisés dans plusieurs articles scientifiques
+    comme par exemple dans le livre de \citet{ModelChecking} ou dans le cours
+    \citet{COURS}.  Pour formaliser ces différents concepts, on définit 
+    une chaîne de Markov $\mathcal{M}(S, \mathbf{P}, \iota_{init})$ 
+    (comme vu au point \ref{def_chaine_markov}) ainsi qu'un sous-ensemble $T$ de $S$.
+    
     % TODO texte introductif
     \subsubsection{Fortement connexe}
-      Dans une chaîne de Markov, un ensemble d'état $T$ est définit comme fortement
-      connexe si tous les noeuds présent dans $T$ peuvent être atteint depuis
-      n'importe quel autre noeud également présent dans cette ensemble $T$. En
-      d'autres mots, pour une chaîne de Markov $\mathcal{M} = (S, \mathbf{P}, 
-      \iota_{init})$, le vecteur d'état $T \in S$ est dit fortement connexe 
-      si $\forall s, s' \in T$, il existe un chemin entre $s$ et $s'$.  C'est
-      a dire qu'il existe un $n$ tel que 
-      $$\mathbf{P}^n (s, s') > 0$$
-  
-    Les chaînes de Markov peuvent avoir différentes caractéristiques en fonction 
-    de leurs structures et des valeurs qu'elles contiennent.  
-    Nous en distinguerons 3:
-    \begin{itemize}
-     \item \textbf{Fortement connexe}: un ensemble est fortemment connexe si pour tout
-      les noeuds présent dans cet ensemble peuvent être atteint depuis n'importe quel
-      autre noeud également présent dans ce même ensemble.  En d'autres mots, on peut dire 
-      que dans un ensemble $T$ il existe un chemin entre l'état $s'$ et $s$ tel que 
-      $s$ et $s' \in T$
-     \item \textbf{Composant fortement connexe}: un ensemble $T$ est un composante fortement
-      connexe s'il est le plus grand ensemble fortement connexe d'une chaîne de Markov.  
-      Les compostants fortements connexes sont notés ``SCC'' (qui sont les initiales de
-      ``Strongly Connected Component'').
-     \item \textbf{BSCC}: il s'agit des initiales de ``Bottom Strongly Connected Component''.
-      L'ensemble $T$ est un BSCC de la chaîne de Markov $\mathcal{M}$ si $T$ est un SCC et
-      qu'aucun état en dehors de $T$ ne peut être atteint.  En d'autres mots, il faut que
-      pour tout $s \in T$, $\mathbb{P}(s, T) = 1$.  Cela signifie que toutes les 
-      arrêtes partant de $s$ sont dirigés dans l'ensemble $T$.
-    \end{itemize}
-    Lorsque l'on se trouve dans un état présent dans un BSCC, on ne quitte plus jamais ce
-    BSCC, même après une infinité de changement d'état.  On a donc une probabilité 1 de 
-    se retrouver dans ce BSCC après une infinité de changement.
+      Ce sous-ensemble $T$ sera définit comme \textit{fortement connexe} si
+      pour chaque pair d'état $(s, t)$ tel que $s, t \in T$.  Il existe un
+      chemin $s_0, s_1, ..., s_n$ tel que $s_i \in T$ pour $0 \leq i \leq n$, 
+      $s_0 = s$ et $s_n = t$.
+      
+    \subsubsection{Composante fortement connexe}
+      Une composante fortement connexe désigne le plus grand sous-ensemble 
+      d'état $T$ fortement connexe. Cette notion est abrégé \textit{SCC} 
+      (``Strongly Connected Component'' en anglais).
+      
+    \subsubsection{BSCC}
+      \textit{BSCC} signifie ``Bottom Strongly Connected Component'' en anglais.
+      Une \textit{BSCC} de $\mathcal{M}$ est une composante fortement connexe 
+      (SCC) $T$ tel que aucun état en dehors de $T$ n'est accèssible.  De manière
+      plus formel, cela signifie que $\forall i \in T$:
+      $$\sum\limits_{t \in T} P(i, t) = 1$$
+      Il est important de noté qu'une fois que l'état actuel se retrouve dans une
+      BSCC, il est impossible d'en sortir.
+      % TODO dire que la probabilité de rester dedans est infini
+      
+    % TODO illustrer avec l'exemple
   
   \subsection{Distribution stationnaire}
     Lorsque l'on se trouve dans un état étant lui même dans un BSCC, il est impossible de 
