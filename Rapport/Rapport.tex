@@ -247,32 +247,30 @@ rdetobel@ulb.ac.be}
     obligatoirement le 3\up{ème} état.  Il est donc normal qu'après 2 tours,
     on retrouve les probabilités de déplacement du troisième état.
     
-  \subsection{Caractéristiques d'une chaîne de Markov}
+  \subsection{Propriété d'une chaîne de Markov}
     On peut remarquer que la somme de tous les éléments de chaque ligne de la
     matrice de transition font $1$.  Ce phénomène peut également être vu
     sur la représentation graphique de la chaîne de Markov où la somme de chaque
     arrête quittant un noeud (un état donc) vaut $1$.  Par exemple, si l'on se
-    concentre sur l'état ``att.'' (sur la représentation matriciel il s'agit donc 
-    de la 3ème ligne), on a bien: $2/3 + 1/3 + 0$ qui vaut bien $1$.  De manière 
-    plus formel, cette caractéristique peut être notée tel que pour un état $s \in S$:
+    concentre sur l'état \textit{att.} (sur la représentation matriciel il s'agit donc 
+    de la 3\up{ème} ligne), on a bien: $2/3 + 1/3 + 0$ qui vaut bien $1$.  De manière 
+    plus formel, cette caractéristique peut être notée tel que pour une matrice
+    $\mathcal{M}$ (définie au point \ref{def_chaine_markov}) et pour un état $s \in S$:
     $$\sum\limits_{s' \in S} \mathbf{P}(s, s') = 1$$
     Où $\mathbf{P}(s, s')$ représente la probabilité (présente dans la matrice de
     transition) de passe de l'état $s$ à l'état $s'$.  Cette caractéristique est
     toujours vrai par défintion d'une chaîne de Markov mais également par définition
-    d'une probabilité.\\
-    En effet, chaque ligne de la matrice représente tous les états accèssible depuis
-    l'état correspondant à la ligne courante.  Cette corrélation est encore plus
-    visible sur la représentation graphique où chaque arrête partant de l'état courrant
-    est la représentation d'une valeur positive dans la matrice.  Ces valeurs 
-    représente la probabilité d'aller d'un état à un autre.  Les arrêtes sur le
-    graphique et les valeurs dans la matrice représente tous les états accèssible
-    depuis l'état actuel.  Il est donc normal que la probabilité d'aller de l'état
-    actuelle à n'importe quel autre état de la chaine de Markov ait une probabilité de 1.\\
+    d'une probabilité.
+    En effet, la matrice $\mathbf{P}$ contient toutes les rélations possibles entre
+    tous les états du système ($S \times S$).  Une ligne représente donc toutes les 
+    relations possible entre un état (définit par la ligne actuelle) et tous les autres
+    état du système (les $S$ colonnes).  La probabilité de passer de l'état actuel
+    à n'importe quel autre état du système est donc égal à $1$ (par définition d'une probabilité).
     Avec ce même raisonnement, il est logique de se rendre compte que la matrice
-    de distribution initiale:
+    de distribution initiale possède les mêmes caractéristiques:
     $$\sum\limits_{s \in S} \iota_{init}(s) = 1$$
     
-  \subsection{Comportement des chaînes des Markov}
+  \subsection{Caractéristiques des chaînes des Markov}
     % ROBIN
 % Pour composé connexe, habituellement, en français on parle de composante connexe, ni composé, ni composant. ;)
 
