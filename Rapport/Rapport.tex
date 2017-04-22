@@ -213,7 +213,7 @@ rdetobel@ulb.ac.be}
     
   \subsection{Simuler les changements d'état}
     Une chaîne de Markov permet donc d'estimer la probabilité de l'état
-    future d'un système uniquement en se basant sur l'état actuel du système.
+    futur d'un système uniquement en se basant sur l'état actuel du système.
     Dans cette idée, la matrice de transition $\mathbf{P}$ représente tous les
     déplacements d'une unité possibles.  Si maintenant on veut connaitre
     les états accèssibles depuis notre état actuel après deux unités de temps,
@@ -239,7 +239,13 @@ rdetobel@ulb.ac.be}
 	0 & 0    & 0 & 0    & 0   & 1    \\
       \end{pmatrix}
     \end{align*}
-    
+    % TODO A voir si c'est clair
+    On remarque donc qu'après 2 déplacements depuis le première état (première
+    ligne), il sera possible d'atteindre le 4 et 5\up{ème} état (avec 
+    respectivement une probabilité de $2/3$ et $1/3$).  Ce comportement est
+    très simple à voir dans cette exemple, car l'état succédant l'état 1 est
+    obligatoirement le 3\up{ème} état.  Il est donc normal qu'après 2 tours,
+    on retrouve les probabilités de déplacement du troisième état.
     
   \subsection{Caractéristiques d'une chaîne de Markov}
     On peut remarquer que la somme de tous les éléments de chaque ligne de la
