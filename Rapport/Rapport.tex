@@ -113,12 +113,16 @@ rdetobel@ulb.ac.be}
     Afin d'illustrer les notions liées aux chaînes de Markov, cet article se 
     basera sur un exemple représentant les différents état que peut avoir 
     un avion.  On va donc ici considérer qu'un avion pourra avoir 6 états 
-    différents: en vol, attérissage, décollage, au sol, contrôle et hors service.
-    On va considérer que lors de l'attérissage, il y a une chance sur 3 pour qu'un
-    voyant indique au pilote qu'un contrôle est nécessaire. On remarque également 
-    qu'il y a une chance sur 10 que l'avion ne passe pas le contrôle et soit considéré 
-    comme hors service.  On considèrera également que tous les avions commencent
-    avec l'état ``au sol''.
+    différents: \textit{en vol} (noté \textit{vol}), \textit{attérissage} 
+    (noté \textit{att.}), \textit{décollage} (noté \textit{dec.}), 
+    \textit{au sol}, \textit{contrôle} (noté \textit{ctr.})
+    et \textit{hors service} (noté \textit{h.s.}).
+    On va considérer que lors de l'\textit{attérissage}, il y a une chance sur 
+    3 pour qu'un voyant indique au pilote qu'un \textit{contrôle} est 
+    nécessaire. On remarque également qu'il y a une chance sur 10 que 
+    l'avion ne passe pas le \textit{contrôle} et soit considéré comme 
+    \textit{hors service}.  On considèrera également que tous les avions commencent
+    avec l'état \textit{au sol}.
     
     \subsubsection{Représentation matriciel}
       Comme vu au point \ref{def_chaine_markov}, il est possible de représenter une
@@ -153,7 +157,7 @@ rdetobel@ulb.ac.be}
       $$
       
     \subsubsection{Représentation graphique}
-      Il est également possible de représenter une chaîne de Markov comme
+      Il est également possible de représenter cette chaîne de Markov comme
       état un graphe dirigé (cfr point \ref{def_chaine_markov}):
       \begin{center}
 	\begin{tikzpicture}
@@ -165,7 +169,7 @@ rdetobel@ulb.ac.be}
 	  
 	  \bigcolornode[below right=of att] (sol) {Au sol};
 
-	  \bigcolornode[below left=of sol] (ctr) {Controle};
+	  \bigcolornode[below left=of sol] (ctr) {Contrôle};
 	  \colornode[right=of ctr] (hs) {Hors service};
 
 	  % Connect the states with arrows
