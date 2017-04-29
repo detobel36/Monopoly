@@ -256,15 +256,15 @@ rdetobel@ulb.ac.be}
     concentre sur l'état \textit{att.} (sur la représentation matriciel il s'agit donc 
     de la 3\up{ème} ligne), on a bien: $2/3 + 1/3 + 0$ qui vaut bien $1$.  De manière 
     plus formel, cette caractéristique peut être notée tel que pour une matrice
-    $\mathcal{M}$ (définie au point \ref{def_chaine_markov}) et pour un état $s \in S$:
+    $\mathcal{M}$ (définie au point \ref{def_chaine_markov}) et pour tout état $s \in S$:
     $$\sum\limits_{s' \in S} \mathbf{P}(s, s') = 1$$
     Où $\mathbf{P}(s, s')$ représente la probabilité (présente dans la matrice de
-    transition) de passe de l'état $s$ à l'état $s'$.  Cette caractéristique est
+    transition) de passer de l'état $s$ à l'état $s'$.  Cette caractéristique est
     toujours vrai par défintion d'une chaîne de Markov mais également par définition
     d'une probabilité.
     En effet, la matrice $\mathbf{P}$ contient toutes les rélations possibles entre
     tous les états du système ($S \times S$).  Une ligne représente donc toutes les 
-    relations possible entre un état (définit par la ligne actuelle) et tous les autres
+    relations possibles entre un état (définit par la ligne actuelle) et tous les autres
     état du système (les $S$ colonnes).  La probabilité de passer de l'état actuel
     à n'importe quel autre état du système est donc égal à $1$ (par définition d'une probabilité).
     Avec ce même raisonnement, il est logique de se rendre compte que la matrice
@@ -291,76 +291,189 @@ rdetobel@ulb.ac.be}
       connexe pourrait être: $\{vol, att., dec., sol\}$
       
     \subsubsection{Composante fortement connexe}
-      Une composante fortement connexe désigne le plus grand sous-ensemble 
-      d'état $T$ fortement connexe. Cette notion est abrégé \textit{SCC} 
-      (``Strongly Connected Component'' en anglais).\\
-      Si l'on reprend l'ensemble fortemetn connexe présenté dans le sous-point
-      précédent et que l'on rajoute l'état: $ctr.$, on obtient le SCC suivant:
-      $$\{vol, att., dec., sol, ctr.\}$$
+      Une composante fortemment connexe est abrégé \textit{SCC} (``Strongly
+      Conntected Component'' en anglais) et est définit tel que pour un état
+      $s \in S$, sa compostante fortement connexe est le plus grand ensemble
+      $U$ au sens de l'inclusion tel que $s \in U$ et $U$ est fortement connexe.\\
+      Nottons au passage, que $S$ est partitionnable en $\{U_1, \ldots, U_n\}$ tel que :
+      \begin{itemize}
+	\item $\forall i \in \{1, \ldots, n\} : U_i$ est connexe ;
+	\item $\forall (i, j) \in \{1, \ldots, n\}^2 : i \neq j \Rightarrow U_i \cap U_j = \emptyset$.
+      \end{itemize}
       
     \subsubsection{BSCC}
+      \label{bscc}
       \textit{BSCC} signifie ``Bottom Strongly Connected Component'' en anglais.
       Une \textit{BSCC} de $\mathcal{M}$ est une composante fortement connexe 
-      (SCC) $T$ tel que aucun état en dehors de $T$ n'est accèssible.  De manière
+      (SCC) $T$ tel que aucun état en dehors de $T$ n'est pas accèssible.  De manière
       plus formel, cela signifie que $\forall i \in T$:
       $$\sum\limits_{t \in T} \mathbf{P}(i, t) = 1$$
-      Il est important de noté qu'une fois que l'état actuel se retrouve dans une
-      BSCC, il est impossible d'en sortir et tous les états sont infiniment visité
-      avec une probabilité de 1.\\ % TODO revoir la formulation
-      L'exemple du point \ref{exemple} a pour seule BSCC: $\{h.s.\}$ (qui 
+      Il est important de noter qu'une fois que l'état actuel se retrouve dans une
+      BSCC, il est impossible d'en sortir.  Cela signifie qu'après un nombre fini
+      ou infini dénombrable d'étape, on sera toujours dans un état présent dans le BSCC
+      pour autant que l'on ai commencé dans ce BSCC.\\
+      L'exemple du point \ref{exemple} a pour seul BSCC: $\{h.s.\}$ (qui 
       est donc uniquement composé d'un seul état).
-      
-      
-    % TODO illustrer avec l'exemple
   
   \subsection{Distribution stationnaire}
-    Lorsque l'on se trouve dans un état étant lui même dans un BSCC, il est impossible de 
-    quitter ce BSCC.  La probabilité dans une chaîne de Markov de se retrouver dans un état
-    présent dans le BSCC après une infinité de changement d'état est donc de 1.  Cependant
-    tous les états présent dans ce BSCC n'ont pas la même probabilité d'être sélectionné.\\
-    On estime qu'on se trouve dans une distribution stationnaire lorsqu'un changement d'état
-    supplémentaire ne modifie pas les valeurs de probabilité de chaque état.  De manière plus 
-    formel, cela signifie qu'il existe un vecteur $v$ où chaque terme est compris entre 0 et 1,
-    tel que sa multiplication par la matrice de déplacement donne ce même vecteur.  C'est à dire:
-    $$v P = v$$
-    Où $v$ est le vecteur décrivant la distribution stationnaire et $P$ la matrice de déplacement.
+    Comme vu au point \ref{bscc}, la probabilité de se retrouver dans un état
+    présent dans un BSCC après un nombre fini ou infini dénombrable d'étape est
+    toujours de 1 (pour autant que l'on ai commencé dans un état lui même présent
+    dans ce BSCC).  Remarquons cependant que chaque état présent dans ce BSCC n'a 
+    pas la même probabilité d'être visité.  En effet, certains états seront 
+    visités plus souvent que d'autres.
+    On définit la distribution stationnaire comme étant un vecteur de probabilité
+    $\mathbf{v}$ tel que:
+    $$\mathbf{v}\mathbf{P} = \mathbf{v}$$
+    Et où pour chaque élément $\mathbf{v}_i \in \mathbf{v}, \mathbf{v}_i \in [0, 1]$.
+    Par définition d'un BSCC, la somme des probabilités de chaque état doit valoir 1
+    (car après un nombre fini ou infini dénombrable d'étape, on sera toujours dans
+    état présent dans ce même BSCC), on peut donc écrire:
+    $$\sum\limits_{\mathbf{v}_i \in \mathbf{v}} \mathbf{v}_i = 1$$
     
-    \subsubsection{Calcul de la distribution stationnaire}
-      \label{etat_stationnaire}
-      Il existe différentes façon de calculer l'état stationnaire d'une chaîne de Markov.
-      Plusieurs méthodes sont décrite dans le livre ``Introduction to Probability'' (\citep{IP}) 
-      dans le chapitre 11.\\
-      On sait que la somme des composants du vecteur $v$ décrivant la distribution stationnaire 
-      fait 1.  On peut donc écire:
-      $$v_1 + v_2 + ... + v_n = 1$$
-      Où $n$ est le nombre d'élément dans ce vecteur $v$.  On sait que multiplier ce vecteur $v$
-      avec le matrice de déplacement ne change pas les valeurs de ce vecteur.  On se retrouve donc
-      avec une multplication de matrice qui peut-être subdivisé en $n$ sous calcul (où $n$ est 
-      toujours le nombre d'élément dans ce vecteur $v$); plus l'équation décrite ci-dessus.  On a 
-      donc $n+1$ équation pour $n$ inconnue.  Le problème peut donc être résolu.\\
-      Une autre méthode consiste à fixer une des valeurs du vecteur $v$ et de ainsi trouver les 
-      autres valeurs du vecteur.  Une fois ces valeurs trouvées, il suffit de diviser tous les 
-      termes par la somme de ceux-ci.
-  
-  \subsection{Cas concret}
-    \label{casconcret}
-    Afin de rendre tous ces concepts plus concrèts, on va s'intéresser à un exemple décrivant
-    l'état d'un avion.
-    
-    \subsubsection{Caractéristiques}
-      La chaîne de Markov résultant de cette exemple à plusieurs propriété.  Tout
-      d'abord, cette chaîne de Markov contient plusieurs sous partie fortement
-      connexe comme par exemple l'ensemble: \{en vol, attérissage, décollage,
-      au sol\}.  Cette ensemble reste fortemment connexe si l'on ajoute l'état
-      ``contrôle''.  On a donc l'ensemble: \{en vol, attérissage, décollage,
-      au sol, contrôle\} qui en plus d'être fortemment connexe est un SCC.
-      Cette chaîne contient également un BSCC formé uniquement de l'état 
-      ``Hors Service''.\\
-      Pour faire en sorte que toute la chaîne de Markov soit un BSCC, il suffirait
-      par exemple de permettre à l'état ``Hors service'' de rejoindre à nouveau l'état
-      ``contrôle''.  On pourrait par exemple imaginer qu'il y a une chance sur 100 qu'un
-      avion hors service soit repris au contrôle et soit de nouveau utilisable.
-  
+    \subsubsection{Caclul de la distribution stationnaire}
+      Nous allons définir le calcul de la distribution stationnaire à travers 
+      un exemple.  Malheureusement, il n'est pas possible de reprendre l'exemple
+      présenté en point \ref{exemple} car le calcul de la distribution stationnaire 
+      de son BSCC est trivial (vu qu'il n'en exsite qu'un seul) et vaut 1.
+      Nous allons donc légèrement modifier cet exemple en considèrant maintenant 
+      que tous les avions \textit{hors service} seront tous réparés (avec une 
+      probabilité de 1 donc) et à nouveau mis dans l'état \textit{au sol}.  
+      Ce nouvel exemple sera noté $\mathcal{M}'$.
+      La matrice de transition de $\mathcal{M}'$ sera donc:
+      $$ \mathbf{P} = 
+	\begin{blockarray}{ccccccc}
+	& vol & dec. & att. & sol & ctr. & h.s. \\
+	  \begin{block}{c(cccccc)}
+	    vol  & 0 & 0 & 1 & 0    & 0   & 0    \\
+	    dec. & 1 & 0 & 0 & 0    & 0   & 0    \\
+	    att. & 0 & 0 & 0 & 2/3  & 1/3 & 0    \\
+	    sol  & 0 & 1 & 0 & 0    & 0   & 0    \\
+	    ctr. & 0 & 0 & 0 & 9/10 & 0   & 1/10 \\
+	    h.s. & 0 & 0 & 0 & 1    & 0   & 0    \\
+	  \end{block}
+	\end{blockarray}
+      $$
+      Et sa représentation graphique:
+      \begin{center}
+	\begin{tikzpicture}
+	  % Draw the states
+	  \colornode[text width=1.7cm] (vol) {En vol};
+	  
+	  \colornode[below left=of vol] (att) {Attérissage};
+	  \bigcolornode[below right=of vol] (dec) {Décollage};
+	  
+	  \bigcolornode[below right=of att] (sol) {Au sol};
+
+	  \bigcolornode[below left=of sol] (ctr) {Contrôle};
+	  \colornode[right=of ctr] (hs) {Hors service};
+
+	  % Connect the states with arrows
+	  \drawedge
+	    (vol) edge[bend right, auto=right] node {1} (att)
+	    (dec) edge[bend right, auto=right] node {1} (vol)
+	    (sol) edge[bend right, auto=right] node {1} (dec)
+	    (att) edge[bend right, auto=right] node {2/3} (sol)
+	    (att) edge[bend right, auto=right] node {1/3} (ctr)
+	    (ctr) edge[bend right, auto=left] node {9/10} (sol)
+	    (ctr) edge[bend right, auto=right] node {1/10} (hs)
+	    (hs) edge[bend right] node [left] {1} (sol);
+	  \draw [->, line width=0.4mm, fill=gray, draw=gray] (1.6,-5.4) -- (sol);
+	\end{tikzpicture}
+      \end{center}
+      Le BSCC de la matrice $\mathcal{M}'$ contiendra donc tous les états de cette 
+      chaîne de Markov.  Le calcul de la distribution stationnaire nous permet
+      de savoir la probabilité qu'a chaque état (présent dans ce BSCC) d'être visité.
+      La distribution stationnaire de la matrice $\mathcal{M}'$, sera donc définit
+      par le vecteur $\mathbf{v}$ tel que:
+      \begin{align*}
+	\mathbf{v} . \mathbf{P} &= \mathbf{v}\\
+	\begin{blockarray}{(c)}
+	  \mathbf{v}_{vol}\\
+	  \mathbf{v}_{dec.}\\
+	  \mathbf{v}_{att.}\\
+	  \mathbf{v}_{sol}\\
+	  \mathbf{v}_{ctr.}\\
+	  \mathbf{v}_{h.s.}
+	\end{blockarray}^T .
+	\begin{blockarray}{(cccccc)}
+	    0 & 0 & 1 & 0    & 0   & 0    \\
+	    1 & 0 & 0 & 0    & 0   & 0    \\
+	    0 & 0 & 0 & 2/3  & 1/3 & 0    \\
+	    0 & 1 & 0 & 0    & 0   & 0    \\
+	    0 & 0 & 0 & 9/10 & 0   & 1/10 \\
+	    0 & 0 & 0 & 1    & 0   & 0    \\
+	\end{blockarray}
+	&= 
+	\begin{blockarray}{(c)}
+	  \mathbf{v}_{vol}\\
+	  \mathbf{v}_{dec.}\\
+	  \mathbf{v}_{att.}\\
+	  \mathbf{v}_{sol}\\
+	  \mathbf{v}_{ctr.}\\
+	  \mathbf{v}_{h.s.}
+	\end{blockarray}^T
+      \end{align*}
+      et où:
+      $$\mathbf{v}_{vol} + \mathbf{v}_{dec.} + \mathbf{v}_{att.} + \mathbf{v}_{sol} + 
+	\mathbf{v}_{ctr.} + \mathbf{v}_{h.s.} = 1$$
+      Calculer une équation où les inconnues se trouve de part et d'autre de l'égalité
+      n'est pas une chose aisée, notons également que peu de solveur acceptent les 
+      problèmes écrit de cette façon.  Il est donc possible de réécrire cette égalité
+      de plusieurs manières différentes.  Le livre  ``Introduction to Probability'' 
+      de \cite{IP} nous en présentes quelques une dans le chapitre 11.
+      Dans cet article nous utiliserons une matrice identité $\mathbf{I}$ tel que:
+      \begin{align*}
+       \mathbf{v} . \mathbf{P} &= \mathbf{v}\\
+       \mathbf{v} . \mathbf{P} &= \mathbf{v} . \mathbf{I}\\
+       \mathbf{v} . \mathbf{P} - \mathbf{v}. \mathbf{I} &= 0\\
+       \mathbf{v} . (\mathbf{P} - \mathbf{I}) &= 0
+      \end{align*}
+      On se retrouve donc avec un système d'équation plus ``classique'' (où chaque 
+      équation correspond à une constante):
+      $$\begin{blockarray}{(c)}
+	  \mathbf{v}_{vol}\\
+	  \mathbf{v}_{dec.}\\
+	  \mathbf{v}_{att.}\\
+	  \mathbf{v}_{sol}\\
+	  \mathbf{v}_{ctr.}\\
+	  \mathbf{v}_{h.s.}
+	\end{blockarray}^T .
+	\begin{blockarray}{(cccccc)}
+	    -1 & 0  & 1  & 0    & 0   & 0    \\
+	    1  & -1 & 0  & 0    & 0   & 0    \\
+	    0  & 0  & -1 & 2/3  & 1/3 & 0    \\
+	    0  & 1  & 0  & -1   & 0   & 0    \\
+	    0  & 0  & 0  & 9/10 & -1  & 1/10 \\
+	    0  & 0  & 0  & 1    & 0   & -1    \\
+	\end{blockarray}
+	= 
+	\begin{blockarray}{(c)}
+	  0\\
+	  0\\
+	  0\\
+	  0\\
+	  0\\
+	  0
+	\end{blockarray}^T$$
+      Qui peut être décomposé en sous-équation:
+      \begin{align*}
+       \mathbf{v}_{vol} . -1 &+ \mathbf{v}_{dec.} . 1 &+ &\mathbf{v}_{att.} . 0 &+ ... &+ \mathbf{v}_{h.s} . 0 &= 0\\
+       \mathbf{v}_{vol} . 0 &+ \mathbf{v}_{dec.} . -1 &+ &\mathbf{v}_{att.} . 0 &+ ... &+ \mathbf{v}_{h.s} . 0 &= 0\\
+       & & ... & & & &= 0\\
+       \mathbf{v}_{vol} . 0 &+ \mathbf{v}_{dec.} . 0 &+ &\mathbf{v}_{att.} . 0 &+ ... &+ \mathbf{v}_{h.s} . -1 &= 0\\
+      \end{align*}
+      Toutes les equations définissant la distribution stationnaire ont donc  la même forme:
+      $$\mathbf{v}_{vol} + \mathbf{v}_{dec.} + \mathbf{v}_{att.} + \mathbf{v}_{sol} + 
+	\mathbf{v}_{ctr.} + \mathbf{v}_{h.s.} = 1$$
+      La résolution de ce système d'équation nous permet donc de trouver la distribution
+      stationnaire de notre chaîne de Markov $\mathcal{M}'$ qui vaut donc:
+      \begin{align*}
+       \mathbf{v} &= (\mathbf{v}_{vol}; \mathbf{v}_{dec.}; \mathbf{v}_{att.}; \mathbf{v}_{sol}; 
+	  \mathbf{v}_{ctr.}; \mathbf{v}_{h.s.})\\
+      \mathbf{v} &= (0,229; 0,229; 0,229; 0,229; 0,0763; 0,0076)
+      \end{align*}
+      
   
 %%%%%%%%%%%%%% SECTION %%%%%%%%%%%%%%
 \section{Modélisation}
