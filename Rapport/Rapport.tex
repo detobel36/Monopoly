@@ -294,9 +294,9 @@ rdetobel@ulb.ac.be}
       connexe pourrait être: $\{vol, att., dec., sol\}$
       
     \subsubsection{Composante fortement connexe}
-      Une composante fortemment connexe est abrégé \textit{SCC} (``Strongly
+      Une composante fortement connexe est abrégé \textit{SCC} (``Strongly
       Conntected Component'' en anglais) et est définit tel que pour un état
-      $s \in S$, sa compostante fortement connexe est le plus grand ensemble
+      $s \in S$, sa composante fortement connexe est le plus grand ensemble
       $U$ au sens de l'inclusion tel que $s \in U$ et $U$ est fortement connexe.\\
       Nottons au passage, que $S$ est partitionnable en $\{U_1, \ldots, U_n\}$ tel que :
       \begin{itemize}
@@ -308,7 +308,7 @@ rdetobel@ulb.ac.be}
       \label{bscc}
       \textit{BSCC} signifie ``Bottom Strongly Connected Component'' en anglais.
       Une \textit{BSCC} de $\mathcal{M}$ est une composante fortement connexe 
-      (SCC) $T$ tel que aucun état en dehors de $T$ n'est pas accèssible.  De manière
+      (SCC) $T$ tel que aucun état en dehors de $T$ n'est pas accessible.  De manière
       plus formel, cela signifie que $\forall i \in T$:
       $$\sum\limits_{t \in T} \mathbf{P}(i, t) = 1$$
       Il est important de noter qu'une fois que l'état actuel se retrouve dans une
@@ -319,6 +319,7 @@ rdetobel@ulb.ac.be}
       est donc uniquement composé d'un seul état).
   
   \subsection{Distribution stationnaire}
+    \label{distribution_stationnaire}
     Comme vu au point \ref{bscc}, la probabilité de se retrouver dans un état
     présent dans un BSCC après un nombre fini ou infini dénombrable d'étape est
     toujours de 1 (pour autant que l'on ai commencé dans un état lui même présent
@@ -495,10 +496,12 @@ rdetobel@ulb.ac.be}
     résultat d'un lancé de dé. 
   
   \subsection{Modélisation}
+    \label{modeliation_monopoly}
     Comme dit dans le point précédent, le Monopoly peut être modélisé par une chaîne de
-    Markov.  Plus concrètement, chaque case sera numérotée et représentera un état de 
-    la chaîne de Markov.  L'état 2 de la chaîne de Markov représente le fait que le
-    pion se trouve sur la case \textit{caisse de communauté}.
+    Markov et plus particulièrement par un BSCC.  Plus concrètement, chaque case sera 
+    numérotée et représentera un état de la chaîne de Markov.  L'état 2 de la chaîne 
+    de Markov représente le fait que le pion se trouve sur la case \textit{caisse de 
+    communauté}.
     \begin{figure}[h]
       \centering
       \includegraphics[scale=0.4]{./Images/Monopoly.png}
@@ -647,7 +650,7 @@ rdetobel@ulb.ac.be}
       sur 36 d'apparaître.
       % TODO Question Randour: faut-il plus développer ?
     
-  \subsection{Case prison}
+  \subsection{Case \textit{prison}}
     \label{case_prison}
     Les règles du Monopoly stipulent que l'on peut sortir de prison de 
     plusieurs manières différentes: soit via une carte chance, soit en 
@@ -677,10 +680,13 @@ rdetobel@ulb.ac.be}
     \end{itemize}
     
   \subsection{Cases \textit{chance}}
-    Les cases chances peuvent faire gagner de l'argent mais également 
-    déplacer les pions présent sur le plateau de jeu.  C'est évidemment 
-    ce second comportement qui sera étudier ici.  Le Monopoly comporte 
-    16 cartes chances ayant la répartition suivante:
+    Les cases chances font piocher une carte dans le paquet des
+    cartes \textit{chance}.  On suppose que chaque carte a la 
+    même probabilité d'être piochée. Ces cartes peuvent faire gagner de 
+    l'argent mais également déplacer les pions présent sur le plateau 
+    de jeu.  C'est évidemment ce second comportement qui sera étudier 
+    ici.  Le Monopoly comporte 16 cartes chances ayant la répartition 
+    suivante:
     \begin{itemize}
      \item 8 cartes faisant référence à des payements;
      \item une carte \textit{sortir de prison};
@@ -702,188 +708,28 @@ rdetobel@ulb.ac.be}
     chances ont donc beaucoup d'arêtes.
     
   \subsection{Cases \textit{caisse de communauté}}
-    Les cartes \textit{caisse de communauté} sont plus axés sur l'aspect 
-    financier du jeu. Cependant 3 cartes provoques également des déplacements 
-    des pions:
+    Comme les cases \textit{chance}, les cases \textit{caisse de 
+    communauté} font piocher une carte du même nom dans les mêmes
+    condition que les cartes \textit{chance}.  Les cartes 
+    \textit{caisse de communauté} sont plus axés sur l'aspect 
+    financier du jeu. Cependant 3 cartes provoques également des 
+    déplacements des pions:
     \begin{itemize}
      \item se rendre à la case départ;
      \item aller en prison;
      \item se rendre sur le première case.
     \end{itemize}
-    La modélisation des cartes \textit{caisse de communauté} se fait de la 
-    même manière que les cartes \textit{chance}.
+    La modélisation des cases \textit{caisse de communauté} se fait de la 
+    même manière que les cases \textit{chance}.
     
-  \subsection{Calcul de l'état stationnaire}
-    Comme vu dans le point \ref{etat_stationnaire}, il est possible de calculer
-    la distribution stationnaire de chaque case du Monopoly.  Pour se faire, on va
-    se basé sur une des méthodes décrite dans ce même point, à savoir simplifier la
-    fonction de base:
-    \begin{align*}
-     wP &= w\\
-     wP &= wI\\
-     w(P-I) &= 0
-    \end{align*}
-    Où $w$ est le vecteur stationnaire que l'on cherche, $P$ est la matrice de 
-    déplacement et $I$ est la matrice identité.  On peut également noté cette 
-    equation de la façon suivante:
-    $$(P-I)^{T} w^{T} = 0$$
-    Qui sera plus simple à implémenté dans un langage informatique.\\
-    % TODO expliquer pourquoi ce sera plus simple (résolution linéaire)
-    On peut également rajouter une colonne de 1 permettant d'intégrer directement la 
-    contrainte suivante dans l'équation:
-    $$\sum\limits_{i \in w} i = 1$$
-    Cette équation part du simple principe que le vecteur résultat sera la distribution 
-    de probabilité de chaque état.  Il faut donc que leur somme corresponde à 1 vu 
-    que l'on exprime la probabilité de se trouver sur tous les états accèssibles, il y
-    a donc une probabilié 1 de se trouver sur les états présent dans le vecteur résultat 
-    (plus d'informations dans le point \ref{etat_stationnaire}).
-    \paragraph{Avec un exemple concret}
-    Prenons la matrice de déplacement suivante:
-    % TODO exemple très mauvais !!!  Ce n'est pas une chaine de markov !
-    \begin{align*} 
-      wP = w\\ 
-      % === NEW LINE ===
-      % > w
-      \left( 
-	\begin{array}{ccc}
-	w_1 & w_2 & w_3
-	\end{array} 
-      \right) 
-      % > p
-      \left( 
-	\begin{array}{ccc}
-	1 & 0 & 1 \\
-	2 & 0 & 0 \\
-	0 & 1 & 3 
-	\end{array} 
-      \right)
-      = 
-      % > w
-      \left( 
-	\begin{array}{ccc}
-	w_1 & w_2 & w_3
-	\end{array} 
-      \right)  
-      \\
-      % === NEW LINE ===
-      % w 
-      \left( 
-	\begin{array}{c}
-	w_1\\
-	w_2\\
-	w_3
-	\end{array} 
-      \right)^T
-      % (
-      \left(
-        % P
-	\left(
-	\begin{array}{ccc}
-	1 & 0 & 1 \\
-	2 & 0 & 0 \\
-	0 & 1 & 3 
-	\end{array} 
-	\right)
-	-
-	% I
-	\left(
-	\begin{array}{ccc}
-	1 & 0 & 0 \\
-	0 & 1 & 0 \\
-	0 & 0 & 1 
-	\end{array} 
-	\right)
-      % )
-      \right)
-      = 0
-      \\ 
-      % === NEW LINE ===
-      % w
-      \left( 
-	\begin{array}{ccc}
-	w_1 & w_2 & w_3
-	\end{array} 
-      \right)
-      % (P-I)
-      \left( 
-	\begin{array}{ccc}
-	0 & 0 & 1 \\
-	2 & -1 & 0 \\
-	0 & 1 & 2 
-	\end{array} 
-      \right) 
-      = 
-      % 0
-      \left( 
-	\begin{array}{ccc}
-	0 & 0 & 0
-	\end{array} 
-      \right)
-      \\
-      % === NEW LINE ===
-      % (P-I)^T
-      \left( 
-	\begin{array}{ccc}
-	0 & 0 & 1 \\
-	2 & -1 & 0 \\
-	0 & 1 & 2 
-	\end{array} 
-      \right)^T
-      % w
-      \left( 
-	\begin{array}{c}
-	w_1\\
-	w_2\\
-	w_3
-	\end{array} 
-      \right)
-      = 
-      % 0
-      \left( 
-	\begin{array}{c}
-	0\\
-	0\\
-	0
-	\end{array} 
-      \right)
-    \end{align*}
-    On ajoute donc la colonne de 1:
-    \begin{align*}
-      \left( 
-	\begin{array}{cccc}
-	0 & 0 & 1 & 1 \\
-	2 & -1 & 0 & 1 \\
-	0 & 1 & 2 & 1
-	\end{array} 
-      \right)^T 
-      \left( 
-	\begin{array}{c}
-	w_1\\
-	w_2\\
-	w_3
-	\end{array} 
-      \right)
-      = 
-      \left( 
-	\begin{array}{c}
-	0\\
-	0\\
-	0\\
-	1
-	\end{array} 
-      \right)
-    \end{align*}
+  \subsection{Probabilité de visiter une case}
+    Comme introduit dans le point \ref{modeliation_monopoly}, le Monopoly
+    peut être vu comme une chaîne de Markov et plus particulièrement un
+    BSCC.  On va donc utilisé la distribution stationnaire (présenté dans
+    le point \ref{distribution_stationnaire}) afin de connaître la
+    probabilité de visité chaque case et en déduire quel est la case la
+    plus visitée.
     
-    
-  \subsection{Choix du langage}
-    Pour modéliser le Monopoly, le langage Python a été choisi.  Il permet en effet
-    d'avoir accès facilement à plusieurs librairies permettant de manipuler
-    facilement des données.
-    
-    \subsubsection{Libraires utilisées}
-      Pour manipuler plus facilement des matrices et résoudre les équations linéaire,
-      la librairie ''numpy`` a été utilisé.  Concernant l'interface graphique, c'est
-      la librairie ''Tkinter`` qui a été sélectionnée.
     
 \section{Résultat}
 
