@@ -41,6 +41,9 @@ rdetobel@ulb.ac.be}
 % - Résultats
 % - Conclusion
 
+% TODO question: lorsque l'on a fait 2 doubles et qu'on a une carte chance qui nous déplace... On a
+% toujours 2 doubles à notre actif ou pas ? (de préférence oui, on perd)
+
 
 \begin{document}
 \maketitle
@@ -597,34 +600,45 @@ rdetobel@ulb.ac.be}
       développement de ce polynôme.
     
   \subsection{Faire un double}
-    % TODO un nombre indéfinit de dés... toujours un double où tous les dés les mêmes ?
-    Les règles du Monopoly stipulent que lorsque l'on fait 3 doubles à la suite, on est
-    envoyé en prison.  Pour modéliser ce comportement via une chaîne de Markov, il va 
-    falloir triplé le nombre d'état.  En effet, une case $i$ peut être visité après avoir
-    fait 0 double, 1 double ou 2 double.  Si de cette case $i$ on refaire encore un double,
-    on se retrouve en case prison.  Si par contre on fait un simple nombre, on se retrouve
-    de nouveau sur la case $i$ ``zero double''.  Il est assez simple de se rendre compte de
-    ça via la figure \ref{representation_double}.  Sur cette image, on peut donc voir en 
-    rouge les déplacements fait grace à des doubles.  Ces 3 lignes rouges montre
-    donc le déplacement d'un joueur qui aurait lancé les dés et fait consécutivement 3 doubles,
-    à savoir ici: $1+1$, $2+2$ et $6+6$.  Ce dernière double le conduit directement en prison.
-    Les flèches bleus montrent ce qu'il se passe lorsque l'on fait un simple déplacement (pas un double).
-    Elles vont toutes vers la même plateau (celui où on a encore fait zero double).
-    \begin{figure}[h]
-      \centering
-      \includegraphics[scale=0.4]{./Images/MonopolyVertical.png}
-	\caption{Déplacement en cas de double}
-	\label{representation_double}
-    \end{figure}
-    % TODO question: lorsque l'on a fait 2 doubles et qu'on a une carte chance qui nous déplace... On a
-    % toujours 2 doubles à notre actif ou pas ?
-    Pour savoir si un nombre est un double, il suffit de vérifier que le nombre est divisible
-    par le nombre de dés.  Il faut cependant bien tenir compte du fait qu'il y a plusieurs
-    moyen de former un nombre.  Par exemple, avec deux dés, il y a trois manières différentes
-    de former un 4: $1+3$, $2+2$ et $3+1$.  Il y a donc 3 chance sur 36 de faire un 4 mais
-    seulement une sur 36 de faire un double et 2 sur 36 de faire un simple 4 avec deux dés
-    différents.
-    Dans le point % TODO
+    Les règles du Monopoly stipulent que lorsque l'on fait 3 doubles 
+    consécutifs, on est directement envoyé en prison.
+    \subsubsection{Modélisation}
+      Pour modéliser ce comportement via une 
+      chaîne de Markov, il faut tripler le nombre d'état.  En effet, une case 
+      $i$ peut être visitée après avoir fait 0 double, 1 double ou 2 double.  
+      On peut donc représenter cela comme 3 plateaux de jeux parallèle comme
+      montré sur la figure \ref{representation_double}.  A chaque fois que l'on
+      fait un double, on se retrouve à un niveau ``plus bas'' (sur l'image).  
+      On a donc 3 niveaux: 0 où aucun double n'a encore été fait, 1 où le coup 
+      précédent était un double et le niveau 2 où les deux coups précédent 
+      étaient des doubles. Lorsque l'on faire un 3\up{ème} double, on se 
+      retrouve directement en prison.  Les flèches en rouges sur la figure nous 
+      montrent les déplacements fait lorsque l'on obtient trois doubles 
+      consécutifs, à savoir dans le cas présent: $1+1$, $2+2$ et $6+6$.  Les 
+      flèches bleus nous montrent ce qu'il se passe lorsque l'on obtient un 
+      simple nombre (pas un double).  Elles sont toutes dirigées vers le 
+      plateau le plus haut sur l'image, c'est-à-dire celui où l'utilisateur 
+      n'a pas encore fait de double.
+      \begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{./Images/MonopolyVertical_legende.png}
+	  \caption{Déplacement en cas de double}
+	  \label{representation_double}
+      \end{figure}
+    \subsubsection{Probabilité de faire un double}
+      Comme vu dans le point \ref{repart_des}, il serait intéressant de 
+      pouvoir modéliser le Monopoly pour $n$ dés.  Il faut donc d'abord
+      définir ce qu'est un \textit{double}.  Dans cet article, on va
+      considéré que le joueur aura fait un double (au sens du Monopoly)
+      si tous les nombres indiqué par les dés sont les mêmes.  Par 
+      définition se nombre est donc divisible par le nombre de dés.
+      Il faut cependant bien tenir compte du fait qu'il y a plusieurs
+      manière de former un même nombre.  Par exemple avec deux dés, 
+      il y a trois manières différentes de former le nombre $4$: 
+      $1+3$, $2+2$ et $3+1$.  Il y a donc 3 chance sur 36 de faire un 
+      $4$ mais seulement une chance sur 36 de faire un double et 2
+      sur 36 de faire un simple 4 avec deux dés différents.
+      % TODO Question Randour: faut-il plus développer ?
     
   \subsection{Case prison}
     \label{case_prison}
@@ -639,7 +653,7 @@ rdetobel@ulb.ac.be}
     La case ''aller en prison`` sera donc considérée comme une case prison de niveau 0 et
     n'aura qu'une seule arrête visant la case ''prison premier tour``.
     Afin d'être le plus précis possible, on va calculer la probabilité de faire un double.
-    Comme vu dans la \fullref{repart_des}, il y a 36 cas possible lorsque l'on lance 
+    Comme vu dans la \ref{repart_des}, il y a 36 cas possible lorsque l'on lance 
     2 dés à 6 faces.  On sait qu'il y a 6 doubles.  On a donc 6 chance sur 36 de faire un
     double et chaque double: $2$, $4$, $6$, $8$, $10$ et $12$ ont chacun une chance sur 36
     d'apparaitre.  Si on ne fait pas de double (dans 5 cas sur 6), on doit relancer les 
