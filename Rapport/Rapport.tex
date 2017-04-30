@@ -473,39 +473,44 @@ rdetobel@ulb.ac.be}
 	  \mathbf{v}_{ctr.}; \mathbf{v}_{h.s.})\\
       \mathbf{v} &= (0,229; 0,229; 0,229; 0,229; 0,0763; 0,0076)
       \end{align*}
-      
   
 %%%%%%%%%%%%%% SECTION %%%%%%%%%%%%%%
 \section{Modélisation}
 
   \subsection{Plateau de jeux}
-    Les plateaux de jeux peuvent être modélisé comme des chaînes de Markov.  En effet, on peut 
-    voir la position d'un point comme l'état d'un système.  Dans ce type de jeu (comme 
-    par exemple le jeu de l'oie) la position du pion dépendra seulement de la case où il 
-    se trouvait précédemment et du nombre de case qu'il doit parcourrir (dû par exemple 
-    au lancement d'un dé ou à l'indication présente sur la case où le pion se trouvait).
-    Les jeux de plateau où le déplacement des pionts n'influancent pas directement la 
-    victoire d'un joueur et où chaque case du plateau de jeu peut être visité tout 
-    au long de la partie, peuvent être vu comme des BSCC.  
+    Plusieurs jeux de plateau peuvent être modélisés à travers une chaîne de Markov,
+    comme par exemple avec le jeu de l'oie ou le Monopoly.  Dans ces jeux,
+    la position du pion dépend uniquement de la case où il se trouvait précédemment.
+    Comme vu dans le point \ref{def_chaine_markov}, les chaînes de Markov permettent
+    de modéliser l'évolution de l'état d'un système.  La plus part du temps, dans
+    la modélisation des jeux de plateau, on utilise la position du pion (sur le plateau)
+    comme représentant l'état du système.  Cet état évolue donc avec le déplacement du
+    pion.  La chaîne de Markov permet de prédir la probabilité que ce pion se retrouve
+    sur une case donnée.  Les chaînes de Markov sont également basés sur le fait que 
+    l'évolution du système est dû à des événements aléatoires.  Il faut donc que le
+    déplacement du pion soit lié à ces événements (aléatoires) comme par exemple le 
+    résultat d'un lancé de dé. 
   
   \subsection{Modélisation}
-    Le Monopoly peut en effet être vu comme une chaîne de Markov.  En effet, comme décrit
-    ci-dessus, on peut voir la position d'un point comme l'état d'un système.  Plus 
-    concrètement, chaque case sera numérotée et représentera un état de la chaîne de Markov.
+    Comme dit dans le point précédent, le Monopoly peut être modélisé par une chaîne de
+    Markov.  Plus concrètement, chaque case sera numérotée et représentera un état de 
+    la chaîne de Markov.  L'état 2 de la chaîne de Markov représente le fait que le
+    pion se trouve sur la case \textit{caisse de communauté}.
     \begin{figure}[h]
       \centering
       \includegraphics[scale=0.4]{./Images/Monopoly.png}
-	\caption{Numéroation du Monopoly \citep{IMG_Monopoly}}
+	\caption{Numéroation du Monopoly (basé sur une image venant du site 
+	\cite{IMG_Monopoly})}
     \end{figure}
     
-    Chaque déplacement du piont (c'est-à-dire à chaque fois que l'on lance le dé) sera 
+    Chaque déplacement du pion (c'est-à-dire à chaque fois que l'on lance le dé) sera 
     traduit par un changement d'état.
     Dans un premier temps, on modélise donc le Monopoly par 40 cases où chaque case est
-    relié aux $6*n-(n-1)$ cases suivante à partir de la case $n-1$, où $n$ est le 
-    nombre de dé.  Dans le cas précis des règles du Monopoly, chaque case pourra 
-    donc accéder à 11 autres cases.  En effet, le résultat le plus petit pouvant être 
-    produit par $n$ dés est de $n$ (tous les dé à 1).
-    On devra donc élminer toutes les $n-1$ cases juste après la case actuelle et le résultat
+    reliée aux $6*n-(n-1)$ cases suivante à partir de la case $n-1$, où $n$ est le 
+    nombre de dé.  Dans le cas précis des règles du Monopoly (donc lorsque $n = 2$), 
+    chaque case pourra donc accéder à 11 autres cases.  En effet, le résultat le plus 
+    petit pouvant être produit par $n$ dés est de $n$ (tous les dé à 1).
+    On devra donc éliminer toutes les $n-1$ cases juste après la case actuelle et le résultat
     le plus grand pouvant être produit par $n$ dés est de $6*n$ (pour un dé à 6 faces).
     \begin{center}
       \begin{tikzpicture}
@@ -524,11 +529,11 @@ rdetobel@ulb.ac.be}
         
       \end{tikzpicture}
     \end{center}
-    Cependant, certaines cases ont un comportement particulier comme
-    par exemple la case ``aller en prison'' sur laquelle on ne peut pas rester; en effet,
-    celle-ci nous redirige directement dans la prison.  La case ``chance'' et ``caisse de
-    communauté'' sont égalements des cas particuliers qui font que le Monopoly n'est pas 
-    équiréparti.
+    Cependant, certaines cases ont un comportement particulier comme par exemple la 
+    case \textit{aller en prison}, la case \textit{chance} ou encore la case
+    \textit{caisse de communauté}.  Les déplacements possibles à partir de ces cases
+    ne sont pas les mêmes que pour les autres cases et seront donc étudier dans les 
+    points suivant.
     
   \subsection{Répartition des dés}
     \label{repart_des}
