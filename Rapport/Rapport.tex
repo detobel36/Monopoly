@@ -550,6 +550,8 @@ rdetobel@ulb.ac.be}
     de chaque dés.  Cette figure nous montre donc toutes les combinaisons possible en
     lançant deux dés (et donc toutes les valeurs possibles).  On remarque par exemple
     qu'il y a 4 façon de faire un $5$ alors qu'il n'y a qu'une façon de faire un $2$.
+    Cette image nous confirme également bien qu'il y a 36 combinaisons possibles 
+    lorsqu'on lance 2 dés.
     \begin{figure}[h]
       \centering
       \includegraphics[scale=0.4]{./Images/RepartitionDes.jpg}
@@ -603,6 +605,7 @@ rdetobel@ulb.ac.be}
     Les règles du Monopoly stipulent que lorsque l'on fait 3 doubles 
     consécutifs, on est directement envoyé en prison.
     \subsubsection{Modélisation}
+      \label{modelisation_double}
       Pour modéliser ce comportement via une 
       chaîne de Markov, il faut tripler le nombre d'état.  En effet, une case 
       $i$ peut être visitée après avoir fait 0 double, 1 double ou 2 double.  
@@ -626,6 +629,7 @@ rdetobel@ulb.ac.be}
 	  \label{representation_double}
       \end{figure}
     \subsubsection{Probabilité de faire un double}
+      \label{prob_double}
       Comme vu dans le point \ref{repart_des}, il serait intéressant de 
       pouvoir modéliser le Monopoly pour $n$ dés.  Il faut donc d'abord
       définir ce qu'est un \textit{double}.  Dans cet article, on va
@@ -636,36 +640,43 @@ rdetobel@ulb.ac.be}
       manière de former un même nombre.  Par exemple avec deux dés, 
       il y a trois manières différentes de former le nombre $4$: 
       $1+3$, $2+2$ et $3+1$.  Il y a donc 3 chance sur 36 de faire un 
-      $4$ mais seulement une chance sur 36 de faire un double et 2
-      sur 36 de faire un simple 4 avec deux dés différents.
+      $4$ mais seulement une chance sur 36 de faire un double.
+      Pour une partie de Monopoly classique (où il y a donc seulement
+      deux dés), il y a 6 chance sur 36 de faire un double, à savoir:
+      $2$, $4$, $6$, $8$, $10$ et $12$.  Chaque double à une chance
+      sur 36 d'apparaître.
       % TODO Question Randour: faut-il plus développer ?
     
   \subsection{Case prison}
     \label{case_prison}
-    Les règles du Monopoly stipulent que l'on peut sortir de prison de plusieurs manières 
-    différentes: soit via une carte chance, soit en payant, soit en faisant un double.
-    Seule les deux dernières solutions seront utilisé dans cette modélisation.  En effet,
-    avoir une carte chance ne dépend pas uniquement de l'état précédent et ne peut donc
-    pas être représenté facilement avec les chaînes de Markov. Les règles indiquent 
-    également que l'on ne peut rester que 3 tours maximum avant d'être obligé de payer.
-    Afin de représenter ces différentes cas, la case prison sera ``triplée``.  On aura
-    donc trois représentations de la case prison: au premier, second et troisième tour.
-    La case ''aller en prison`` sera donc considérée comme une case prison de niveau 0 et
-    n'aura qu'une seule arrête visant la case ''prison premier tour``.
-    Afin d'être le plus précis possible, on va calculer la probabilité de faire un double.
-    Comme vu dans la \ref{repart_des}, il y a 36 cas possible lorsque l'on lance 
-    2 dés à 6 faces.  On sait qu'il y a 6 doubles.  On a donc 6 chance sur 36 de faire un
-    double et chaque double: $2$, $4$, $6$, $8$, $10$ et $12$ ont chacun une chance sur 36
-    d'apparaitre.  Si on ne fait pas de double (dans 5 cas sur 6), on doit relancer les 
-    dés (et donc avant ça, passer à la case prison ''suivante``).
-    Chaque case ''prison`` (les 3 cases cités ci-dessus) auront donc 8 arrêtes différentes:
+    Les règles du Monopoly stipulent que l'on peut sortir de prison de 
+    plusieurs manières différentes: soit via une carte chance, soit en 
+    payant, soit en faisant un double. Seul les deux dernières solutions 
+    seront utilisées dans cette modélisation. En effet, pour modéliser 
+    l'utilisation d'une carte permettant de sortir de prison, il faudrait, 
+    comme au point \ref{modelisation_double} dupliquer chaque case 
+    pour savoir si on est dans un état où l'on a une carte ou pas.  
+    Les règles indiquent également que l'on ne peut rester que 3 tours 
+    maximum avant d'être obligé de payer. Afin de représenter ces 
+    différentes cas, la case prison sera triplée. On aura donc trois 
+    représentations de la case prison: au premier, second et troisième 
+    tour. La case \textit{aller en prison} sera donc considérée comme 
+    une case prison de niveau 0 et n'aura qu'une seule arrête visant la 
+    case \textit{prison premier tour}. Comme vu au point \ref{prob_double}, 
+    il y a une probabilité de $6/36$ de faire un double.  Dans les 5 
+    autre cas sur 6, on doit relancer le dés et on passera sur la case 
+    prison \textit{suivante}. Une fois arrivé sur la dernière case 
+    prison, on est obligé de payer.\\
+    En résumé, il y a 7 déplacements possibles lorsque l'on sort de
+    prison:
     \begin{itemize}
-     \item Payer et sortir de prison;
-     \item Faire un double (et avancer du résultat de ce double), il y a donc 6 choix possibles;
-     \item Ne pas réussir à faire un double (et continuer attendre).
+      \item faire un double (et avancer du résultat de ce double), 
+	ce qui correspond à 6 déplacements;
+      \item payer et se retrouver sur la case \textit{prison visite 
+	uniquement}.
     \end{itemize}
     
-  \subsection{Case ''Chance``}
+  \subsection{Case Chance}
     Les cases chances peuvent faire gagner de l'argent mais également déplacé les pions 
     présent sur le plateau de jeu.  C'est évidemment ce second comportement qui sera
     étudier ici.  Le Monopoly comporte 16 cartes chances ayant la répartition suivante:
@@ -677,13 +688,13 @@ rdetobel@ulb.ac.be}
     On peut donc en déduire que lorsqu'un joueur pioche une carte chance, il aura une 
     7 chance sur 16 de devoir déplacer son pion.  Ces déplacements sont les suivants:
     \begin{itemize}
-     \item Reculer de 3 cases;
-     \item Se rendre à la case départ;
-     \item Aller en prison;
-     \item Se rendre à la 11ème case (où 0 est le départ);
-     \item Se rendre à la 15ème case;
-     \item Se rendre à la 24ème case;
-     \item Se rendre à la 36ème case (dernière case avant l'arrivée).
+     \item reculer de 3 cases;
+     \item se rendre à la case départ;
+     \item aller en prison;
+     \item se rendre à la 11\up{ème} case (où 0 est le départ);
+     \item se rendre à la 15\up{ème} case;
+     \item se rendre à la 24\up{ème} case;
+     \item se rendre à la 36\up{ème} case (dernière case avant l'arrivée).
     \end{itemize}
     Dans les 9 autres cas on lancera simplement les dés.  Les cases chances ont donc 
     beaucoup d'arrêtes.
