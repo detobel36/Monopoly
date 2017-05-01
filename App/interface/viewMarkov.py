@@ -60,7 +60,7 @@ class viewMarkov(tk.LabelFrame):
     """
     def __initLimitAndBorder(self):
         self._width = 950
-        self._height = 500
+        self._height = 600*3 # TODO changer par le nombre maximum de double
         self._borderX = 50
         self._borderY = 50
 
@@ -69,12 +69,19 @@ class viewMarkov(tk.LabelFrame):
         Permet de dessiner les cases du Monopoly, représenté par des noeud
     """
     def __drawAllNodes(self):
-        index = 0
+        index = [0]
         for case in self._listeCase:
-            if(case.getNbrDeDouble() == 0):
-                (x, y) = self.__generatePlateauCoord(index)
-                self.__drawCase(case, x, y)
-            index += 1
+            # Nombre de double pour atteindre cette case
+            nbrDeDouble = case.getNbrDeDouble()
+
+            # Gestion des index
+            while(nbrDeDouble >= len(index)):
+                index.append(0)
+            currentIndex = index[nbrDeDouble]
+
+            (x, y) = self.__generatePlateauCoord(currentIndex, nbrDeDouble)
+            self.__drawCase(case, x, y)
+            index[nbrDeDouble] += 1
 
 
     """
@@ -83,15 +90,15 @@ class viewMarkov(tk.LabelFrame):
     def __drawAllDeplacement(self):
         index = 0
         for case in self._listeCase:
-            if(case.getNbrDeDouble() == 0):
-                colonne = 0
+            colonne = 0
 
-                for elem in self._matriceDeplacement[index]:
-                    idCaseDestination = self._listeCase[colonne].getPosition()
-                    if(elem > 0 and idCaseDestination in self._listeCercleCase):
-                        self.__drawDeplacement(case.getPosition(), idCaseDestination)
+            for elem in self._matriceDeplacement[index]:
+                caseDest = self._listeCase[colonne]
+                # if(elem > 0 and idCaseDestination in self._listeCercleCase):
+                if(elem > 0):
+                    self.__drawDeplacement(case, caseDest)
 
-                    colonne += 1
+                colonne += 1
             index += 1
 
 
@@ -108,9 +115,10 @@ class viewMarkov(tk.LabelFrame):
         coordRightX = x + viewMarkov.CIRCLE_SIZE + self._borderX
         coordBottomY = y + viewMarkov.CIRCLE_SIZE + self._borderY
 
+        nbrDeDouble = case.getNbrDeDouble()
         idCase = case.getPosition()
         caseCercle = CaseCercle(self._canvas, case, coordLeftX, coordRightX, coordTopY, coordBottomY)
-        self._listeCercleCase[idCase] = caseCercle
+        self._listeCercleCase[(idCase, nbrDeDouble)] = caseCercle
 
 
     """
@@ -138,43 +146,38 @@ class viewMarkov(tk.LabelFrame):
         Permet de dessiner une ligne entre deux cases (représentant donc un déplacement possible sur
             le plateau de Monopoly)
 
-        @param idCase1 id de la case une
-        @param idCase2 id de la seconde case
+        @param caseSource la case de départ
+        @param caseDest la case de destination
     """
-    def __drawDeplacement(self, idCase1, idCase2):
-        idCercleSource = self._listeCercleCase[idCase1]
-        idCercleDest = self._listeCercleCase[idCase2]
+    def __drawDeplacement(self, caseSource, caseDest):
+        idCaseSource = caseSource.getPosition()
+        idCercleSource = self._listeCercleCase[(idCaseSource, caseSource.getNbrDeDouble())]
+        idCercleDest = self._listeCercleCase[(caseDest.getPosition(), caseDest.getNbrDeDouble())]
 
-        variableSource = idCercleSource.getCoords()
-        variableDest = idCercleDest.getCoords()
-
-        coordsSource = self.__getCenterOfOval(variableSource)
-        coordsDest = self.__getCenterOfOval(variableDest)
-
-        idArc = self.__createArc(coordsSource, coordsDest)
-        if(idCase1 in self._listeLigneDepl):
-            self._listeLigneDepl[idCase1].append(idArc)
-        else:
-            self._listeLigneDepl[idCase1] = [idArc]
+        self.__createArc(idCercleSource, idCercleDest)
 
 
     """
         Permet de tracer un arc de cercle entre deux points
 
-        @param p0 point 0 
-        @param p1 point 1
-
-        @return l'id de l'arc créé
+        @param caseSource l'objet caseCercle source
+        @param caseDest l'objet caseCercle destination
     """
-    def __createArc(self, p0, p1):
-        minX = min(p0[0], p1[0])
-        minY = min(p0[1], p1[1])
+    def __createArc(self, caseSource, caseDest):
+        variableSource = caseSource.getCoords()
+        variableDest = caseDest.getCoords()
+
+        coordsSource = self.__getCenterOfOval(variableSource)
+        coordsDest = self.__getCenterOfOval(variableDest)
+
+        minX = min(coordsSource[0], coordsDest[0])
+        minY = min(coordsSource[1], coordsDest[1])
 
         milieuX = minX
         milieuY = minY
         
-        diffX = max(p0[0], p1[0]) - minX
-        diffY = max(p0[1], p1[1]) - minY
+        diffX = max(coordsSource[0], coordsDest[0]) - minX
+        diffY = max(coordsSource[1], coordsDest[1]) - minY
 
         if(diffY == 0):
             milieuX += diffX/2
@@ -190,44 +193,45 @@ class viewMarkov(tk.LabelFrame):
 
         milieu = (milieuX, milieuY)
 
-        idLine = self._canvas.create_line(p0, milieu, p1, smooth=True)
+        idLine = self._canvas.create_line(coordsSource, milieu, coordsDest, smooth=True, fill="gray")
         self._canvas.tag_lower(idLine)
 
-        return idLine
+        caseSource.addRelation(idLine, caseDest)
 
 
     """
         Permet de récupérer la position de la ième case
 
         @param index de la case à placer
+        @param nbrDeDouble nombre de double pour atteindre cette case
         @return un tuple x, y
     """
-    def __generatePlateauCoord(self, index):
-        x = 0
-        y = 0
+    def __generatePlateauCoord(self, index, nbrDeDouble = 0):
+        x = 400 if (nbrDeDouble % 2 == 1) else 0
+        y = nbrDeDouble*600
 
         if(index < viewMarkov.CASE_PAR_LIGNE):
-            x = index * viewMarkov.ESPACE
-            y = 0
+            x += index * viewMarkov.ESPACE
+            # y = 0
 
         elif(index < viewMarkov.CASE_PAR_LIGNE * 2):
-            x = viewMarkov.CASE_PAR_LIGNE * viewMarkov.ESPACE
-            y = (index-viewMarkov.CASE_PAR_LIGNE) * viewMarkov.ESPACE
+            x += viewMarkov.CASE_PAR_LIGNE * viewMarkov.ESPACE
+            y += (index-viewMarkov.CASE_PAR_LIGNE) * viewMarkov.ESPACE
 
         elif(index < viewMarkov.CASE_PAR_LIGNE * 3):
             maxX = viewMarkov.CASE_PAR_LIGNE * viewMarkov.ESPACE
-            x = maxX - ((index - (2 * viewMarkov.CASE_PAR_LIGNE)) * viewMarkov.ESPACE)
-            y = viewMarkov.CASE_PAR_LIGNE * viewMarkov.ESPACE
+            x += maxX - ((index - (2 * viewMarkov.CASE_PAR_LIGNE)) * viewMarkov.ESPACE)
+            y += viewMarkov.CASE_PAR_LIGNE * viewMarkov.ESPACE
 
         elif(index < viewMarkov.CASE_PAR_LIGNE * 4):
-            x = 0
+            # x = 0
             maxY = viewMarkov.CASE_PAR_LIGNE * viewMarkov.ESPACE
-            y = maxY - ((index - (3 * viewMarkov.CASE_PAR_LIGNE)) * viewMarkov.ESPACE)
+            y += maxY - ((index - (3 * viewMarkov.CASE_PAR_LIGNE)) * viewMarkov.ESPACE)
 
         else:
             newIndex = (index - viewMarkov.CASE_PAR_LIGNE * 4)
-            x = (viewMarkov.CASE_PAR_LIGNE + 2) * viewMarkov.ESPACE
-            y = newIndex * viewMarkov.ESPACE
+            x += (viewMarkov.CASE_PAR_LIGNE + 2) * viewMarkov.ESPACE
+            y += newIndex * viewMarkov.ESPACE
 
         return x, y
 
