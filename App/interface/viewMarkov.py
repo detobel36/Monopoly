@@ -4,6 +4,7 @@
 # Tkinter and External
 import tkinter as tk
 
+from math import ceil
 from interface.caseCercle import CaseCercle
 
 import math
@@ -18,23 +19,47 @@ class viewMarkov(tk.LabelFrame):
     ESPACE = 50
     CASE_PAR_LIGNE = 10
     ARC_DECALAGE = -40
+    TAILLE_PLATEAU = 300 # Taille que prend la représentation d'un plateau
 
 
     """
         Permet d'initialiser la fenêtre
 
         @param fenetre la fenêtre parente à celle-ci
+        @param nbrDeDoubles avant d'aller en prison
         @param listCase liste des cases à afficher
         @param matriceDeplacement matrice contenant tous les déplacements des états possibles
     """
-    def __init__(self, fenetre, listCase, matriceDeplacement):
+    def __init__(self, fenetre, nbrDeDoubles, listCase, matriceDeplacement):
         tk.LabelFrame.__init__(self, fenetre, text="Chaine de Markov", padx=0, pady=0, labelanchor="n")
 
         self._listeCercleCase = {} # Liste stockant l'id du cercle en fonction de l'id de la case
         self._listeLigneDepl = {}  # Liste stockant l'id de la ligne en fonction de l'id de la case de départ
 
+        self._nbrDeDoubles = nbrDeDoubles
         self._listeCase = listCase
         self._matriceDeplacement = matriceDeplacement
+        self.__drawMarkov()
+
+
+    """
+        Permet de remettre à jour tout le canvas
+
+        @param listeCases la nouvelle liste des cases
+        @param nbrDeDoubles le nombre de double avant d'aller en prison
+        @param matriceDeplacement la matrice de déplacement
+    """
+    def updateAll(self, listeCases, nbrDeDoubles, matriceDeplacement):
+        self._canvas.delete("all")
+        self._canvas.destroy()
+        self._listeCercleCase = {}
+        self._listeLigneDepl = {}
+
+
+        self._listeCase = listeCases
+        self._nbrDeDoubles = nbrDeDoubles
+        self._matriceDeplacement = matriceDeplacement
+
         self.__drawMarkov()
 
 
@@ -59,10 +84,10 @@ class viewMarkov(tk.LabelFrame):
         Permet d'initialiser les variables définissant les bordures et les échelles
     """
     def __initLimitAndBorder(self):
-        self._width = 950
-        self._height = 600*3 # TODO changer par le nombre maximum de double
-        self._borderX = 50
-        self._borderY = 50
+        self._width = 1200
+        self._height = viewMarkov.TAILLE_PLATEAU * (self._nbrDeDoubles+1)
+        self._borderX = 150
+        self._borderY = 150
 
 
     """
@@ -79,8 +104,8 @@ class viewMarkov(tk.LabelFrame):
                 index.append(0)
             currentIndex = index[nbrDeDouble]
 
-            (x, y) = self.__generatePlateauCoord(currentIndex, nbrDeDouble)
-            self.__drawCase(case, x, y)
+            (x, y, angle) = self.__generatePlateauCoord(currentIndex, nbrDeDouble)
+            self.__drawCase(case, x, y, angle)
             index[nbrDeDouble] += 1
 
 
@@ -94,7 +119,6 @@ class viewMarkov(tk.LabelFrame):
 
             for elem in self._matriceDeplacement[index]:
                 caseDest = self._listeCase[colonne]
-                # if(elem > 0 and idCaseDestination in self._listeCercleCase):
                 if(elem > 0):
                     self.__drawDeplacement(case, caseDest)
 
@@ -109,7 +133,7 @@ class viewMarkov(tk.LabelFrame):
         @param x coordonnée x
         @param y coordonnée y
     """
-    def __drawCase(self, case, x, y):
+    def __drawCase(self, case, x, y, angle):
         coordLeftX = x - viewMarkov.CIRCLE_SIZE + self._borderX
         coordTopY = y - viewMarkov.CIRCLE_SIZE + self._borderY
         coordRightX = x + viewMarkov.CIRCLE_SIZE + self._borderX
@@ -117,7 +141,8 @@ class viewMarkov(tk.LabelFrame):
 
         nbrDeDouble = case.getNbrDeDouble()
         idCase = case.getPosition()
-        caseCercle = CaseCercle(self._canvas, case, coordLeftX, coordRightX, coordTopY, coordBottomY)
+        caseCercle = CaseCercle(self._canvas, case, coordLeftX, coordRightX, coordTopY, coordBottomY,
+            angle)
         self._listeCercleCase[(idCase, nbrDeDouble)] = caseCercle
 
 
@@ -193,7 +218,7 @@ class viewMarkov(tk.LabelFrame):
 
         milieu = (milieuX, milieuY)
 
-        idLine = self._canvas.create_line(coordsSource, milieu, coordsDest, smooth=True, fill="gray")
+        idLine = self._canvas.create_line(coordsSource, milieu, coordsDest, smooth=True, fill="gray83")
         self._canvas.tag_lower(idLine)
 
         caseSource.addRelation(idLine, caseDest)
@@ -204,15 +229,17 @@ class viewMarkov(tk.LabelFrame):
 
         @param index de la case à placer
         @param nbrDeDouble nombre de double pour atteindre cette case
-        @return un tuple x, y
+        @return un tuple x, y, position du text
     """
     def __generatePlateauCoord(self, index, nbrDeDouble = 0):
-        x = 400 if (nbrDeDouble % 2 == 1) else 0
-        y = nbrDeDouble*600
+        angle = 0
+        x = 650 if (nbrDeDouble % 2 == 1) else 0
+        y = nbrDeDouble * viewMarkov.TAILLE_PLATEAU
 
         if(index < viewMarkov.CASE_PAR_LIGNE):
             x += index * viewMarkov.ESPACE
             # y = 0
+            angle = 90
 
         elif(index < viewMarkov.CASE_PAR_LIGNE * 2):
             x += viewMarkov.CASE_PAR_LIGNE * viewMarkov.ESPACE
@@ -222,6 +249,7 @@ class viewMarkov(tk.LabelFrame):
             maxX = viewMarkov.CASE_PAR_LIGNE * viewMarkov.ESPACE
             x += maxX - ((index - (2 * viewMarkov.CASE_PAR_LIGNE)) * viewMarkov.ESPACE)
             y += viewMarkov.CASE_PAR_LIGNE * viewMarkov.ESPACE
+            angle = 90
 
         elif(index < viewMarkov.CASE_PAR_LIGNE * 4):
             # x = 0
@@ -233,6 +261,6 @@ class viewMarkov(tk.LabelFrame):
             x += (viewMarkov.CASE_PAR_LIGNE + 2) * viewMarkov.ESPACE
             y += newIndex * viewMarkov.ESPACE
 
-        return x, y
+        return x, y, angle
 
 

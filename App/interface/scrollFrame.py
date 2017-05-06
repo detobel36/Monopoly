@@ -27,8 +27,10 @@ class scrollFrame(tk.Tk):
         self._scrollCanvas.create_window((0,0), window=self._scrollFrame, anchor='nw')
 
     def __scrollOnConfigure(self, event):
-        self._scrollCanvas.configure(scrollregion=self._scrollCanvas.bbox('all'))
+        self.updateScroll()
 
+    def updateScroll(self):
+        self._scrollCanvas.configure(scrollregion=self._scrollCanvas.bbox('all'))
 
     def getMainFrame(self):
         return self._scrollFrame

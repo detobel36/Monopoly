@@ -50,7 +50,7 @@ class Statistiques(tk.LabelFrame):
         Permet d'initialiser les variables définissant les bordures et les échelles
     """
     def __initLimitAndBorder(self):
-        self._width = 1000
+        self._width = 1300
         self._height = 150
         self._borderX = 25
         self._borderBottomY = 210

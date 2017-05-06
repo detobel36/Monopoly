@@ -39,10 +39,8 @@ class CasePrison(Case):
         # On récupère la prison suivante
         nextPrison = self.__getNextCasePrison(dataMonopoly)
 
-        if(nextPrison == None): # Si il n'y en a pas, on est obligé de payé
-            proportionPayer = 1
-        else: # Sinon ça va dépendre de ce que le utilisateur à décidé
-            proportionPayer = dataMonopoly.getProbSortirPrison()
+        # Avec quel proportion le joueur veut-il payer pour sortir de prison
+        proportionPayer = dataMonopoly.getProbSortirPrison()
 
         # Case "prison visite uniquement"
         casePrisonVisiteUniquement = dataMonopoly.getPrisonVisiteUniquement()
@@ -53,6 +51,10 @@ class CasePrison(Case):
         # Si on est pas obligé de payer
         if(proportionPayer < 1):
             proportionJouer = 1-proportionPayer
+            # S'il n'y a plus de case prison suivante, la case suivante est la sortir de prison 
+            # avec payement
+            if(nextPrison == None):
+                nextPrison = casePrisonVisiteUniquement
             self.__getCaseSuivanteLanceDes(res, dataMonopoly, nextPrison, \
                                 casePrisonVisiteUniquement, proportionJouer)
             

@@ -32,6 +32,7 @@ class FenetrePrincipal(scrollFrame):
         self._selectedDataMonopoly = None
         self._nbrTourFrame = None
         self._viewParam = None
+        self._markovFrame = None
 
         # Choix des paramètres
         self.__choixParametres()
@@ -57,10 +58,10 @@ class FenetrePrincipal(scrollFrame):
         self._statFrame = Statistiques(caseData, self.getMainFrame())
         self._statFrame.grid(row=0, column=0, rowspan=2)
 
-        self._markovFrame = viewMarkov(self.getMainFrame(), \
+        self._markovFrame = viewMarkov(self.getMainFrame(), self._selectedDataMonopoly.getNbrDeDouble(), \
                                     self._selectedDataMonopoly.getListeCases(), \
                                     self._selectedMonopoly.getMatriceDeplacement())
-        self._markovFrame.grid(row=2, column=0)
+        self._markovFrame.grid(row=2, column=0, columnspan=2)
 
         # Création de la bar de menu
         self.__createMenuBar()
@@ -226,3 +227,10 @@ class FenetrePrincipal(scrollFrame):
 
         if(self._viewParam != None):
             self._viewParam.setNewMonopolyData(self._selectedDataMonopoly)
+
+        if(self._markovFrame != None):
+            self._markovFrame.updateAll(self._selectedDataMonopoly.getListeCases(), \
+                                        self._selectedDataMonopoly.getNbrDeDouble(), \
+                                        self._selectedMonopoly.getMatriceDeplacement())
+
+        scrollFrame.updateScroll(self)
