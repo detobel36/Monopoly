@@ -44,6 +44,7 @@ class ChoixMonopoly(tk.Toplevel):
     """
     def __initEventParametres(self):
         self.bind("<Return>", self.__selectMonopoly)
+        self.bind("<Escape>", self.__closeChoixMonopoly)
 
 
     """
@@ -85,7 +86,7 @@ class ChoixMonopoly(tk.Toplevel):
     """
         Permet de fermer la fenêtre de choix du Monopoly
     """
-    def __closeChoixMonopoly(self):
+    def __closeChoixMonopoly(self, event = None):
         self.quit()
         self.destroy()
 

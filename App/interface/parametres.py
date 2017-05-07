@@ -19,15 +19,14 @@ class Parametres(tk.Toplevel):
         self._dataMonopoly = dataMonopoly
         self.__initDefaultValues()
 
-        self.initAllParametres()
+        self.__initAllParametres()
         self.__initEventParametres()
-
 
 
     """
         Permet d'initialiser la fenêtre graphique
     """
-    def initAllParametres(self):
+    def __initAllParametres(self):
         self.__addNombreDeDes()
         self.__addNombreTourMaxPrison()
         self.__addProbPayerSortirPrison()
@@ -56,6 +55,7 @@ class Parametres(tk.Toplevel):
     """
     def __initEventParametres(self):
         self.bind("<Return>", self.__closeParametres)
+        self.bind("<Escape>", self.__closeParametres)
 
 
     """

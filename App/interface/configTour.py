@@ -46,7 +46,7 @@ class ConfigTour(tk.LabelFrame):
         Permet d'ajouter un bouton permettant de passer au tour suivant
     """
     def __addNextTourButton(self):
-        tk.Button(self, text="->", command=self.__commandNextTourButton)\
+        tk.Button(self, text="->", command=self.commandNextTourButton)\
             .grid(row=2, column=1, columnspan=2, sticky=tk.N+tk.S+tk.E+tk.W)
 
 
@@ -54,14 +54,14 @@ class ConfigTour(tk.LabelFrame):
         Permet d'ajouter un bouton permettant de revenir au tour précédent
     """
     def __addPrevTourButton(self):
-        tk.Button(self, text="<-", command=self.__commandPrevTourButton)\
+        tk.Button(self, text="<-", command=self.commandPrevTourButton)\
             .grid(row=2, column=0, sticky=tk.N+tk.S+tk.E+tk.W)
 
 
     """
         Fonction appellé lorsqu'on veut avancé de 1 le nombre de tour
     """
-    def __commandNextTourButton(self):
+    def commandNextTourButton(self, event = None):
         self.__setNbrTourASimuler(self.getNbrTourASimuler()+1)
         self.__submitChange()
 
@@ -70,7 +70,7 @@ class ConfigTour(tk.LabelFrame):
         Fonction appellé lorsqu'on veut reculé (retourné au nombre de tour précédent) de 1 le 
         nombre de tour
     """
-    def __commandPrevTourButton(self):
+    def commandPrevTourButton(self, event = None):
         nbrASimuler = self.getNbrTourASimuler()-1
         self.__setNbrTourASimuler(nbrASimuler)
         self.__submitChange()
@@ -99,13 +99,13 @@ class ConfigTour(tk.LabelFrame):
         Permet d'ajouter un bouton permettant d'afficher l'état fixe des états
     """
     def __addFixedEtatButton(self):
-        tk.Button(self, text="Point fixe", command=self.__commandFixedEtat, anchor="center")\
+        tk.Button(self, text="Point fixe", command=self.commandFixedEtat, anchor="center")\
             .grid(row=4, column=0, columnspan=2, sticky=tk.N+tk.S+tk.E+tk.W, pady=5)
 
     """
         Fonction appellée lorsqu'on clic sur le bouton "Fixed Etat".
     """
-    def __commandFixedEtat(self):
+    def commandFixedEtat(self, event = None):
         self._parent.updateNewTour(True)
 
 

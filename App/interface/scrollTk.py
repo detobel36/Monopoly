@@ -6,7 +6,7 @@ import tkinter as tk
 
     Source: http://stackoverflow.com/a/3092341
 """
-class scrollFrame(tk.Tk):
+class scrollTk(tk.Tk):
 
     def __init__(self):
         tk.Tk.__init__(self)

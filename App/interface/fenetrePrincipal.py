@@ -8,23 +8,25 @@ from collections import OrderedDict
 from Constantes import *
 from Monopoly import Monopoly
 # Interface
-from interface.scrollFrame import scrollFrame
+from interface.scrollTk import scrollTk
 from interface.choixMonopoly import ChoixMonopoly
 from interface.parametres import Parametres
 from interface.statistiques import Statistiques
 from interface.viewMarkov import viewMarkov
 from interface.configTour import ConfigTour
 from interface.viewParametres import ViewParametres
+from interface.listeStatistiques import ListeStatistiques
+from interface.help import Help
 
 
 
 """
     FenetrePrincipal qui hérite de tkinter.Tk et contenant toutes les autres fenêtres à afficher
 """
-class FenetrePrincipal(scrollFrame):
+class FenetrePrincipal(scrollTk):
 
     def __init__(self):
-        scrollFrame.__init__(self)
+        scrollTk.__init__(self)
         self.wm_title("Stats")
         self.config(padx=5, pady=5) # TODO check que c'est bon
 
@@ -53,9 +55,10 @@ class FenetrePrincipal(scrollFrame):
 
         # Permet de récupérer toutes les informations sur les cases
         caseData = self.__sumSameCase(self._selectedMonopoly.getResultatSimulation())
+        self._dataSimulation = caseData
 
         # Création de la fenêtre de statistique
-        self._statFrame = Statistiques(caseData, self.getMainFrame())
+        self._statFrame = Statistiques(self._dataSimulation, self.getMainFrame())
         self._statFrame.grid(row=0, column=0, rowspan=2)
 
         self._markovFrame = viewMarkov(self.getMainFrame(), self._selectedDataMonopoly.getNbrDeDouble(), \
@@ -66,8 +69,20 @@ class FenetrePrincipal(scrollFrame):
         # Création de la bar de menu
         self.__createMenuBar()
 
+        self.__refreshScroll()
+        self.__initEvent()
+
         self.wait_window(self)
 
+
+    def __initEvent(self):
+        self.bind("<Control-l>", self.__viewListStats)
+        self.bind("<Control-h>", self.__viewHelp)
+        self.bind("<Control-Right>", self._nbrTourFrame.commandNextTourButton)
+        self.bind("<Control-Left>", self._nbrTourFrame.commandPrevTourButton)
+        self.bind("<Control-Up>", self._nbrTourFrame.commandFixedEtat)
+        self.bind("<Control-m>", self.__choixMonopoly)
+        self.bind("<Control-p>", self.__choixParametres)
 
 
     """
@@ -76,13 +91,22 @@ class FenetrePrincipal(scrollFrame):
     def __createMenuBar(self):
         menubar = tk.Menu(self)
 
+        ###### Menu ######
         paramMenu = tk.Menu(menubar, tearoff=0)
         paramMenu.add_command(label="Changer les paramètres", command=self.__choixParametres)
         paramMenu.add_command(label="Changer de Monopoly", command=self.__choixMonopoly)
         paramMenu.add_separator()
+        paramMenu.add_command(label="Aide", command=self.__viewHelp)
+        paramMenu.add_separator()
         paramMenu.add_command(label="Quitter", command=self.quit)
 
         menubar.add_cascade(label="Options", menu=paramMenu)
+
+        ###### View ###### 
+        paramView = tk.Menu(menubar, tearoff=0)
+        paramView.add_command(label="Statistiques ordonnée", command=self.__viewListStats)
+
+        menubar.add_cascade(label="Fenêtre", menu=paramView)
 
         # Afficher le mneu menu
         self.config(menu=menubar)
@@ -91,14 +115,14 @@ class FenetrePrincipal(scrollFrame):
     """
         Permet de choisir le Monopoly que l'on veut simuler
     """
-    def __choixMonopoly(self):
+    def __choixMonopoly(self, event = None):
         newDataMonopoly = self.__displayChoixDuMonopoly()
 
         # Si on ne chosi aucun Monopoly
         if(newDataMonopoly == None and self._selectedDataMonopoly == None):
             raise TypeError('Aucun Monopoly sélectionné')
 
-        if(newDataMonopoly != self._selectedDataMonopoly):
+        if(newDataMonopoly != self._selectedDataMonopoly and newDataMonopoly != None):
             self._selectedDataMonopoly = newDataMonopoly
             self.__refrechMonopolyData()
 
@@ -131,7 +155,7 @@ class FenetrePrincipal(scrollFrame):
     """
         Permet de choisir les paramètres qui seront utilisé pour modéliser le Monopoly
     """
-    def __choixParametres(self):
+    def __choixParametres(self, event = None):
         self._choixParametres = Parametres(self._selectedDataMonopoly)
         self.wait_window(self._choixParametres)
         if(self._selectedDataMonopoly != None):
@@ -155,10 +179,14 @@ class FenetrePrincipal(scrollFrame):
             print("[DEBUG] Paramètres: nombre de double avant d'aller en prison: " + \
                 str(nbrDeDoublePrison))
 
-        self._selectedDataMonopoly.setNbrDeDes(nbrDes)
-        self._selectedDataMonopoly.setMaxTourPrison(nbrMaxTourPrison)
-        self._selectedDataMonopoly.setProbSortirPrison(probSortirPrison)
-        self._selectedDataMonopoly.setNbrDeDoublePrison(nbrDeDoublePrison)
+        if(nbrDes != None):
+            self._selectedDataMonopoly.setNbrDeDes(nbrDes)
+        if(nbrMaxTourPrison != None):
+            self._selectedDataMonopoly.setMaxTourPrison(nbrMaxTourPrison)
+        if(probSortirPrison != None):
+            self._selectedDataMonopoly.setProbSortirPrison(probSortirPrison)
+        if(nbrDeDoublePrison != None):
+            self._selectedDataMonopoly.setNbrDeDoublePrison(nbrDeDoublePrison)
 
 
     """
@@ -184,7 +212,8 @@ class FenetrePrincipal(scrollFrame):
             newData = self._selectedMonopoly.getResultatSimulation()
 
         newData = self.__sumSameCase(newData)
-        self._statFrame.updateCanvas(newData)
+        self._dataSimulation = newData
+        self._statFrame.updateCanvas(self._dataSimulation)
 
 
     """
@@ -232,5 +261,16 @@ class FenetrePrincipal(scrollFrame):
             self._markovFrame.updateAll(self._selectedDataMonopoly.getListeCases(), \
                                         self._selectedDataMonopoly.getNbrDeDouble(), \
                                         self._selectedMonopoly.getMatriceDeplacement())
+        self.__refreshScroll()
 
-        self.after(100, lambda: scrollFrame.updateScroll(self))
+    def __refreshScroll(self):
+        self.after(100, lambda: scrollTk.updateScroll(self))
+
+
+    def __viewListStats(self, event = None):
+        listStatistique = ListeStatistiques(self._dataSimulation)
+        self.wait_window(listStatistique)
+
+    def __viewHelp(self, event = None):
+        help = Help()
+        self.wait_window(help)
