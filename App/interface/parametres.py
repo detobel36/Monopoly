@@ -12,11 +12,16 @@ class Parametres(tk.Toplevel):
     DEFAULT_NBR_DOUBLE_PRISON = 3
 
 
-    def __init__(self):
+    def __init__(self, dataMonopoly):
         tk.Toplevel.__init__(self)
         self.title("Paramètres")
+        
+        self._dataMonopoly = dataMonopoly
+        self.__initDefaultValues()
+
         self.initAllParametres()
         self.__initEventParametres()
+
 
 
     """
@@ -30,6 +35,20 @@ class Parametres(tk.Toplevel):
 
         # Ajout d'un bouton à cette fenêtre
         self.__addSubmitButton()
+
+
+    def __initDefaultValues(self):
+        if(self._dataMonopoly != None):
+            self._defaultDes = self._dataMonopoly.getNbrDeDes()
+            self._defaultTourPrison = self._dataMonopoly.getMaxTourPrison()
+            self._defaultProbSortirPrison = self._dataMonopoly.getProbSortirPrison()
+            self._defaultNbrDoublePrison = self._dataMonopoly.getNbrDeDouble()
+
+        else:
+            self._defaultDes = Parametres.DEFAULT_DES
+            self._defaultTourPrison = Parametres.DEFAULT_TOUR_PRISON
+            self._defaultProbSortirPrison = Parametres.DEFAULT_PROB_SORTIR_PRISON
+            self._defaultNbrDoublePrison = Parametres.DEFAULT_NBR_DOUBLE_PRISON
 
 
     """
@@ -49,7 +68,7 @@ class Parametres(tk.Toplevel):
         self._entryNbrDeDes = tk.StringVar()
         _entry = tk.Entry(self, textvariable=self._entryNbrDeDes, justify='right', width=7)\
             .pack()
-        self._entryNbrDeDes.set(str(Parametres.DEFAULT_DES))
+        self._entryNbrDeDes.set(str(self._defaultDes))
 
 
     """
@@ -62,7 +81,7 @@ class Parametres(tk.Toplevel):
         self._entryNbrTourPrison = tk.StringVar()
         _entry = tk.Entry(self, textvariable=self._entryNbrTourPrison, justify='right', width=7)\
             .pack()
-        self._entryNbrTourPrison.set(str(Parametres.DEFAULT_TOUR_PRISON))
+        self._entryNbrTourPrison.set(str(self._defaultTourPrison))
 
 
     """
@@ -74,7 +93,7 @@ class Parametres(tk.Toplevel):
         self._entryProbPayerSortirPrison = tk.StringVar()
         _entry = tk.Entry(self, textvariable=self._entryProbPayerSortirPrison, justify='right', width=7)\
             .pack()
-        self._entryProbPayerSortirPrison.set(str(Parametres.DEFAULT_PROB_SORTIR_PRISON))
+        self._entryProbPayerSortirPrison.set(str(self._defaultProbSortirPrison))
 
 
     """
@@ -86,7 +105,7 @@ class Parametres(tk.Toplevel):
         self._entryNbrDeDoublePrison = tk.StringVar()
         _entry = tk.Entry(self, textvariable=self._entryNbrDeDoublePrison, justify='right', width=7)\
             .pack()
-        self._entryNbrDeDoublePrison.set(str(Parametres.DEFAULT_NBR_DOUBLE_PRISON))
+        self._entryNbrDeDoublePrison.set(str(self._defaultNbrDoublePrison))
 
 
     def __addSubmitButton(self):
@@ -172,4 +191,3 @@ class Parametres(tk.Toplevel):
             nbrDeDouble = 0
 
         return nbrDeDouble
-

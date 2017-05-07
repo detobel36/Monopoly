@@ -132,7 +132,7 @@ class FenetrePrincipal(scrollFrame):
         Permet de choisir les paramètres qui seront utilisé pour modéliser le Monopoly
     """
     def __choixParametres(self):
-        self._choixParametres = Parametres()
+        self._choixParametres = Parametres(self._selectedDataMonopoly)
         self.wait_window(self._choixParametres)
         if(self._selectedDataMonopoly != None):
             self.__refrechMonopolyData()
@@ -233,4 +233,4 @@ class FenetrePrincipal(scrollFrame):
                                         self._selectedDataMonopoly.getNbrDeDouble(), \
                                         self._selectedMonopoly.getMatriceDeplacement())
 
-        scrollFrame.updateScroll(self)
+        self.after(100, lambda: scrollFrame.updateScroll(self))
