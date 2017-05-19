@@ -12,6 +12,9 @@
 \usepackage{tikz}
 \usetikzlibrary{automata, positioning}
 
+\usepackage{fancyhdr}
+\pagestyle{plain}
+
 \newcommand{\colornode}[1][]{\node[state,
 	    align=center,
 	    text=gray!40!black,
@@ -25,9 +28,11 @@
 	    text width=1.7cm,{#1}]}
 
 \newcommand{\drawedge}{\draw[every loop, line width=0.4mm, fill=gray, draw=gray]}
-\newcommand{\caseUp}{\hfill\textcolor[HTML]{008000}{$\mathbf{\uparrow}$}}
-\newcommand{\caseStable}{\hfill\textcolor[HTML]{3779dd}{\textbf{-}}}
-\newcommand{\caseDown}{\hfill\textcolor[HTML]{dd3737}{$\mathbf{\downarrow}$}}
+
+% CASE evolution
+\newcommand{\caseUp}[1][]{#1\textcolor[HTML]{008000}{$\mathbf{\uparrow}$}}
+\newcommand{\caseStable}[1][]{#1\textcolor[HTML]{3779dd}{\textbf{-}}}
+\newcommand{\caseDown}[1][]{#1\textcolor[HTML]{dd3737}{$\mathbf{\downarrow}$}}
 
 
 \title{Etude du Monopoly via les chaînes de Markov}
@@ -770,7 +775,7 @@ rdetobel@ulb.ac.be}
   
     \subsubsection{État stationnaire}
       Le but premier de cet article était de déterminer les cases ayant
-      la plus grande probabilité d'être visité.  Pour pouvoir répondre à 
+      la plus grande probabilité d'être visitée.  Pour pouvoir répondre à 
       cet objectif, on va se concentrer sur l'état stationnaire car il décrit
       au mieux le comportement des cases peut importe le nombre de tour considéré
       (pour autant que ce nombre soit assez important).  Il faut cependant 
@@ -871,23 +876,24 @@ rdetobel@ulb.ac.be}
     \subsubsection{Tour par tour}
       Le point précédent s'intéressait uniquement à la répartition des cases dans un état
       stationnaire.  Il peut cependant être intéressant de regarder la répartition des cases
-      après un nombre fixe de tour.  On ne vas cependant s'intéresser qu'aux résultats fait
-      après 20 lancés.  En effet, avant cela % TODO
-      
-      
-      Les valeurs présentes dans les tableaux \ref{result_paye} et \ref{result_paye_pas} montrent
-      la probabilité de tomber sur une case dans une situation stationnaire.  Les tableaux 
-      \ref{result_tour_paye_pas} et \ref{result_tour_paye} montrent la répartition des 
-      cases après un nombre définit de tour.  Après 20 lancés de dés, on est sur que tous 
-      les joueurs ont fait le tour du plateau (vu que le score minimum pouvant être fait est de 2).
-      Pour avoir des résultats cohérent, on a donc regardé l'évolution de la répartition
-      après 20, 40 et 60 tours.  Si l'on classe les cases de la plus grande à la plus petite
-      probabilité, on remarque que l'ordre des cases après 60 tours est identique à l'ordre
-      dans un état stationnaire.
+      après un nombre fixe de tour.  On ne va cependant s'intéresser qu'aux résultats obtenu
+      après 20 lancés.  En effet, avant cela il est possible qu'un joueur n'ai même pas encore
+      fait un tour complet du plateau (vu que le nombre minimum pouvant être formé avec deux dés 
+      est de 2 et qu'il y a 40 cases).  Ces résultats sont tout de même disponibles sous forme de
+      graphiques dans l'annexe \ref{annexe_graphe} (figure \ref{graph_result_paye_pas} et 
+      \ref{graph_result_paye}).  Les tableaux \ref{result_tour_paye_pas} et \ref{result_tour_paye} 
+      montrent donc la répartition des cases après 20, 40 et 60 tours.  Ces mêmes résultats 
+      sont également disponibles en annexe sous forme de graphique (également dans l'annexe
+      \ref{annexe_graphe}, les figures \ref{graph_all_result_paye_pas} et \ref{graph_all_result_paye}).  
+      Ces tableaux mettent en relation une case avec la probabilité de tomber sur celle-ci en fonction du
+      nombre de tour considéré.  Les cases sont ordonnées de la plus probable à la moins probable
+      et un symbole permet d'indiquer si le résultat obtenu dans la colonne précédente (10 tours avant donc)
+      plaçait la case dans une position inférieur, supérieur ou égal (respectivement \caseUp, \caseDown~ 
+      et \caseStable) à la position actuelle de la case.
       
       \begin{table}
 	\centering
-	\begin{tabular}{|l|l|l|l|l|l|}
+	\begin{tabular}{|l|l||l|l||l|l|}
 	  \hline
 	  \multicolumn{1}{|c|}{{\textbf{N}}} & % Numero
 	  \multicolumn{1}{p{1.5cm}||}{\centering \textbf{Probabilité \\ après 20 tours}} & %
@@ -895,49 +901,49 @@ rdetobel@ulb.ac.be}
 	  \multicolumn{1}{p{1.5cm}||}{\centering \textbf{Probabilité \\ après 40 tours}} & %
 	  \multicolumn{1}{c|}{{\textbf{N}}} & % Numero
 	  \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Probabilité \\ après 60 tours}} \\ \hline %
-	  \cellcolor[HTML]{FF4500} 25 & 3.131 \% & \cellcolor[HTML]{000000} \textcolor{white}{41} & 3.517 \% \caseUp & \cellcolor[HTML]{000000} \textcolor{white}{41} & 3.47 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{FF8C00} 19 & 3.086 \% & \cellcolor[HTML]{000000} \textcolor{white}{42} & 2.926 \% \caseUp & \cellcolor[HTML]{000000} \textcolor{white}{42} & 2.893 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{FF8C00} 20 & 3.075 \% & \cellcolor[HTML]{FF4500} 25 & 2.762 \% \caseUp & \cellcolor[HTML]{FF4500} 25 & 2.793 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{FFFFFF} 21 & 3.068 \% & \cellcolor[HTML]{FFFFFF} 1  & 2.746 \% \caseUp & \cellcolor[HTML]{FFFFFF} 1 & 2.707 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{000000} \textcolor{white}{41} & 3.011 \% & \cellcolor[HTML]{E6E6FA} 16 & 2.6 \% \caseUp & \cellcolor[HTML]{FF8C00} 19 & 2.637 \% \caseUp \\ \hline
-	  \cellcolor[HTML]{FFC1C1} 23 & 3.0 \% & \cellcolor[HTML]{FF8C00} 19 & 2.592 \% \caseDown & \cellcolor[HTML]{E6E6FA} 16 & 2.634 \% \caseDown \\ \hline
-	  \cellcolor[HTML]{E6E6FA} 16 & 2.967 \% & \cellcolor[HTML]{FFFFFF} 21 & 2.572 \% \caseDown & \cellcolor[HTML]{FFFFFF} 21 & 2.616 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{EEEED1} 18 & 2.896 \% & \cellcolor[HTML]{FF8C00} 20 & 2.562 \% \caseDown & \cellcolor[HTML]{FF8C00} 20 & 2.607 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{FF8C00} 17 & 2.891 \% & \cellcolor[HTML]{FFC1C1} 23 & 2.554 \% \caseDown & \cellcolor[HTML]{FFC1C1} 23 & 2.593 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{FF4500} 22 & 2.87 \% & \cellcolor[HTML]{FF8C00} 17 & 2.467 \% \caseDown & \cellcolor[HTML]{FF8C00} 17 & 2.506 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{FF4500} 24 & 2.763 \% & \cellcolor[HTML]{EEEED1} 18 & 2.409 \% \caseDown & \cellcolor[HTML]{EEEED1} 18 & 2.453 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{E6E6FA} 26 & 2.688 \% & \cellcolor[HTML]{000000} \textcolor{white}{43} & 2.401 \% \caseUp & \cellcolor[HTML]{FF4500} 22 & 2.426 \% \caseUp \\ \hline
-	  \cellcolor[HTML]{FFD700} 27 & 2.636 \% & \cellcolor[HTML]{FF4500} 22 & 2.384 \% \caseDown & \cellcolor[HTML]{000000} \textcolor{white}{43} & 2.414 \% \caseDown \\ \hline
-	  \cellcolor[HTML]{FFD700} 28 & 2.559 \% & \cellcolor[HTML]{EEEED1} 34 & 2.377 \% \caseUp & \cellcolor[HTML]{FFD700} 27 & 2.395 \% \caseUp \\ \hline
-	  \cellcolor[HTML]{FF69B4} 15 & 2.539 \% & \cellcolor[HTML]{FFD700} 27 & 2.374 \% \caseDown & \cellcolor[HTML]{E6E6FA} 26 & 2.391 \% \caseUp \\ \hline
-	  \cellcolor[HTML]{000000} \textcolor{white}{42} & 2.537 \% & \cellcolor[HTML]{FF69B4} 12 & 2.373 \% \caseUp & \cellcolor[HTML]{FF4500} 24 & 2.385 \% \caseUp \\ \hline
-	  \cellcolor[HTML]{000000} \textcolor{white}{43} & 2.512 \% & \cellcolor[HTML]{2E8B57} 32 & 2.371 \% \caseUp & \cellcolor[HTML]{FF69B4} 12 & 2.382 \% \caseDown \\ \hline
-	  \cellcolor[HTML]{FFFFF0} 29 & 2.456 \% & \cellcolor[HTML]{FFD700} 28 & 2.364 \% \caseDown & \cellcolor[HTML]{FFD700} 28 & 2.38 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{FF69B4} 12 & 2.449 \% & \cellcolor[HTML]{E6E6FA} 26 & 2.364 \% \caseDown & \cellcolor[HTML]{2E8B57} 32 & 2.359 \% \caseDown \\ \hline
-	  \cellcolor[HTML]{FFD700} 30 & 2.358 \% & \cellcolor[HTML]{BEBEBE} 31 & 2.35 \% \caseUp & \cellcolor[HTML]{EEEED1} 34 & 2.352 \% \caseDown \\ \hline
-	  \cellcolor[HTML]{FFFFFF} 1 & 2.323 \% & \cellcolor[HTML]{FF4500} 24 & 2.349 \% \caseDown & \cellcolor[HTML]{FFFFF0} 29 & 2.346 \% \caseUp \\ \hline
-	  \cellcolor[HTML]{BEBEBE} 31 & 2.311 \% & \cellcolor[HTML]{483D8B} \textcolor{white}{40} & 2.339 \% \caseUp & \cellcolor[HTML]{BEBEBE} 31 & 2.345 \% \caseDown \\ \hline
-	  \cellcolor[HTML]{FFFFF0} 13 & 2.301 \% & \cellcolor[HTML]{FFFFF0} 29 & 2.338 \% \caseDown & \cellcolor[HTML]{FFD700} 30 & 2.32 \% \caseUp \\ \hline
-	  \cellcolor[HTML]{2E8B57} 32 & 2.254 \% & \cellcolor[HTML]{A0522D} 2 & 2.332 \% \caseUp & \cellcolor[HTML]{483D8B} \textcolor{white}{40} & 2.302 \% \caseDown \\ \hline
-	  \cellcolor[HTML]{FF69B4} 14 & 2.242 \% & \cellcolor[HTML]{FFD700} 30 & 2.318 \% \caseDown & \cellcolor[HTML]{A0522D} 2 & 2.295 \% \caseDown \\ \hline
-	  \cellcolor[HTML]{2E8B57} 33 & 2.132 \% & \cellcolor[HTML]{2E8B57} 33 & 2.309 \% \caseStable & \cellcolor[HTML]{2E8B57} 33 & 2.291 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{EEEED1} 34 & 2.118 \% & \cellcolor[HTML]{FF69B4} 15 & 2.248 \% \caseDown & \cellcolor[HTML]{FF69B4} 15 & 2.276 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{000000} \textcolor{white}{11} & 2.013 \% & \cellcolor[HTML]{2E8B57} 35 & 2.196 \% \caseUp & \cellcolor[HTML]{2E8B57} 35 & 2.169 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{1E90FF} 10 & 1.989 \% & \cellcolor[HTML]{FFFFF0} 13 & 2.153 \% \caseDown & \cellcolor[HTML]{FFFFF0} 13 & 2.168 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{1E90FF} 9 & 1.977 \% & \cellcolor[HTML]{E6E6FA} 36 & 2.126 \% \caseUp & \cellcolor[HTML]{E6E6FA} 36 & 2.096 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{483D8B} \textcolor{white}{40} & 1.929 \% & \cellcolor[HTML]{8B1A1A} \textcolor{white}{5} & 2.12 \% \caseUp & \cellcolor[HTML]{8B1A1A} \textcolor{white}{5} & 2.094 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{FFC1C1} 8 & 1.922 \% & \cellcolor[HTML]{FFC1C1} 8 & 2.09 \% \caseStable & \cellcolor[HTML]{1E90FF} 9 & 2.078 \% \caseUp \\ \hline
-	  \cellcolor[HTML]{A0522D} 2 & 1.919 \% & \cellcolor[HTML]{1E90FF} 9 & 2.085 \% \caseDown & \cellcolor[HTML]{FFC1C1} 8 & 2.077 \% \caseDown \\ \hline
-	  \cellcolor[HTML]{2E8B57} 35 & 1.915 \% & \cellcolor[HTML]{1E90FF} 7 & 2.067 \% \caseUp & \cellcolor[HTML]{1E90FF} 7 & 2.049 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{1E90FF} 7 & 1.842 \% & \cellcolor[HTML]{1E90FF} 10 & 2.039 \% \caseDown & \cellcolor[HTML]{1E90FF} 10 & 2.037 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{8B1A1A} \textcolor{white}{5} & 1.819 \% & \cellcolor[HTML]{FFC1C1} 37 & 2.029 \% \caseUp & \cellcolor[HTML]{FF69B4} 14 & 2.033 \% \caseUp \\ \hline
-	  \cellcolor[HTML]{E6E6FA} 36 & 1.809 \% & \cellcolor[HTML]{E6E6FA} 6 & 2.019 \% \caseUp & \cellcolor[HTML]{000000} \textcolor{white}{11} & 2.003 \% \caseUp \\ \hline
-	  \cellcolor[HTML]{E6E6FA} 6 & 1.743 \% & \cellcolor[HTML]{FF69B4} 14 & 2.01 \% \caseDown & \cellcolor[HTML]{FFC1C1} 37 & 1.997 \% \caseDown \\ \hline
-	  \cellcolor[HTML]{FFC1C1} 37 & 1.684 \% & \cellcolor[HTML]{000000} \textcolor{white}{11} & 1.999 \% \caseDown & \cellcolor[HTML]{E6E6FA} 6 & 1.996 \% \caseDown \\ \hline
-	  \cellcolor[HTML]{A0522D} 4 & 1.614 \% & \cellcolor[HTML]{A0522D} 4 & 1.973 \% \caseStable & \cellcolor[HTML]{A0522D} 4 & 1.942 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 1.561 \% & \cellcolor[HTML]{EEEED1} 3 & 1.941 \% \caseUp & \cellcolor[HTML]{EEEED1} 3 & 1.906 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{EEEED1} 3 & 1.554 \% & \cellcolor[HTML]{8B1A1A} 39 & 1.932 \% \caseUp & \cellcolor[HTML]{8B1A1A} 39 & 1.896 \% \caseStable \\ \hline
-	  \cellcolor[HTML]{8B1A1A} 39 & 1.54 \% & \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 1.924 \% \caseDown & \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 1.89 \% \caseStable \\ \hline
+	  \cellcolor[HTML]{FF4500} 25 & 3.131 \% & \cellcolor[HTML]{000000} \textcolor{white}{41} & 3.517 \% \caseUp[\hfill] & \cellcolor[HTML]{000000} \textcolor{white}{41} & 3.47 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{FF8C00} 19 & 3.086 \% & \cellcolor[HTML]{000000} \textcolor{white}{42} & 2.926 \% \caseUp[\hfill] & \cellcolor[HTML]{000000} \textcolor{white}{42} & 2.893 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{FF8C00} 20 & 3.075 \% & \cellcolor[HTML]{FF4500} 25 & 2.762 \% \caseUp[\hfill] & \cellcolor[HTML]{FF4500} 25 & 2.793 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{FFFFFF} 21 & 3.068 \% & \cellcolor[HTML]{FFFFFF} 1  & 2.746 \% \caseUp[\hfill] & \cellcolor[HTML]{FFFFFF} 1 & 2.707 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{000000} \textcolor{white}{41} & 3.011 \% & \cellcolor[HTML]{E6E6FA} 16 & 2.6 \% \caseUp[\hfill] & \cellcolor[HTML]{FF8C00} 19 & 2.637 \% \caseUp[\hfill] \\ \hline
+	  \cellcolor[HTML]{FFC1C1} 23 & 3.0 \% & \cellcolor[HTML]{FF8C00} 19 & 2.592 \% \caseDown[\hfill] & \cellcolor[HTML]{E6E6FA} 16 & 2.634 \% \caseDown[\hfill] \\ \hline
+	  \cellcolor[HTML]{E6E6FA} 16 & 2.967 \% & \cellcolor[HTML]{FFFFFF} 21 & 2.572 \% \caseDown[\hfill] & \cellcolor[HTML]{FFFFFF} 21 & 2.616 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{EEEED1} 18 & 2.896 \% & \cellcolor[HTML]{FF8C00} 20 & 2.562 \% \caseDown[\hfill] & \cellcolor[HTML]{FF8C00} 20 & 2.607 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{FF8C00} 17 & 2.891 \% & \cellcolor[HTML]{FFC1C1} 23 & 2.554 \% \caseDown[\hfill] & \cellcolor[HTML]{FFC1C1} 23 & 2.593 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{FF4500} 22 & 2.87 \% & \cellcolor[HTML]{FF8C00} 17 & 2.467 \% \caseDown[\hfill] & \cellcolor[HTML]{FF8C00} 17 & 2.506 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{FF4500} 24 & 2.763 \% & \cellcolor[HTML]{EEEED1} 18 & 2.409 \% \caseDown[\hfill] & \cellcolor[HTML]{EEEED1} 18 & 2.453 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{E6E6FA} 26 & 2.688 \% & \cellcolor[HTML]{000000} \textcolor{white}{43} & 2.401 \% \caseUp[\hfill] & \cellcolor[HTML]{FF4500} 22 & 2.426 \% \caseUp[\hfill] \\ \hline
+	  \cellcolor[HTML]{FFD700} 27 & 2.636 \% & \cellcolor[HTML]{FF4500} 22 & 2.384 \% \caseDown[\hfill] & \cellcolor[HTML]{000000} \textcolor{white}{43} & 2.414 \% \caseDown[\hfill] \\ \hline
+	  \cellcolor[HTML]{FFD700} 28 & 2.559 \% & \cellcolor[HTML]{EEEED1} 34 & 2.377 \% \caseUp[\hfill] & \cellcolor[HTML]{FFD700} 27 & 2.395 \% \caseUp[\hfill] \\ \hline
+	  \cellcolor[HTML]{FF69B4} 15 & 2.539 \% & \cellcolor[HTML]{FFD700} 27 & 2.374 \% \caseDown[\hfill] & \cellcolor[HTML]{E6E6FA} 26 & 2.391 \% \caseUp[\hfill] \\ \hline
+	  \cellcolor[HTML]{000000} \textcolor{white}{42} & 2.537 \% & \cellcolor[HTML]{FF69B4} 12 & 2.373 \% \caseUp[\hfill] & \cellcolor[HTML]{FF4500} 24 & 2.385 \% \caseUp[\hfill] \\ \hline
+	  \cellcolor[HTML]{000000} \textcolor{white}{43} & 2.512 \% & \cellcolor[HTML]{2E8B57} 32 & 2.371 \% \caseUp[\hfill] & \cellcolor[HTML]{FF69B4} 12 & 2.382 \% \caseDown[\hfill] \\ \hline
+	  \cellcolor[HTML]{FFFFF0} 29 & 2.456 \% & \cellcolor[HTML]{FFD700} 28 & 2.364 \% \caseDown[\hfill] & \cellcolor[HTML]{FFD700} 28 & 2.38 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{FF69B4} 12 & 2.449 \% & \cellcolor[HTML]{E6E6FA} 26 & 2.364 \% \caseDown[\hfill] & \cellcolor[HTML]{2E8B57} 32 & 2.359 \% \caseDown[\hfill] \\ \hline
+	  \cellcolor[HTML]{FFD700} 30 & 2.358 \% & \cellcolor[HTML]{BEBEBE} 31 & 2.35 \% \caseUp[\hfill] & \cellcolor[HTML]{EEEED1} 34 & 2.352 \% \caseDown[\hfill] \\ \hline
+	  \cellcolor[HTML]{FFFFFF} 1 & 2.323 \% & \cellcolor[HTML]{FF4500} 24 & 2.349 \% \caseDown[\hfill] & \cellcolor[HTML]{FFFFF0} 29 & 2.346 \% \caseUp[\hfill] \\ \hline
+	  \cellcolor[HTML]{BEBEBE} 31 & 2.311 \% & \cellcolor[HTML]{483D8B} \textcolor{white}{40} & 2.339 \% \caseUp[\hfill] & \cellcolor[HTML]{BEBEBE} 31 & 2.345 \% \caseDown[\hfill] \\ \hline
+	  \cellcolor[HTML]{FFFFF0} 13 & 2.301 \% & \cellcolor[HTML]{FFFFF0} 29 & 2.338 \% \caseDown[\hfill] & \cellcolor[HTML]{FFD700} 30 & 2.32 \% \caseUp[\hfill] \\ \hline
+	  \cellcolor[HTML]{2E8B57} 32 & 2.254 \% & \cellcolor[HTML]{A0522D} 2 & 2.332 \% \caseUp[\hfill] & \cellcolor[HTML]{483D8B} \textcolor{white}{40} & 2.302 \% \caseDown[\hfill] \\ \hline
+	  \cellcolor[HTML]{FF69B4} 14 & 2.242 \% & \cellcolor[HTML]{FFD700} 30 & 2.318 \% \caseDown[\hfill] & \cellcolor[HTML]{A0522D} 2 & 2.295 \% \caseDown[\hfill] \\ \hline
+	  \cellcolor[HTML]{2E8B57} 33 & 2.132 \% & \cellcolor[HTML]{2E8B57} 33 & 2.309 \% \caseStable[\hfill] & \cellcolor[HTML]{2E8B57} 33 & 2.291 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{EEEED1} 34 & 2.118 \% & \cellcolor[HTML]{FF69B4} 15 & 2.248 \% \caseDown[\hfill] & \cellcolor[HTML]{FF69B4} 15 & 2.276 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{000000} \textcolor{white}{11} & 2.013 \% & \cellcolor[HTML]{2E8B57} 35 & 2.196 \% \caseUp[\hfill] & \cellcolor[HTML]{2E8B57} 35 & 2.169 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{1E90FF} 10 & 1.989 \% & \cellcolor[HTML]{FFFFF0} 13 & 2.153 \% \caseDown[\hfill] & \cellcolor[HTML]{FFFFF0} 13 & 2.168 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{1E90FF} 9 & 1.977 \% & \cellcolor[HTML]{E6E6FA} 36 & 2.126 \% \caseUp[\hfill] & \cellcolor[HTML]{E6E6FA} 36 & 2.096 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{483D8B} \textcolor{white}{40} & 1.929 \% & \cellcolor[HTML]{8B1A1A} \textcolor{white}{5} & 2.12 \% \caseUp[\hfill] & \cellcolor[HTML]{8B1A1A} \textcolor{white}{5} & 2.094 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{FFC1C1} 8 & 1.922 \% & \cellcolor[HTML]{FFC1C1} 8 & 2.09 \% \caseStable[\hfill] & \cellcolor[HTML]{1E90FF} 9 & 2.078 \% \caseUp[\hfill] \\ \hline
+	  \cellcolor[HTML]{A0522D} 2 & 1.919 \% & \cellcolor[HTML]{1E90FF} 9 & 2.085 \% \caseDown[\hfill] & \cellcolor[HTML]{FFC1C1} 8 & 2.077 \% \caseDown[\hfill] \\ \hline
+	  \cellcolor[HTML]{2E8B57} 35 & 1.915 \% & \cellcolor[HTML]{1E90FF} 7 & 2.067 \% \caseUp[\hfill] & \cellcolor[HTML]{1E90FF} 7 & 2.049 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{1E90FF} 7 & 1.842 \% & \cellcolor[HTML]{1E90FF} 10 & 2.039 \% \caseDown[\hfill] & \cellcolor[HTML]{1E90FF} 10 & 2.037 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{8B1A1A} \textcolor{white}{5} & 1.819 \% & \cellcolor[HTML]{FFC1C1} 37 & 2.029 \% \caseUp[\hfill] & \cellcolor[HTML]{FF69B4} 14 & 2.033 \% \caseUp[\hfill] \\ \hline
+	  \cellcolor[HTML]{E6E6FA} 36 & 1.809 \% & \cellcolor[HTML]{E6E6FA} 6 & 2.019 \% \caseUp[\hfill] & \cellcolor[HTML]{000000} \textcolor{white}{11} & 2.003 \% \caseUp[\hfill] \\ \hline
+	  \cellcolor[HTML]{E6E6FA} 6 & 1.743 \% & \cellcolor[HTML]{FF69B4} 14 & 2.01 \% \caseDown[\hfill] & \cellcolor[HTML]{FFC1C1} 37 & 1.997 \% \caseDown[\hfill] \\ \hline
+	  \cellcolor[HTML]{FFC1C1} 37 & 1.684 \% & \cellcolor[HTML]{000000} \textcolor{white}{11} & 1.999 \% \caseDown[\hfill] & \cellcolor[HTML]{E6E6FA} 6 & 1.996 \% \caseDown[\hfill] \\ \hline
+	  \cellcolor[HTML]{A0522D} 4 & 1.614 \% & \cellcolor[HTML]{A0522D} 4 & 1.973 \% \caseStable[\hfill] & \cellcolor[HTML]{A0522D} 4 & 1.942 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 1.561 \% & \cellcolor[HTML]{EEEED1} 3 & 1.941 \% \caseUp[\hfill] & \cellcolor[HTML]{EEEED1} 3 & 1.906 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{EEEED1} 3 & 1.554 \% & \cellcolor[HTML]{8B1A1A} 39 & 1.932 \% \caseUp[\hfill] & \cellcolor[HTML]{8B1A1A} 39 & 1.896 \% \caseStable[\hfill] \\ \hline
+	  \cellcolor[HTML]{8B1A1A} 39 & 1.54 \% & \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 1.924 \% \caseDown[\hfill] & \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 1.89 \% \caseStable[\hfill] \\ \hline
 	\end{tabular}
 	\caption{Résultats tour par tour si le joueur ne paye pas pour 
 	sortir de prison}
@@ -946,7 +952,7 @@ rdetobel@ulb.ac.be}
       
       \begin{table}
 	\centering
-	\begin{tabular}{|l|l|l|l|l|l|}
+	\begin{tabular}{|l|l||l|l||l|l|}
 	  \hline
 	  \multicolumn{1}{|c|}{{\textbf{N}}} & % Numero
 	  \multicolumn{1}{p{1.5cm}||}{\centering \textbf{Probabilité \\ après 20 tours}} & %
@@ -954,54 +960,58 @@ rdetobel@ulb.ac.be}
 	  \multicolumn{1}{p{1.5cm}||}{\centering \textbf{Probabilité \\ après 40 tours}} & %
 	  \multicolumn{1}{c|}{{\textbf{N}}} & % Numero
 	  \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Probabilité \\ après 60 tours}} \\ \hline %
-	  \cellcolor[HTML]{000000} \textcolor{white}{41} & 3.485 \% & \cellcolor[HTML]{000000} \textcolor{white}{41} & 3.675 \% \caseStable & \cellcolor[HTML]{000000} \textcolor{white}{41} & 3.675 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{FF4500} 25 & 3.171 \% & \cellcolor[HTML]{FF4500} 25 & 2.948 \% \caseStable & \cellcolor[HTML]{FF4500} 25 & 2.948 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{FF8C00} 20 & 3.035 \% & \cellcolor[HTML]{E6E6FA} 16 & 2.89 \%  \caseUp & \cellcolor[HTML]{E6E6FA} 16 & 2.89 \%  \caseStable \\ \hline 
-	  \cellcolor[HTML]{E6E6FA} 16 & 2.967 \% & \cellcolor[HTML]{FFFFFF}  1 & 2.872 \% \caseUp & \cellcolor[HTML]{FFFFFF}  1 & 2.872 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{FF8C00} 19 & 2.885 \% & \cellcolor[HTML]{FF8C00} 20 & 2.844 \% \caseDown & \cellcolor[HTML]{FF8C00} 20 & 2.844 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{EEEED1} 18 & 2.882 \% & \cellcolor[HTML]{EEEED1} 18 & 2.759 \% \caseStable & \cellcolor[HTML]{EEEED1} 18 & 2.759 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{FFFFFF} 21 & 2.856 \% & \cellcolor[HTML]{FF8C00} 19 & 2.73 \%  \caseDown & \cellcolor[HTML]{FF8C00} 19 & 2.73 \%  \caseStable \\ \hline 
-	  \cellcolor[HTML]{FF4500} 22 & 2.832 \% & \cellcolor[HTML]{FFFFFF} 21 & 2.651 \% \caseDown & \cellcolor[HTML]{FFFFFF} 21 & 2.651 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{FFC1C1} 23 & 2.809 \% & \cellcolor[HTML]{FF4500} 22 & 2.613 \% \caseDown & \cellcolor[HTML]{FF4500} 22 & 2.613 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{FF4500} 24 & 2.755 \% & \cellcolor[HTML]{FF8C00} 17 & 2.601 \% \caseUp & \cellcolor[HTML]{FF8C00} 17 & 2.601 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{E6E6FA} 26 & 2.742 \% & \cellcolor[HTML]{FFC1C1} 23 & 2.579 \% \caseDown & \cellcolor[HTML]{FFC1C1} 23 & 2.579 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{FFD700} 27 & 2.725 \% & \cellcolor[HTML]{FFD700} 27 & 2.531 \% \caseStable & \cellcolor[HTML]{FFD700} 27 & 2.531 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{FF8C00} 17 & 2.703 \% & \cellcolor[HTML]{E6E6FA} 26 & 2.53 \%  \caseDown & \cellcolor[HTML]{E6E6FA} 26 & 2.53 \%  \caseStable \\ \hline 
-	  \cellcolor[HTML]{FFD700} 28 & 2.681 \% & \cellcolor[HTML]{FF4500} 24 & 2.52 \%  \caseDown & \cellcolor[HTML]{FF4500} 24 & 2.52 \%  \caseStable \\ \hline 
-	  \cellcolor[HTML]{FFFFFF}  1 & 2.667 \% & \cellcolor[HTML]{FF69B4} 12 & 2.513 \% \caseUp & \cellcolor[HTML]{FF69B4} 12 & 2.513 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{FFFFF0} 29 & 2.616 \% & \cellcolor[HTML]{FFD700} 28 & 2.509 \% \caseDown & \cellcolor[HTML]{FFD700} 28 & 2.509 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{FFD700} 30 & 2.556 \% & \cellcolor[HTML]{EEEED1} 34 & 2.487 \% \caseUp & \cellcolor[HTML]{EEEED1} 34 & 2.487 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{BEBEBE} 31 & 2.552 \% & \cellcolor[HTML]{2E8B57} 32 & 2.487 \% \caseUp & \cellcolor[HTML]{2E8B57} 32 & 2.487 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{2E8B57} 32 & 2.537 \% & \cellcolor[HTML]{FFFFF0} 29 & 2.47 \%  \caseDown & \cellcolor[HTML]{FFFFF0} 29 & 2.47 \%  \caseStable \\ \hline 
-	  \cellcolor[HTML]{FF69B4} 12 & 2.479 \% & \cellcolor[HTML]{BEBEBE} 31 & 2.467 \% \caseDown & \cellcolor[HTML]{BEBEBE} 31 & 2.467 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{EEEED1} 34 & 2.458 \% & \cellcolor[HTML]{A0522D}  2 & 2.446 \% \caseUp & \cellcolor[HTML]{A0522D}  2 & 2.446 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{2E8B57} 33 & 2.436 \% & \cellcolor[HTML]{FFD700} 30 & 2.44 \%  \caseDown & \cellcolor[HTML]{FFD700} 30 & 2.44 \%  \caseStable \\ \hline 
-	  \cellcolor[HTML]{FF69B4} 15 & 2.357 \% & \cellcolor[HTML]{483D8B} \textcolor{white}{40} & 2.43 \% \caseUp & \cellcolor[HTML]{483D8B} \textcolor{white}{40} & 2.43 \%  \caseStable \\ \hline 
-	  \cellcolor[HTML]{483D8B} \textcolor{white}{40} & 2.248 \% & \cellcolor[HTML]{2E8B57} 33 & 2.418 \% \caseDown & \cellcolor[HTML]{2E8B57} 33 & 2.418 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{2E8B57} 35 & 2.247 \% & \cellcolor[HTML]{FF69B4} 15 & 2.306 \% \caseDown & \cellcolor[HTML]{FF69B4} 15 & 2.306 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{FF69B4} 14 & 2.235 \% & \cellcolor[HTML]{2E8B57} 35 & 2.294 \% \caseDown & \cellcolor[HTML]{2E8B57} 35 & 2.294 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{A0522D}  2 & 2.231 \% & \cellcolor[HTML]{8B1A1A} \textcolor{white}{5} & 2.223 \% \caseUp & \cellcolor[HTML]{8B1A1A}  \textcolor{white}{5} & 2.223 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{E6E6FA} 36 & 2.142 \% & \cellcolor[HTML]{E6E6FA} 36 & 2.219 \% \caseStable & \cellcolor[HTML]{E6E6FA} 36 & 2.219 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{FFFFF0} 13 & 2.134 \% & \cellcolor[HTML]{FF69B4} 14 & 2.212 \% \caseDown & \cellcolor[HTML]{FF69B4} 14 & 2.212 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{1E90FF}  9 & 2.075 \% & \cellcolor[HTML]{1E90FF}  9 & 2.205 \% \caseStable & \cellcolor[HTML]{1E90FF}  9 & 2.205 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{1E90FF} 10 & 2.058 \% & \cellcolor[HTML]{FFC1C1}  8 & 2.204 \% \caseUp & \cellcolor[HTML]{FFC1C1}  8 & 2.204 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{000000} \textcolor{white}{11} & 2.053 \% & \cellcolor[HTML]{1E90FF}  7 & 2.175 \% \caseUp & \cellcolor[HTML]{1E90FF} 7 & 2.175 \%  \caseStable \\ \hline 
-	  \cellcolor[HTML]{FFC1C1}  8 & 2.049 \% & \cellcolor[HTML]{1E90FF} 10 & 2.16 \% \caseDown & \cellcolor[HTML]{1E90FF} 10 & 2.16 \%  \caseStable \\ \hline 
-	  \cellcolor[HTML]{8B1A1A}  \textcolor{white}{5} & 2.025 \% & \cellcolor[HTML]{FFFFF0} 13 & 2.139 \% \caseDown & \cellcolor[HTML]{FFFFF0} 13 & 2.139 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{FFC1C1} 37 & 2.008 \% & \cellcolor[HTML]{000000} \textcolor{white}{11} & 2.122 \% \caseDown & \cellcolor[HTML]{000000} \textcolor{white}{11} & 2.122 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{1E90FF}  7 & 1.998 \% & \cellcolor[HTML]{E6E6FA}  6 & 2.119 \% \caseUp & \cellcolor[HTML]{E6E6FA}  6 & 2.119 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{E6E6FA}  6 & 1.926 \% & \cellcolor[HTML]{FFC1C1} 37 & 2.114 \% \caseDown & \cellcolor[HTML]{FFC1C1} 37 & 2.114 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 1.871 \% & \cellcolor[HTML]{A0522D}  4 & 2.062 \% \caseUp & \cellcolor[HTML]{A0522D}  4 & 2.062 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{A0522D}  4 & 1.852 \% & \cellcolor[HTML]{EEEED1}  3 & 2.025 \% \caseUp & \cellcolor[HTML]{EEEED1} 3 & 2.025 \%  \caseStable \\ \hline 
-	  \cellcolor[HTML]{8B1A1A} 39 & 1.85 \%  & \cellcolor[HTML]{8B1A1A} 39 & 2.01 \% \caseStable & \cellcolor[HTML]{8B1A1A} 39 & 2.01 \%  \caseStable \\ \hline 
-	  \cellcolor[HTML]{EEEED1}  3 & 1.813 \% & \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 2.002 \% \caseDown & \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 2.002 \% \caseStable \\ \hline 
-	  \cellcolor[HTML]{000000} \textcolor{white}{42} & 0.0 \%   & \cellcolor[HTML]{000000} \textcolor{white}{42} & 0.0 \% \caseStable & \cellcolor[HTML]{000000} \textcolor{white}{42} & 0.0 \%   \caseStable \\ \hline 
-	  \cellcolor[HTML]{000000} \textcolor{white}{43} & 0.0 \%   & \cellcolor[HTML]{000000} \textcolor{white}{43} & 0.0 \% \caseStable & \cellcolor[HTML]{000000} \textcolor{white}{43} & 0.0 \%   \caseStable \\ \hline
+	    \cellcolor[HTML]{000000} \textcolor{white}{41} & 3.485 \% & \cellcolor[HTML]{000000} \textcolor{white}{41} & 3.675 \% \caseStable[\hfill] & \cellcolor[HTML]{000000} \textcolor{white}{41} & 3.672 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{FF4500} 25 & 3.171 \% & \cellcolor[HTML]{FF4500} 25 & 2.948 \% \caseStable[\hfill] & \cellcolor[HTML]{FF4500} 25 & 2.956 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{FF8C00} 20 & 3.035 \% & \cellcolor[HTML]{E6E6FA} 16 & 2.89 \%  \caseUp[\hfill] & \cellcolor[HTML]{E6E6FA} 16 & 2.889 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{E6E6FA} 16 & 2.967 \% & \cellcolor[HTML]{FFFFFF}  1 & 2.872 \% \caseUp[\hfill] & \cellcolor[HTML]{FFFFFF} 1 & 2.866 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{FF8C00} 19 & 2.885 \% & \cellcolor[HTML]{FF8C00} 20 & 2.844 \% \caseDown[\hfill] & \cellcolor[HTML]{FF8C00} 20 & 2.848 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{EEEED1} 18 & 2.882 \% & \cellcolor[HTML]{EEEED1} 18 & 2.759 \% \caseStable[\hfill] & \cellcolor[HTML]{EEEED1} 18 & 2.76 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{FFFFFF} 21 & 2.856 \% & \cellcolor[HTML]{FF8C00} 19 & 2.73 \%  \caseDown[\hfill] & \cellcolor[HTML]{FF8C00} 19 & 2.732 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{FF4500} 22 & 2.832 \% & \cellcolor[HTML]{FFFFFF} 21 & 2.651 \% \caseDown[\hfill] & \cellcolor[HTML]{FFFFFF} 21 & 2.657 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{FFC1C1} 23 & 2.809 \% & \cellcolor[HTML]{FF4500} 22 & 2.613 \% \caseDown[\hfill] & \cellcolor[HTML]{FF4500} 22 & 2.619 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{FF4500} 24 & 2.755 \% & \cellcolor[HTML]{FF8C00} 17 & 2.601 \% \caseUp[\hfill] & \cellcolor[HTML]{FF8C00} 17 & 2.601 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{E6E6FA} 26 & 2.742 \% & \cellcolor[HTML]{FFC1C1} 23 & 2.579 \% \caseDown[\hfill] & \cellcolor[HTML]{FFC1C1} 23 & 2.587 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{FFD700} 27 & 2.725 \% & \cellcolor[HTML]{FFD700} 27 & 2.531 \% \caseStable[\hfill] & \cellcolor[HTML]{FFD700} 27 & 2.54 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{FF8C00} 17 & 2.703 \% & \cellcolor[HTML]{E6E6FA} 26 & 2.53 \%  \caseDown[\hfill] & \cellcolor[HTML]{E6E6FA} 26 & 2.539 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{FFD700} 28 & 2.681 \% & \cellcolor[HTML]{FF4500} 24 & 2.52 \%  \caseDown[\hfill] & \cellcolor[HTML]{FF4500} 24 & 2.529 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{FFFFFF}  1 & 2.667 \% & \cellcolor[HTML]{FF69B4} 12 & 2.513 \% \caseUp[\hfill] & \cellcolor[HTML]{FFD700} 28 & 2.517 \% \caseUp[\hfill] \\ \hline 
+	    \cellcolor[HTML]{FFFFF0} 29 & 2.616 \% & \cellcolor[HTML]{FFD700} 28 & 2.509 \% \caseDown[\hfill] & \cellcolor[HTML]{FF69B4} 12 & 2.508 \% \caseDown[\hfill] \\ \hline 
+	    \cellcolor[HTML]{FFD700} 30 & 2.556 \% & \cellcolor[HTML]{EEEED1} 34 & 2.487 \% \caseUp[\hfill] & \cellcolor[HTML]{2E8B57} 32 & 2.492 \% \caseUp[\hfill] \\ \hline 
+	    \cellcolor[HTML]{BEBEBE} 31 & 2.552 \% & \cellcolor[HTML]{2E8B57} 32 & 2.487 \% \caseUp[\hfill] & \cellcolor[HTML]{EEEED1} 34 & 2.49 \% \caseDown[\hfill] \\ \hline 
+	    \cellcolor[HTML]{2E8B57} 32 & 2.537 \% & \cellcolor[HTML]{FFFFF0} 29 & 2.47 \%  \caseDown[\hfill] & \cellcolor[HTML]{FFFFF0} 29 & 2.478 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{FF69B4} 12 & 2.479 \% & \cellcolor[HTML]{BEBEBE} 31 & 2.467 \% \caseDown[\hfill] & \cellcolor[HTML]{BEBEBE} 31 & 2.474 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{EEEED1} 34 & 2.458 \% & \cellcolor[HTML]{A0522D}  2 & 2.446 \% \caseUp[\hfill] & \cellcolor[HTML]{FFD700} 30 & 2.447 \% \caseUp[\hfill] \\ \hline 
+	    \cellcolor[HTML]{2E8B57} 33 & 2.436 \% & \cellcolor[HTML]{FFD700} 30 & 2.44 \%  \caseDown[\hfill] & \cellcolor[HTML]{A0522D} 2 & 2.439 \% \caseDown[\hfill] \\ \hline 
+	    \cellcolor[HTML]{FF69B4} 15 & 2.357 \% & \cellcolor[HTML]{483D8B} \textcolor{white}{40} & 2.43 \% \caseUp[\hfill] & \cellcolor[HTML]{483D8B} \textcolor{white}{40} & 2.426 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{483D8B} \textcolor{white}{40} & 2.248 \% & \cellcolor[HTML]{2E8B57} 33 & 2.418 \% \caseDown[\hfill] & \cellcolor[HTML]{2E8B57} 33 & 2.422 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{2E8B57} 35 & 2.247 \% & \cellcolor[HTML]{FF69B4} 15 & 2.306 \% \caseDown[\hfill] & \cellcolor[HTML]{FF69B4} 15 & 2.304 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{FF69B4} 14 & 2.235 \% & \cellcolor[HTML]{2E8B57} 35 & 2.294 \% \caseDown[\hfill] & \cellcolor[HTML]{2E8B57} 35 & 2.296 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{A0522D}  2 & 2.231 \% & \cellcolor[HTML]{8B1A1A} \textcolor{white}{5} & 2.223 \% \caseUp[\hfill] & \cellcolor[HTML]{E6E6FA} 36 & 2.22 \% \caseUp[\hfill] \\ \hline 
+	    \cellcolor[HTML]{E6E6FA} 36 & 2.142 \% & \cellcolor[HTML]{E6E6FA} 36 & 2.219 \% \caseStable[\hfill] & \cellcolor[HTML]{8B1A1A} \textcolor{white}{5} & 2.215 \% \caseDown[\hfill] \\ \hline 
+	    \cellcolor[HTML]{FFFFF0} 13 & 2.134 \% & \cellcolor[HTML]{FF69B4} 14 & 2.212 \% \caseDown[\hfill] & \cellcolor[HTML]{FF69B4} 14 & 2.209 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{1E90FF}  9 & 2.075 \% & \cellcolor[HTML]{1E90FF}  9 & 2.205 \% \caseStable[\hfill] & \cellcolor[HTML]{1E90FF} 9 & 2.197 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{1E90FF} 10 & 2.058 \% & \cellcolor[HTML]{FFC1C1}  8 & 2.204 \% \caseUp[\hfill] & \cellcolor[HTML]{FFC1C1} 8 & 2.196 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{000000} \textcolor{white}{11} & 2.053 \% & \cellcolor[HTML]{1E90FF}  7 & 2.175 \% \caseUp[\hfill] & \cellcolor[HTML]{1E90FF} 7 & 2.167 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{FFC1C1}  8 & 2.049 \% & \cellcolor[HTML]{1E90FF} 10 & 2.16 \% \caseDown[\hfill] & \cellcolor[HTML]{1E90FF} 10 & 2.153 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{8B1A1A}  \textcolor{white}{5} & 2.025 \% & \cellcolor[HTML]{FFFFF0} 13 & 2.139 \% \caseDown[\hfill] & \cellcolor[HTML]{FFFFF0} 13 & 2.135 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{FFC1C1} 37 & 2.008 \% & \cellcolor[HTML]{000000} \textcolor{white}{11} & 2.122 \% \caseDown[\hfill] & \cellcolor[HTML]{000000} \textcolor{white}{11} & 2.116 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{1E90FF}  7 & 1.998 \% & \cellcolor[HTML]{E6E6FA}  6 & 2.119 \% \caseUp[\hfill] & \cellcolor[HTML]{FFC1C1} 37 & 2.114 \% \caseUp[\hfill] \\ \hline 
+	    \cellcolor[HTML]{E6E6FA}  6 & 1.926 \% & \cellcolor[HTML]{FFC1C1} 37 & 2.114 \% \caseDown[\hfill] & \cellcolor[HTML]{E6E6FA} 6 & 2.11 \% \caseDown[\hfill] \\ \hline 
+	    \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 1.871 \% & \cellcolor[HTML]{A0522D}  4 & 2.062 \% \caseUp[\hfill] & \cellcolor[HTML]{A0522D} 4 & 2.054 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{A0522D}  4 & 1.852 \% & \cellcolor[HTML]{EEEED1}  3 & 2.025 \% \caseUp[\hfill] & \cellcolor[HTML]{EEEED1} 3 & 2.017 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{8B1A1A} 39 & 1.85 \%  & \cellcolor[HTML]{8B1A1A} 39 & 2.01 \% \caseStable[\hfill] & \cellcolor[HTML]{8B1A1A} 39 & 2.006 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{EEEED1}  3 & 1.813 \% & \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 2.002 \% \caseDown[\hfill] & \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 2.0 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{000000} \textcolor{white}{42} & 0.0 \%   & \cellcolor[HTML]{000000} \textcolor{white}{42} & 0.0 \% \caseStable[\hfill] & \cellcolor[HTML]{000000} \textcolor{white}{42} & 0.0 \% \caseStable[\hfill] \\ \hline 
+	    \cellcolor[HTML]{000000} \textcolor{white}{43} & 0.0 \%   & \cellcolor[HTML]{000000} \textcolor{white}{43} & 0.0 \% \caseStable[\hfill] & \cellcolor[HTML]{000000} \textcolor{white}{43} & 0.0 \% \caseStable[\hfill] \\ \hline
 	\end{tabular}
 	\caption{Résultats tour par tour si le joueur paye pour 
 	sortir de prison}
 	\label{result_tour_paye}
       \end{table}
+      En comparant ces deux tableaux avec les tableaux du point précédent 
+      (à savoir \ref{result_paye_pas} et \ref{result_paye}), on constate
+      qu'après 60 tours, l'ordre des cases est la même que si l'on était
+      dans un état stationnaire.
     
     \subsubsection{Comparaison}
       Les résultats précédent peuvent être comparée à d'autres recherches déjà faite,
@@ -1013,30 +1023,8 @@ rdetobel@ulb.ac.be}
     
     
 \section{Conclusion}
+  % TODO
   
-  
-%     ===== EXEMPLE =====
-%     \begin{tikzpicture}
-%       % Draw the states
-%       \node[state,
-% 	    text=yellow,
-% 	    draw=none,
-% 	    fill=gray!50!black] (s) {Sunny};
-%       \node[state,
-% 	    right=of s,
-% 	    text=blue!30!white, 
-% 	    draw=none, 
-% 	    fill=gray!50!black] (r) {Rainy};
-% 
-%       % Connect the states with arrows
-%       \draw[every loop]
-% 	  (s) edge[bend right] node {} (r)
-% 	  (r) edge[bend right] node {} (s)
-% 	  (s) edge[bend right, auto=left]  node {0.6} (r)
-% 	  (r) edge[bend right, auto=right] node {0.7} (s)
-% 	  (s) edge[loop above]             node {0.4} (s)
-% 	  (r) edge[loop above]             node {0.3} (r);
-%     \end{tikzpicture}
   
 \footnotesize
 \nocite{*}
@@ -1044,7 +1032,9 @@ rdetobel@ulb.ac.be}
 \bibliography{Rapport}
 
   
+\newpage
 \appendix
+  \pagenumbering{Roman}
   \onecolumn
   
   \section{Liste des cases}
@@ -1101,5 +1091,33 @@ rdetobel@ulb.ac.be}
       40 & \cellcolor[HTML]{483D8B} & Bruxelles Rue Neuve & \cellcolor[HTML]{483D8B} & La grande Pyramide de Gizeh &\cellcolor[HTML]{483D8B} & Brésil &\cellcolor[HTML]{483D8B} & Armée Clone\\ \hline
       \end{tabular}
     }
+    
+    \section{Graphique}
+      \label{annexe_graphe}
+      \subsection{Répartition des cases}
+	\begin{center}
+	  \begin{figure}[h]
+	    \includegraphics[scale=0.26]{./Images/GraphRepPayePasLeq20.png}
+	    \caption{\label{graph_result_paye_pas} Répartition des cases entre 1 et 20 tours lorsque le joueur ne paye pas pour sortir de prison}
+	  \end{figure}
+	  
+	  \begin{figure}[h]
+	    \includegraphics[scale=0.26]{./Images/GraphRepPayeLeq20.png}
+	    \caption{\label{graph_result_paye} Répartition des cases entre 1 et 20 tours lorsque le joueur paye directement pour sortir de prison}
+	  \end{figure}
+	  
+	  \begin{figure}[h]
+	    \includegraphics[scale=0.4]{./Images/GraphRepPayePas20-70.png}
+	    \caption{\label{graph_all_result_paye_pas} Répartition des cases pour 20, 30, 40, 50, 60 et 70 tours lorsque le joueur ne paye pas pour sortir de prison}
+	  \end{figure}
+	  
+	  \begin{figure}[h]
+	    \includegraphics[scale=0.4]{./Images/GraphRepPaye20-70.png}
+	    \caption{\label{graph_all_result_paye} Répartition des cases pour 20, 30, 40, 50, 60 et 70 tours lorsque le joueur paye directement pour sortir de prison}
+	  \end{figure}
+	  
+	\end{center}
+	
+	
 
 \end{document}
