@@ -700,6 +700,7 @@ rdetobel@ulb.ac.be}
     tout le temps attendre en espérant faire un double).
     
   \subsection{Case \textit{Aller en prison}}
+    \label{aller_en_prison}
     La case \textit{Aller en prison} envoie directement le joueur vers
     la case prison.  Il est tout de même intéressant de connaître la
     probabilité de tomber sur cette case.  Elle a donc été modélise
@@ -758,11 +759,20 @@ rdetobel@ulb.ac.be}
     plus visitée.
     
   \subsubsection{Rentabilité}
-    $n$ = nombre de tour, $r$ = revenu si un joueur tombe sur la case, 
-    $p$ = probabilité de tomber sur cette case
-    $$n * p * r = $$
-    % TODO définir la rentabilité
-    
+    \label{rentabilite}
+    Il y a plusieurs moyen de calculer la rentabilité d'une case.  Tout 
+    d'abord on peut simplement s'intéresser au nombre de fois que cette case
+    devra être visitée pour permettre de la rentabilisée.  Cette information
+    nous permettra juste de savoir quel est la case qui a le plus haut revenu en
+    fonction de son prix.\\
+    Pour prendre en compte la probabilité qu'a un joueur de tomber sur cette 
+    case, il suffit de multiplié le revenu $r$ par la probabilité $p$ qu'elle soit
+    visitée.  On a donc la formule suivante:
+    $$r \times p = s$$
+    Où $s$ est le revenu espéré par tour adverse.  C'est à dire qu'a chaque tour
+    fait par un adversaire, on peut espérer récupérer la somme $s$ si l'on 
+    considère être dans un état stationnaire (et que la case est accessible
+    pour l'adversaire).
     
 \section{Résultats}
   Pour réduire la taille des tableaux et ne pas se baser sur les nom d'un seul
@@ -1008,17 +1018,40 @@ rdetobel@ulb.ac.be}
 	sortir de prison}
 	\label{result_tour_paye}
       \end{table}
+
       En comparant ces deux tableaux avec les tableaux du point précédent 
       (à savoir \ref{result_paye_pas} et \ref{result_paye}), on constate
       qu'après 60 tours, l'ordre des cases est la même que si l'on était
       dans un état stationnaire.
     
     \subsubsection{Comparaison}
-      Les résultats précédent peuvent être comparée à d'autres recherches déjà faite,
-      comme par exemple le document \cite{} % TODO
-    
-    
+      Les résultats précédent peuvent être comparés à d'autres recherches déjà faites,
+      comme par exemple la présentation de \cite{PP_MONOPOLY} où dans le 13\up{ème} slide
+      on peut découvrir la liste des cases ainsi que la probabilité de tomber sur 
+      chacune d'entre elle lorsque le système est dans un état stationnaire.  Dans ce tableau, l'auteur
+      ne distingue pas le nombre de tour passé en prison.  On remarque également
+      que l'auteur a décidé de ne pas modélisé la case \textit{Aller en prison}
+      contrairement au choix fait dans cet article en point \ref{aller_en_prison}.
+      Dans cette même idée, les cases \textit{chance} et \textit{caisse de communauté}
+      ont des probabilités plus faible car l'auteur n'a compté aucune étape entre
+      le fait que le pion tombe sur cette case et le fait que celui-ci doit être
+      déplacé en fonction de l'action demandé par la carte.\\
+      Bien que de nombreuses cases n'aient pas la même probabilité (pour les raisons
+      expliqué ci-dessus), on peut tout de même constater que les trois premières cases
+      du classement sont les mêmes: \textit{prison}, la 25\up{ème} case et la case départ.
+      La case la moins cher du Monopoly, la 2\up{ème} case, se trouve au milieu du classement
+      fait dans cette article alors que les résultats présent dans le document 
+      place cette case tout en bas du classement.  Elle est pourtant visitée plus régulièrement
+      suite à la possibilité de s'y rendre grâce à une carte \textit{caisse de communauté}.
+      De manière générale, on constate tout de même que les cases \textit{orange} et 
+      \textit{rouge} sont toujours au début du classement.
+      % TODO comparaison avec l'autre document
+      
   \subsection{Rentabilité}
+    Comme vu dans le point \ref{rentabilite}, il y a plusieurs moyen
+    de caractérisé la rentabilité d'une case.  Un récapitulatif des cases
+    ainsi que de leur coût, leur revenu et le nombre de fois qu'un adversaire
+    doit visité cette case est disponible dans l'annexe \ref{tableau_rentabilite}
     % TODO
     
     
@@ -1091,6 +1124,63 @@ rdetobel@ulb.ac.be}
       40 & \cellcolor[HTML]{483D8B} & Bruxelles Rue Neuve & \cellcolor[HTML]{483D8B} & La grande Pyramide de Gizeh &\cellcolor[HTML]{483D8B} & Brésil &\cellcolor[HTML]{483D8B} & Armée Clone\\ \hline
       \end{tabular}
     }
+    
+    \section{Économie des cases}
+      \label{tableau_rentabilite}
+	\begin{table}
+	  \centering
+	  \begin{tabular}{|l|c|c|c|}
+	    \hline
+	    \multicolumn{1}{|c|}{{\textbf{N}}} & % Numero
+	    \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Prix d'achat}} & 
+	    \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Revenu terrain vide}} & 
+	    \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Nombre de tour pour la rentabilisée}} \\ \hline %
+	    \cellcolor[HTML]{FFFFFF} 1  &     -       &  -         & \\ \hline
+	    \cellcolor[HTML]{A0522D} 2  &   600 000 \$ &  20 000 \$ & 30 \\ \hline
+	    \cellcolor[HTML]{EEEED1} 3  &     -     &    -        &     \\ \hline
+	    \cellcolor[HTML]{A0522D} 4  &   600 000 \$ &  40 000 \$ & 15 \\ \hline
+	    \cellcolor[HTML]{8B1A1A} \textcolor{white}{5}  &     -     &    -        &     \\ \hline
+	    \cellcolor[HTML]{E6E6FA} 6  & 2 000 000 \$ & 250 000 \$ & 8 \\ \hline
+	    \cellcolor[HTML]{1E90FF} 7  & 1 000 000 \$ &  60 000 \$ & 16 \\ \hline
+	    \cellcolor[HTML]{FFC1C1} 8  &     -     &    -        &     \\ \hline
+	    \cellcolor[HTML]{1E90FF} 9  & 1 000 000 \$ &  60 000 \$ & 16 \\ \hline
+	    \cellcolor[HTML]{1E90FF} 10 & 1 200 000 \$ &  80 000 \$ & 15 \\ \hline
+	    \cellcolor[HTML]{000000} \textcolor{white}{11} &     -     &    -        &     \\ \hline
+	    \cellcolor[HTML]{FF69B4} 12 & 1 400 000 \$ & 100 000 \$ & 14 \\ \hline
+	    \cellcolor[HTML]{FFFFF0} 13 & 1 500 000 \$ & \textit{variable*}  &     \\ \hline
+	    \cellcolor[HTML]{FF69B4} 14 & 1 400 000 \$ & 100 000 \$ & 14 \\ \hline
+	    \cellcolor[HTML]{FF69B4} 15 & 1 600 000 \$ & 120 000 \$ & 13 \\ \hline
+	    \cellcolor[HTML]{E6E6FA} 16 & 2 000 000 \$ & 250 000 \$ & 8 \\ \hline
+	    \cellcolor[HTML]{FF8C00} 17 & 1 800 000 \$ & 140 000 \$ & 12 \\ \hline
+	    \cellcolor[HTML]{EEEED1} 18 &     -     &    -        &     \\ \hline
+	    \cellcolor[HTML]{FF8C00} 19 & 1 800 000 \$ & 140 000 \$ & 12 \\ \hline
+	    \cellcolor[HTML]{FF8C00} 20 & 2 000 000 \$ & 160 000 \$ & 12 \\ \hline
+	    \cellcolor[HTML]{FFFFFF} 21 &     -     &    -        &     \\ \hline
+	    \cellcolor[HTML]{FF4500} 22 & 2 200 000 \$ & 180 000 \$ & 12 \\ \hline
+	    \cellcolor[HTML]{FFC1C1} 23 &     -     &    -        &     \\ \hline
+	    \cellcolor[HTML]{FF4500} 24 & 2 200 000 \$ & 180 000 \$ & 12 \\ \hline
+	    \cellcolor[HTML]{FF4500} 25 & 2 400 000 \$ & 200 000 \$ & 12 \\ \hline
+	    \cellcolor[HTML]{E6E6FA} 26 & 2 000 000 \$ & 250 000 \$ & 8 \\ \hline
+	    \cellcolor[HTML]{FFD700} 27 & 2 600 000 \$ & 220 000 \$ & 11 \\ \hline
+	    \cellcolor[HTML]{FFD700} 28 & 2 600 000 \$ & 220 000 \$ & 11 \\ \hline
+	    \cellcolor[HTML]{FFFFF0} 29 & 1 500 000 \$ & \textit{variable*}  &     \\ \hline 
+	    \cellcolor[HTML]{FFD700} 30 & 2 800 000 \$ & 240 000 \$ & 11 \\ \hline
+	    \cellcolor[HTML]{BEBEBE} 31 &     -     &    -        &     \\ \hline
+	    \cellcolor[HTML]{2E8B57} 32 & 3 000 000 \$ & 260 000 \$ & 11 \\ \hline
+	    \cellcolor[HTML]{2E8B57} 33 & 3 000 000 \$ & 260 000 \$ & 11 \\ \hline
+	    \cellcolor[HTML]{EEEED1} 34 &     -     &    -        &     \\ \hline
+	    \cellcolor[HTML]{2E8B57} 35 & 3 200 000 \$ & 280 000 \$ & 11 \\ \hline
+	    \cellcolor[HTML]{E6E6FA} 36 & 2 000 000 \$ & 250 000 \$ & 8 \\ \hline
+	    \cellcolor[HTML]{FFC1C1} 37 &     -     &    -        &     \\ \hline
+	    \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 3 500 000 \$ & 350 000 \$ & 10 \\ \hline
+	    \cellcolor[HTML]{8B1A1A} 39 &     -     &    -        &    \\ \hline
+	    \cellcolor[HTML]{483D8B} \textcolor{white}{40} & 4 000 000 \$ & 500 000 \$ & 8 \\ \hline
+	  \end{tabular}
+	\caption{Revenu et prix de chaque case}
+	\label{tableau_rentabilite}
+      \end{table}
+      (*) Le montant à payer sur ces cases dépend du nombre formé par le dé.  Il n'est donc pas possible
+      d'évaluer simplement cette valeur.
     
     \section{Graphique}
       \label{annexe_graphe}
