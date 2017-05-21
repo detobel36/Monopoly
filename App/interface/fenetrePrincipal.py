@@ -278,6 +278,7 @@ class FenetrePrincipal(scrollTk):
     def __viewListStats(self, event = None):
         self._listStatistique = ListeStatistiques(self._dataSimulation)
         self.wait_window(self._listStatistique)
+        self._listStatistique = None
 
     def __viewHelp(self, event = None):
         help = Help()
