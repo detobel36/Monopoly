@@ -34,7 +34,6 @@
 \newcommand{\caseStable}[1][]{#1\textcolor[HTML]{3779dd}{\textbf{-}}}
 \newcommand{\caseDown}[1][]{#1\textcolor[HTML]{dd3737}{$\mathbf{\downarrow}$}}
 
-
 \title{Etude du Monopoly via les chaînes de Markov}
 \author{Rémy Detobel\\
 Mickael Randour\\
@@ -54,6 +53,9 @@ rdetobel@ulb.ac.be}
 
 \begin{document}
 \maketitle
+
+% New commands
+\newcommand{\monopoly70Anni}{``Monopoly édition 70\up{ème} anniversaire''}
 
 \begin{abstract}
   Modélisation et étude du Monopoly à travers les chaînes de Markov.
@@ -777,9 +779,11 @@ rdetobel@ulb.ac.be}
 \section{Résultats}
   Pour réduire la taille des tableaux et ne pas se baser sur les nom d'un seul
   Monopoly, les cases seront représentées par leur numéro.  Afin de tout de même 
-  faciliter la lecture, les couleurs du Monopoly ``Monopoly édition 70\up{ème} 
-  anniversaire'' seront appliquées.  Pour savoir plus précisément quel numéro
-  correspond à quel case, il faut consulter l'annexe \ref{liste_case}.
+  faciliter la lecture, les couleurs du Monopoly \monopoly70Anni
+  seront appliquées.  Pour savoir plus précisément quel numéro
+  correspond à quel case, il faut consulter l'annexe \ref{liste_case}.  A noté
+  également que toutes les valeurs chiffré notamment utilisée dans l'annexe
+  \ref{annexe:economie} viennent également du \monopoly70Anni.
   
   \subsection{Répartition des cases}
   
@@ -890,11 +894,11 @@ rdetobel@ulb.ac.be}
       après 20 lancés.  En effet, avant cela il est possible qu'un joueur n'ai même pas encore
       fait un tour complet du plateau (vu que le nombre minimum pouvant être formé avec deux dés 
       est de 2 et qu'il y a 40 cases).  Ces résultats sont tout de même disponibles sous forme de
-      graphiques dans l'annexe \ref{annexe_graphe} (figure \ref{graph_result_paye_pas} et 
+      graphiques dans l'annexe \ref{annexe:graphe} (figure \ref{graph_result_paye_pas} et 
       \ref{graph_result_paye}).  Les tableaux \ref{result_tour_paye_pas} et \ref{result_tour_paye} 
       montrent donc la répartition des cases après 20, 40 et 60 tours.  Ces mêmes résultats 
       sont également disponibles en annexe sous forme de graphique (également dans l'annexe
-      \ref{annexe_graphe}, les figures \ref{graph_all_result_paye_pas} et \ref{graph_all_result_paye}).  
+      \ref{annexe:graphe}, les figures \ref{graph_all_result_paye_pas} et \ref{graph_all_result_paye}).  
       Ces tableaux mettent en relation une case avec la probabilité de tomber sur celle-ci en fonction du
       nombre de tour considéré.  Les cases sont ordonnées de la plus probable à la moins probable
       et un symbole permet d'indiquer si le résultat obtenu dans la colonne précédente (10 tours avant donc)
@@ -903,7 +907,7 @@ rdetobel@ulb.ac.be}
       
       \begin{table}
 	\centering
-	\begin{tabular}{|l|l||l|l||l|l|}
+	\begin{tabular}{|l|r||l|r||l|r|}
 	  \hline
 	  \multicolumn{1}{|c|}{{\textbf{N}}} & % Numero
 	  \multicolumn{1}{p{1.5cm}||}{\centering \textbf{Probabilité \\ après 20 tours}} & %
@@ -962,7 +966,7 @@ rdetobel@ulb.ac.be}
       
       \begin{table}
 	\centering
-	\begin{tabular}{|l|l||l|l||l|l|}
+	\begin{tabular}{|l|r||l|r||l|r|}
 	  \hline
 	  \multicolumn{1}{|c|}{{\textbf{N}}} & % Numero
 	  \multicolumn{1}{p{1.5cm}||}{\centering \textbf{Probabilité \\ après 20 tours}} & %
@@ -1049,9 +1053,116 @@ rdetobel@ulb.ac.be}
       
   \subsection{Rentabilité}
     Comme vu dans le point \ref{rentabilite}, il y a plusieurs moyen
-    de caractérisé la rentabilité d'une case.  Un récapitulatif des cases
-    ainsi que de leur coût, leur revenu et le nombre de fois qu'un adversaire
-    doit visité cette case est disponible dans l'annexe \ref{tableau_rentabilite}
+    de caractériser la rentabilité d'une case.  Un récapitulatif des cases
+    ainsi que de leur coût, leur revenu ainsi que le ratio entre ces deux nombres
+    est disponible dans l'annexe \ref{annexe:economie} (dans les tableaux 
+    \ref{table:rentabilite_paye} et \ref{table:rentabilite_paye_pas}).\\
+    Ces chiffres ne tiennent pas compte de la répartition des cases décrit au 
+    point précédent.  L'article écrit par \cite{MONOPOLY_ARTICLE} et la 
+    présentation de \cite{PP_MONOPOLY} donnent tous les deux des chiffres
+    calculé simplement en multipliant la probabilité de tomber sur une 
+    case lorsque l'on est dans un état stationnaire avec le revenu de la case
+    en question.  Ces valeurs ont également été calculées dans le tableau
+    \ref{table:result_tour_paye_pas} et \ref{table:result_tour_paye} pour
+    le \monopoly70Anni.  
+    
+    \begin{table}
+      \centering
+      \begin{tabular}{|l|r|r|c|}
+	\hline
+	\multicolumn{1}{|c|}{{\textbf{N}}} & % Numero
+	\multicolumn{1}{p{1.5cm}|}{\rotatebox{90}{\textbf{\shortstack[l]{Prix d'achat\\(avec hotel)}}}} & %
+	\multicolumn{1}{p{1.5cm}|}{\rotatebox{90}{\textbf{\shortstack[l]{Revenu espéré\\par tour adverse}}}} &
+	\multicolumn{1}{c|}{\rotatebox{90}{\textbf{\shortstack[l]{Nombre de tour\\pour rentabiliser}}}} \\ \hline %
+	\cellcolor[HTML]{A0522D} 2 & 3100000 \$ & 57 449.676 \$ & 54 \\ \hline
+	\cellcolor[HTML]{A0522D} 4 & 3100000 \$ & 87 488.073 \$ & 36 \\ \hline
+	\cellcolor[HTML]{1E90FF} 7 & 3500000 \$ & 112 775.793 \$ & 32 \\ \hline
+	\cellcolor[HTML]{1E90FF} 9 & 3500000 \$ & 114 328.207 \$ & 31 \\ \hline
+	\cellcolor[HTML]{1E90FF} 10 & 3700000 \$ & 122 205.803 \$ & 31 \\ \hline
+	\cellcolor[HTML]{FF69B4} 12 & 6400000 \$ & 178 610.779 \$ & 36 \\ \hline
+	\cellcolor[HTML]{FF69B4} 14 & 6400000 \$ & 152 325.798 \$ & 43 \\ \hline
+	\cellcolor[HTML]{FF69B4} 15 & 6600000 \$ & 204 601.833 \$ & 33 \\ \hline
+	\cellcolor[HTML]{FF8C00} 17 & 6800000 \$ & 237 736.322 \$ & 29 \\ \hline
+	\cellcolor[HTML]{FF8C00} 19 & 6800000 \$ & 250 131.845 \$ & 28 \\ \hline
+	\cellcolor[HTML]{FF8C00} 20 & 7000000 \$ & 260 354.264 \$ & \textbf{27} \\ \hline
+	\cellcolor[HTML]{FF4500} 22 & 9700000 \$ & 254 410.886 \$ & 39 \\ \hline
+	\cellcolor[HTML]{FF4500} 24 & 9700000 \$ & 250 140.482 \$ & 39 \\ \hline
+	\cellcolor[HTML]{FF4500} 25 & 9900000 \$ & 306 977.189 \$ & 33 \\ \hline
+	\cellcolor[HTML]{FFD700} 27 & 10100000 \$ & 275 276.298 \$ & 37 \\ \hline
+	\cellcolor[HTML]{FFD700} 28 & 10100000 \$ & 273 544.421 \$ & 37 \\ \hline
+	\cellcolor[HTML]{FFD700} 30 & 10300000 \$ & 278 378.326 \$ & 38 \\ \hline
+	\cellcolor[HTML]{2E8B57} 32 & 13000000 \$ & 300 915.695 \$ & 44 \\ \hline
+	\cellcolor[HTML]{2E8B57} 33 & 13000000 \$ & 292 363.274 \$ & 45 \\ \hline
+	\cellcolor[HTML]{2E8B57} 35 & 13200000 \$ & 303 983.183 \$ & 44 \\ \hline
+	\cellcolor[HTML]{483D8B} \textcolor{white}{38} & 13500000 \$ & 283 926.043 \$ & 48 \\ \hline
+	\cellcolor[HTML]{483D8B} \textcolor{white}{40} & \textbf{14000000 \$} & \textbf{460 925.100 \$} & 31 \\ \hline
+      \end{tabular}
+      \caption{Résultats si le joueur ne paye pas pour sortir de prison}
+      \label{table:result_tour_paye_pas}
+    \end{table}
+    
+    \begin{table}
+      \centering
+      \begin{tabular}{|c|r|r|c|}
+	\hline
+	\multicolumn{1}{|c|}{{\textbf{N}}} & % Numero
+	\multicolumn{1}{p{1.5cm}|}{\rotatebox{90}{\textbf{\shortstack[l]{Prix d'achat\\(avec hotel)}}}} & %
+	\multicolumn{1}{p{1.5cm}|}{\rotatebox{90}{\textbf{\shortstack[l]{Revenu espéré\\par tour adverse}}}} &
+	\multicolumn{1}{c|}{\rotatebox{90}{\textbf{\shortstack[l]{Nombre de tour\\pour rentabiliser}}}} \\ \hline %
+	\cellcolor[HTML]{A0522D} 2 & 3100000 \$ & 60 979.848 \$ & 51 \\ \hline
+	\cellcolor[HTML]{A0522D} 4 & 3100000 \$ & 92 451.629 \$ & 34 \\ \hline
+	\cellcolor[HTML]{1E90FF} 7 & 3500000 \$ & 119 181.788 \$ & 30 \\ \hline
+	\cellcolor[HTML]{1E90FF} 9 & 3500000 \$ & 120 874.543 \$ & 29 \\ \hline
+	\cellcolor[HTML]{1E90FF} 10 & 3700000 \$ & 129 194.389 \$ & 29 \\ \hline
+	\cellcolor[HTML]{FF69B4} 12 & 6400000 \$ & 188 115.555 \$ & 35 \\ \hline
+	\cellcolor[HTML]{FF69B4} 14 & 6400000 \$ & 165 676.394 \$ & 39 \\ \hline
+	\cellcolor[HTML]{FF69B4} 15 & 6600000 \$ & 207 410.610 \$ & 32 \\ \hline
+	\cellcolor[HTML]{FF8C00} 17 & 6800000 \$ & 247 074.875 \$ & 28 \\ \hline
+	\cellcolor[HTML]{FF8C00} 19 & 6800000 \$ & 259 565.992 \$ & 27 \\ \hline
+	\cellcolor[HTML]{FF8C00} 20 & 7000000 \$ & 284 820.589 \$ & \textbf{25} \\ \hline
+	\cellcolor[HTML]{FF4500} 22 & 9700000 \$ & 275 008.614 \$ & 36 \\ \hline
+	\cellcolor[HTML]{FF4500} 24 & 9700000 \$ & 265 492.410 \$ & 37 \\ \hline
+	\cellcolor[HTML]{FF4500} 25 & 9900000 \$ & 325 141.089 \$ & 31 \\ \hline
+	\cellcolor[HTML]{FFD700} 27 & 10100000 \$ & 292 026.842 \$ & 35 \\ \hline
+	\cellcolor[HTML]{FFD700} 28 & 10100000 \$ & 289 426.834 \$ & 35 \\ \hline
+	\cellcolor[HTML]{FFD700} 30 & 10300000 \$ & 293 651.955 \$ & 36 \\ \hline
+	\cellcolor[HTML]{2E8B57} 32 & 13000000 \$ & 317 741.033 \$ & 41 \\ \hline
+	\cellcolor[HTML]{2E8B57} 33 & 13000000 \$ & 308 811.735 \$ & 43 \\ \hline
+	\cellcolor[HTML]{2E8B57} 35 & 13200000 \$ & 321 413.098 \$ & 42 \\ \hline
+	\cellcolor[HTML]{483D8B} \textcolor{white}{38} & 13500000 \$ & 300 058.049 \$ & 45 \\ \hline
+	\cellcolor[HTML]{483D8B} \textcolor{white}{40} & \textbf{14000000 \$} & \textbf{485 137.304 \$} & 29 \\ \hline
+      \end{tabular}
+      \caption{Résultats si le joueur paye pour sortir de prison}
+      \label{table:result_tour_paye}
+    \end{table}
+    
+    Les deux documents cité précédemment utilisent
+    des chiffres d'une autre version du Monopoly.  Cependant, il est
+    tout a fait possible de comparer les résultats obtenu en calculant
+    le ratio permettant de passer d'une version de Monopoly à une autre.
+    Pour cela commençons par calculer le prix moyen d'une case avec un
+    hotel pour chaque couleur.  Les résultats de ce calcul ce trouvent
+    dans le tableau \ref{table:result_cout_couleur}
+    
+    \begin{table}
+      \centering
+      \begin{tabular}{|c|r|}
+      \hline
+      \multicolumn{1}{|c|}{\textbf{Cases}} &
+      \multicolumn{1}{c|}{\textbf{Coût moyen}} \\ \hline
+      \cellcolor[HTML]{A0522D} 2, 4 & 3100000 \$ \\ \hline
+      \cellcolor[HTML]{1E90FF} 7, 9, 10 & 3566666.66 \$ \\ \hline
+      \cellcolor[HTML]{FF69B4} 12, 14, 15 & 6466666.66 \$ \\ \hline
+      \cellcolor[HTML]{FF8C00} 17, 19, 20 & 6866666.66 \$ \\ \hline
+      \cellcolor[HTML]{FF4500} 22, 24, 25 & 9766666.66 \$ \\ \hline
+      \cellcolor[HTML]{FFD700} 27, 28, 30 & 10166666.66 \$ \\ \hline
+      \cellcolor[HTML]{2E8B57} 32, 33, 35 & 13066666.66 \$ \\ \hline
+      \cellcolor[HTML]{483D8B} \textcolor{white}{38, 40} & 13750000.00 \$ \\ \hline
+      \end{tabular}
+      \caption{Coût moyen d'achat d'une propriété avec un hotel}
+      \label{table:result_cout_couleur}
+    \end{table}
+
     % TODO
     
     
@@ -1125,89 +1236,148 @@ rdetobel@ulb.ac.be}
       \end{tabular}
     }
     
-    \section{Économie des cases}
-      \label{tableau_rentabilite}
-	\begin{table}
-	  \centering
-	  \begin{tabular}{|l|c|c|c|}
-	    \hline
-	    \multicolumn{1}{|c|}{{\textbf{N}}} & % Numero
-	    \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Prix d'achat}} & 
-	    \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Revenu terrain vide}} & 
-	    \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Nombre de tour pour la rentabilisée}} \\ \hline %
-	    \cellcolor[HTML]{FFFFFF} 1  &     -       &  -         & \\ \hline
-	    \cellcolor[HTML]{A0522D} 2  &   600 000 \$ &  20 000 \$ & 30 \\ \hline
-	    \cellcolor[HTML]{EEEED1} 3  &     -     &    -        &     \\ \hline
-	    \cellcolor[HTML]{A0522D} 4  &   600 000 \$ &  40 000 \$ & 15 \\ \hline
-	    \cellcolor[HTML]{8B1A1A} \textcolor{white}{5}  &     -     &    -        &     \\ \hline
-	    \cellcolor[HTML]{E6E6FA} 6  & 2 000 000 \$ & 250 000 \$ & 8 \\ \hline
-	    \cellcolor[HTML]{1E90FF} 7  & 1 000 000 \$ &  60 000 \$ & 16 \\ \hline
-	    \cellcolor[HTML]{FFC1C1} 8  &     -     &    -        &     \\ \hline
-	    \cellcolor[HTML]{1E90FF} 9  & 1 000 000 \$ &  60 000 \$ & 16 \\ \hline
-	    \cellcolor[HTML]{1E90FF} 10 & 1 200 000 \$ &  80 000 \$ & 15 \\ \hline
-	    \cellcolor[HTML]{000000} \textcolor{white}{11} &     -     &    -        &     \\ \hline
-	    \cellcolor[HTML]{FF69B4} 12 & 1 400 000 \$ & 100 000 \$ & 14 \\ \hline
-	    \cellcolor[HTML]{FFFFF0} 13 & 1 500 000 \$ & \textit{variable*}  &     \\ \hline
-	    \cellcolor[HTML]{FF69B4} 14 & 1 400 000 \$ & 100 000 \$ & 14 \\ \hline
-	    \cellcolor[HTML]{FF69B4} 15 & 1 600 000 \$ & 120 000 \$ & 13 \\ \hline
-	    \cellcolor[HTML]{E6E6FA} 16 & 2 000 000 \$ & 250 000 \$ & 8 \\ \hline
-	    \cellcolor[HTML]{FF8C00} 17 & 1 800 000 \$ & 140 000 \$ & 12 \\ \hline
-	    \cellcolor[HTML]{EEEED1} 18 &     -     &    -        &     \\ \hline
-	    \cellcolor[HTML]{FF8C00} 19 & 1 800 000 \$ & 140 000 \$ & 12 \\ \hline
-	    \cellcolor[HTML]{FF8C00} 20 & 2 000 000 \$ & 160 000 \$ & 12 \\ \hline
-	    \cellcolor[HTML]{FFFFFF} 21 &     -     &    -        &     \\ \hline
-	    \cellcolor[HTML]{FF4500} 22 & 2 200 000 \$ & 180 000 \$ & 12 \\ \hline
-	    \cellcolor[HTML]{FFC1C1} 23 &     -     &    -        &     \\ \hline
-	    \cellcolor[HTML]{FF4500} 24 & 2 200 000 \$ & 180 000 \$ & 12 \\ \hline
-	    \cellcolor[HTML]{FF4500} 25 & 2 400 000 \$ & 200 000 \$ & 12 \\ \hline
-	    \cellcolor[HTML]{E6E6FA} 26 & 2 000 000 \$ & 250 000 \$ & 8 \\ \hline
-	    \cellcolor[HTML]{FFD700} 27 & 2 600 000 \$ & 220 000 \$ & 11 \\ \hline
-	    \cellcolor[HTML]{FFD700} 28 & 2 600 000 \$ & 220 000 \$ & 11 \\ \hline
-	    \cellcolor[HTML]{FFFFF0} 29 & 1 500 000 \$ & \textit{variable*}  &     \\ \hline 
-	    \cellcolor[HTML]{FFD700} 30 & 2 800 000 \$ & 240 000 \$ & 11 \\ \hline
-	    \cellcolor[HTML]{BEBEBE} 31 &     -     &    -        &     \\ \hline
-	    \cellcolor[HTML]{2E8B57} 32 & 3 000 000 \$ & 260 000 \$ & 11 \\ \hline
-	    \cellcolor[HTML]{2E8B57} 33 & 3 000 000 \$ & 260 000 \$ & 11 \\ \hline
-	    \cellcolor[HTML]{EEEED1} 34 &     -     &    -        &     \\ \hline
-	    \cellcolor[HTML]{2E8B57} 35 & 3 200 000 \$ & 280 000 \$ & 11 \\ \hline
-	    \cellcolor[HTML]{E6E6FA} 36 & 2 000 000 \$ & 250 000 \$ & 8 \\ \hline
-	    \cellcolor[HTML]{FFC1C1} 37 &     -     &    -        &     \\ \hline
-	    \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 3 500 000 \$ & 350 000 \$ & 10 \\ \hline
-	    \cellcolor[HTML]{8B1A1A} 39 &     -     &    -        &    \\ \hline
-	    \cellcolor[HTML]{483D8B} \textcolor{white}{40} & 4 000 000 \$ & 500 000 \$ & 8 \\ \hline
-	  \end{tabular}
-	\caption{Revenu et prix de chaque case}
-	\label{tableau_rentabilite}
-      \end{table}
-      (*) Le montant à payer sur ces cases dépend du nombre formé par le dé.  Il n'est donc pas possible
-      d'évaluer simplement cette valeur.
+    \newpage
     
     \section{Graphique}
-      \label{annexe_graphe}
+      \label{annexe:graphe}
       \subsection{Répartition des cases}
 	\begin{center}
-	  \begin{figure}[h]
+	  \begin{figure}[bp!]
 	    \includegraphics[scale=0.26]{./Images/GraphRepPayePasLeq20.png}
 	    \caption{\label{graph_result_paye_pas} Répartition des cases entre 1 et 20 tours lorsque le joueur ne paye pas pour sortir de prison}
 	  \end{figure}
 	  
-	  \begin{figure}[h]
+	  \begin{figure}[bp!]
 	    \includegraphics[scale=0.26]{./Images/GraphRepPayeLeq20.png}
 	    \caption{\label{graph_result_paye} Répartition des cases entre 1 et 20 tours lorsque le joueur paye directement pour sortir de prison}
 	  \end{figure}
 	  
-	  \begin{figure}[h]
+	  \begin{figure}[bp!]
 	    \includegraphics[scale=0.4]{./Images/GraphRepPayePas20-70.png}
 	    \caption{\label{graph_all_result_paye_pas} Répartition des cases pour 20, 30, 40, 50, 60 et 70 tours lorsque le joueur ne paye pas pour sortir de prison}
 	  \end{figure}
 	  
-	  \begin{figure}[h]
+	  \begin{figure}[bp!]
 	    \includegraphics[scale=0.4]{./Images/GraphRepPaye20-70.png}
 	    \caption{\label{graph_all_result_paye} Répartition des cases pour 20, 30, 40, 50, 60 et 70 tours lorsque le joueur paye directement pour sortir de prison}
 	  \end{figure}
-	  
 	\end{center}
+    \newpage
+    
+    \section{Économie des cases}
+      \label{annexe:economie}
+      \begin{table}[htbp!]
+	\centering
+	\begin{tabular}{|l|c|c|c||c|c|c|}
+	  \hline
+	  \multicolumn{1}{|c|}{{\textbf{N}}} & % Numero
+	  \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Prix d'achat\\vide}} & 
+	  \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Revenu terrain vide}} & 
+	  \multicolumn{1}{p{1.5cm}||}{\centering \textbf{Ratio revenu/prix\\vide}} & 
+	  \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Prix d'achat\\hotel}} &
+	  \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Revenu terrain hotel}} & 
+	  \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Ratio revenu/prix\\hotel}} \\ \hline %
+	  \cellcolor[HTML]{FFFFFF} 1 & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{A0522D} 2 & 600000 \$ & 20000 \$ & 0.033 & 3100000 \$ & 2500000 \$ & 0.806 \\ \hline
+	  \cellcolor[HTML]{EEEED1} 3   & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{A0522D} 4 & 600000 \$ & 40000 \$ & 0.067 & 3100000 \$ & 4500000 \$ & 1.452 \\ \hline
+	  \cellcolor[HTML]{8B1A1A} \textcolor{white}{5}   & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{E6E6FA} 6 & 2000000 \$ & 250000 \$ & \textbf{0.125} & - & - & - \\ \hline
+	  \cellcolor[HTML]{1E90FF} 7 & 1000000 \$ & 60000 \$ & 0.06 & 3500000 \$ & 5500000 \$ & 1.571 \\ \hline
+	  \cellcolor[HTML]{FFC1C1} 8   & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{1E90FF} 9 & 1000000 \$ & 60000 \$ & 0.06 & 3500000 \$ & 5500000 \$ & 1.571 \\ \hline
+	  \cellcolor[HTML]{1E90FF} 10 & 1200000 \$ & 80000 \$ & 0.067 & 3700000 \$ & 6000000 \$ & \textbf{1.622} \\ \hline
+	  \cellcolor[HTML]{000000} \textcolor{white}{11}  & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{FF69B4} 12 & 1400000 \$ & 100000 \$ & 0.071 & 6400000 \$ & 7500000 \$ & 1.172 \\ \hline
+	  \cellcolor[HTML]{FFFFF0} 13 & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{FF69B4} 14 & 1400000 \$ & 100000 \$ & 0.071 & 6400000 \$ & 7500000 \$ & 1.172 \\ \hline
+	  \cellcolor[HTML]{FF69B4} 15 & 1600000 \$ & 120000 \$ & 0.075 & 6600000 \$ & 9000000 \$ & 1.364 \\ \hline
+	  \cellcolor[HTML]{E6E6FA} 16 & 2000000 \$ & 250000 \$ & \textbf{0.125} & - & - & - \\ \hline
+	  \cellcolor[HTML]{FF8C00} 17 & 1800000 \$ & 140000 \$ & 0.078 & 6800000 \$ & 9500000 \$ & 1.397 \\ \hline
+	  \cellcolor[HTML]{EEEED1} 18  & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{FF8C00} 19 & 1800000 \$ & 140000 \$ & 0.078 & 6800000 \$ & 9500000 \$ & 1.397 \\ \hline
+	  \cellcolor[HTML]{FF8C00} 20 & 2000000 \$ & 160000 \$ & 0.08 & 7000000 \$ & 10000000 \$ & 1.429 \\ \hline
+	  \cellcolor[HTML]{FFFFFF} 21  & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{FF4500} 22 & 2200000 \$ & 180000 \$ & 0.082 & 9700000 \$ & 10500000 \$ & 1.082 \\ \hline
+	  \cellcolor[HTML]{FFC1C1} 23  & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{FF4500} 24 & 2200000 \$ & 180000 \$ & 0.082 & 9700000 \$ & 10500000 \$ & 1.082 \\ \hline
+	  \cellcolor[HTML]{FF4500} 25 & 2400000 \$ & 200000 \$ & 0.083 & 9900000 \$ & 11000000 \$ & 1.111 \\ \hline
+	  \cellcolor[HTML]{E6E6FA} 26 & 2000000 \$ & 250000 \$ & \textbf{0.125} & - & - & - \\ \hline
+	  \cellcolor[HTML]{FFD700} 27 & 2600000 \$ & 220000 \$ & 0.085 & 10100000 \$ & 11500000 \$ & 1.139 \\ \hline
+	  \cellcolor[HTML]{FFD700} 28 & 2600000 \$ & 220000 \$ & 0.085 & 10100000 \$ & 11500000 \$ & 1.139 \\ \hline
+	  \cellcolor[HTML]{FFFFF0} 29 & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{FFD700} 30 & 2800000 \$ & 240000 \$ & 0.086 & 10300000 \$ & 12000000 \$ & 1.165 \\ \hline
+	  \cellcolor[HTML]{BEBEBE} 31  & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{2E8B57} 32 & 3000000 \$ & 260000 \$ & 0.087 & 13000000 \$ & 12750000 \$ & 0.981 \\ \hline
+	  \cellcolor[HTML]{2E8B57} 33 & 3000000 \$ & 260000 \$ & 0.087 & 13000000 \$ & 12750000 \$ & 0.981 \\ \hline
+	  \cellcolor[HTML]{EEEED1} 34 & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{2E8B57} 35 & 3200000 \$ & 280000 \$ & 0.087 & 13200000 \$ & 14000000 \$ & 1.061 \\ \hline
+	  \cellcolor[HTML]{E6E6FA} 36 & 2000000 \$ & 250000 \$ & \textbf{0.125} & - & - & - \\ \hline
+	  \cellcolor[HTML]{FFC1C1} 37  & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 3500000 \$ & 350000 \$ & 0.1 & 13500000 \$ & 15000000 \$ & 1.111 \\ \hline
+	  \cellcolor[HTML]{8B1A1A} 39  & 1000000 \$ & - & - & 1000000 \$ & - & - \\ \hline
+	  \cellcolor[HTML]{483D8B} \textcolor{white}{40} & 4000000 \$ & 500000 \$ & \textbf{0.125} & 14000000 \$ & 20000000 \$ & 1.429 \\ \hline
+	\end{tabular}
 	
+	\caption{Revenu, prix et ratio de ces deux valeur pour une joueur qui paye pour sortir de prison}
+	\label{table:rentabilite_paye}
+      \end{table}
+      
+      \begin{table}[h]
+	\centering
+	\begin{tabular}{|l|c|c|c||c|c|c|}
+	  \hline
+	  \multicolumn{1}{|c|}{{\textbf{N}}} & % Numero
+	  \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Prix d'achat\\vide}} & 
+	  \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Revenu terrain vide}} & 
+	  \multicolumn{1}{p{1.5cm}||}{\centering \textbf{Ratio revenu/prix\\vide}} & 
+	  \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Prix d'achat\\hotel}} &
+	  \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Revenu terrain hotel}} & 
+	  \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Ratio revenu/prix\\hotel}} \\ \hline %
+	  \cellcolor[HTML]{FFFFFF} 1 & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{A0522D} 2 & 600000 \$ & 20000 \$ & 0.033 & 3100000 \$ & 2500000 \$ & 0.806 \\ \hline
+	  \cellcolor[HTML]{EEEED1} 3   & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{A0522D} 4 & 600000 \$ & 40000 \$ & 0.067 & 3100000 \$ & 4500000 \$ & 1.452 \\ \hline
+	  \cellcolor[HTML]{8B1A1A} \textcolor{white}{5}   & 2000000 \$ & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{E6E6FA} 6 & 2000000 \$ & 250000 \$ & 0.125 & - & - & - \\ \hline
+	  \cellcolor[HTML]{1E90FF} 7 & 1000000 \$ & 60000 \$ & 0.06 & 3500000 \$ & 5500000 \$ & 1.571 \\ \hline
+	  \cellcolor[HTML]{FFC1C1} 8   & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{1E90FF} 9 & 1000000 \$ & 60000 \$ & 0.06 & 3500000 \$ & 5500000 \$ & 1.571 \\ \hline
+	  \cellcolor[HTML]{1E90FF} 10 & 1200000 \$ & 80000 \$ & 0.067 & 3700000 \$ & 6000000 \$ & 1.622 \\ \hline
+	  \cellcolor[HTML]{000000} \textcolor{white}{11}  & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{FF69B4} 12 & 1400000 \$ & 100000 \$ & 0.071 & 6400000 \$ & 7500000 \$ & 1.172 \\ \hline
+	  \cellcolor[HTML]{FFFFF0} 13 & 1500000 \$ & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{FF69B4} 14 & 1400000 \$ & 100000 \$ & 0.071 & 6400000 \$ & 7500000 \$ & 1.172 \\ \hline
+	  \cellcolor[HTML]{FF69B4} 15 & 1600000 \$ & 120000 \$ & 0.075 & 6600000 \$ & 9000000 \$ & 1.364 \\ \hline
+	  \cellcolor[HTML]{E6E6FA} 16 & 2000000 \$ & 250000 \$ & 0.125 & - & - & - \\ \hline
+	  \cellcolor[HTML]{FF8C00} 17 & 1800000 \$ & 140000 \$ & 0.078 & 6800000 \$ & 9500000 \$ & 1.397 \\ \hline
+	  \cellcolor[HTML]{EEEED1} 18  & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{FF8C00} 19 & 1800000 \$ & 140000 \$ & 0.078 & 6800000 \$ & 9500000 \$ & 1.397 \\ \hline
+	  \cellcolor[HTML]{FF8C00} 20 & 2000000 \$ & 160000 \$ & 0.08 & 7000000 \$ & 10000000 \$ & 1.429 \\ \hline
+	  \cellcolor[HTML]{FFFFFF} 21  & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{FF4500} 22 & 2200000 \$ & 180000 \$ & 0.082 & 9700000 \$ & 10500000 \$ & 1.082 \\ \hline
+	  \cellcolor[HTML]{FFC1C1} 23  & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{FF4500} 24 & 2200000 \$ & 180000 \$ & 0.082 & 9700000 \$ & 10500000 \$ & 1.082 \\ \hline
+	  \cellcolor[HTML]{FF4500} 25 & 2400000 \$ & 200000 \$ & 0.083 & 9900000 \$ & 11000000 \$ & 1.111 \\ \hline
+	  \cellcolor[HTML]{E6E6FA} 26 & 2000000 \$ & 250000 \$ & 0.125 & - & - & - \\ \hline
+	  \cellcolor[HTML]{FFD700} 27 & 2600000 \$ & 220000 \$ & 0.085 & 10100000 \$ & 11500000 \$ & 1.139 \\ \hline
+	  \cellcolor[HTML]{FFD700} 28 & 2600000 \$ & 220000 \$ & 0.085 & 10100000 \$ & 11500000 \$ & 1.139 \\ \hline
+	  \cellcolor[HTML]{FFFFF0} 29 & 1500000 \$ & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{FFD700} 30 & 2800000 \$ & 240000 \$ & 0.086 & 10300000 \$ & 12000000 \$ & 1.165 \\ \hline
+	  \cellcolor[HTML]{BEBEBE} 31  & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{2E8B57} 32 & 3000000 \$ & 260000 \$ & 0.087 & 13000000 \$ & 12750000 \$ & 0.981 \\ \hline
+	  \cellcolor[HTML]{2E8B57} 33 & 3000000 \$ & 260000 \$ & 0.087 & 13000000 \$ & 12750000 \$ & 0.981 \\ \hline
+	  \cellcolor[HTML]{EEEED1} 34 & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{2E8B57} 35 & 3200000 \$ & 280000 \$ & 0.087 & 13200000 \$ & 14000000 \$ & 1.061 \\ \hline
+	  \cellcolor[HTML]{E6E6FA} 36 & 2000000 \$ & 250000 \$ & 0.125 & - & - & - \\ \hline
+	  \cellcolor[HTML]{FFC1C1} 37  & - & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 3500000 \$ & 350000 \$ & 0.1 & 13500000 \$ & 15000000 \$ & 1.111 \\ \hline
+	  \cellcolor[HTML]{8B1A1A} 39  & 1000000 \$ & - & - & - & - & - \\ \hline
+	  \cellcolor[HTML]{483D8B} \textcolor{white}{40} & 4000000 \$ & 500000 \$ & 0.125 & 14000000 \$ & 20000000 \$ & 1.429 \\ \hline
+	\end{tabular}
+	\caption{Revenu, prix et ratio de ces deux valeur pour une joueur qui ne paye pas pour sortir de prison}
+	\label{table:rentabilite_paye_pas}
+      \end{table}
 	
 
 \end{document}

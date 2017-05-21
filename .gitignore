@@ -4,6 +4,7 @@ __pycache__/
 # Latex
 *.log
 *.aux
+*.toc
 *.out
 *.tex.backup
 *.bbl
