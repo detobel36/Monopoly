@@ -34,6 +34,8 @@
 \newcommand{\caseStable}[1][]{#1\textcolor[HTML]{3779dd}{\textbf{-}}}
 \newcommand{\caseDown}[1][]{#1\textcolor[HTML]{dd3737}{$\mathbf{\downarrow}$}}
 
+\newcommand{\monopolyEditionAnni}{``Monopoly édition 70\up{ème} anniversaire''}
+
 \title{Etude du Monopoly via les chaînes de Markov}
 \author{Rémy Detobel\\
 Mickael Randour\\
@@ -55,7 +57,7 @@ rdetobel@ulb.ac.be}
 \maketitle
 
 % New commands
-\newcommand{\monopoly70Anni}{``Monopoly édition 70\up{ème} anniversaire''}
+
 
 \begin{abstract}
   Modélisation et étude du Monopoly à travers les chaînes de Markov.
@@ -779,11 +781,11 @@ rdetobel@ulb.ac.be}
 \section{Résultats}
   Pour réduire la taille des tableaux et ne pas se baser sur les nom d'un seul
   Monopoly, les cases seront représentées par leur numéro.  Afin de tout de même 
-  faciliter la lecture, les couleurs du Monopoly \monopoly70Anni
+  faciliter la lecture, les couleurs du Monopoly \monopolyEditionAnni
   seront appliquées.  Pour savoir plus précisément quel numéro
   correspond à quel case, il faut consulter l'annexe \ref{liste_case}.  A noté
   également que toutes les valeurs chiffré notamment utilisée dans l'annexe
-  \ref{annexe:economie} viennent également du \monopoly70Anni.
+  \ref{annexe:economie} viennent également du \monopolyEditionAnni.
   
   \subsection{Répartition des cases}
   
@@ -831,7 +833,7 @@ rdetobel@ulb.ac.be}
 	  \cellcolor[HTML]{FFD700} 28 & 2.379 \%  & \cellcolor[HTML]{A0522D}  4 & 1.944 \% \\ \hline
 	  \cellcolor[HTML]{2E8B57} 32 & 2.36 \%   & \cellcolor[HTML]{EEEED1}  3 & 1.909 \% \\ \hline
 	  \cellcolor[HTML]{EEEED1} 34 & 2.354 \%  & \cellcolor[HTML]{8B1A1A} 39 & 1.899 \% \\ \hline
-	  \cellcolor[HTML]{FFFFF0} 29 & 2.346 \%  & \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 1.893\%  \\ \hline
+	  \cellcolor[HTML]{FFFFF0} 29 & 2.346 \%  & \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 1.893 \%  \\ \hline
 	  \cellcolor[HTML]{BEBEBE} 31 & 2.345 \\ \cline{1-2}
 	\end{tabular}
 	\caption{Résultats si le joueur ne paye pas pour sortir de prison}
@@ -1063,78 +1065,10 @@ rdetobel@ulb.ac.be}
     calculé simplement en multipliant la probabilité de tomber sur une 
     case lorsque l'on est dans un état stationnaire avec le revenu de la case
     en question.  Ces valeurs ont également été calculées dans le tableau
-    \ref{table:result_tour_paye_pas} et \ref{table:result_tour_paye} pour
-    le \monopoly70Anni.  
+    \ref{table:result_tour_paye_pas} et \ref{table:result_tour_paye} 
+    (présent dans l'annexe \ref{annexe:economie}) pour le \monopolyEditionAnni.
     
-    \begin{table}
-      \centering
-      \begin{tabular}{|l|r|r|c|}
-	\hline
-	\multicolumn{1}{|c|}{{\textbf{N}}} & % Numero
-	\multicolumn{1}{p{1.5cm}|}{\rotatebox{90}{\textbf{\shortstack[l]{Prix d'achat\\(avec hotel)}}}} & %
-	\multicolumn{1}{p{1.5cm}|}{\rotatebox{90}{\textbf{\shortstack[l]{Revenu espéré\\par tour adverse}}}} &
-	\multicolumn{1}{c|}{\rotatebox{90}{\textbf{\shortstack[l]{Nombre de tour\\pour rentabiliser}}}} \\ \hline %
-	\cellcolor[HTML]{A0522D} 2 & 3100000 \$ & 57 449.676 \$ & 54 \\ \hline
-	\cellcolor[HTML]{A0522D} 4 & 3100000 \$ & 87 488.073 \$ & 36 \\ \hline
-	\cellcolor[HTML]{1E90FF} 7 & 3500000 \$ & 112 775.793 \$ & 32 \\ \hline
-	\cellcolor[HTML]{1E90FF} 9 & 3500000 \$ & 114 328.207 \$ & 31 \\ \hline
-	\cellcolor[HTML]{1E90FF} 10 & 3700000 \$ & 122 205.803 \$ & 31 \\ \hline
-	\cellcolor[HTML]{FF69B4} 12 & 6400000 \$ & 178 610.779 \$ & 36 \\ \hline
-	\cellcolor[HTML]{FF69B4} 14 & 6400000 \$ & 152 325.798 \$ & 43 \\ \hline
-	\cellcolor[HTML]{FF69B4} 15 & 6600000 \$ & 204 601.833 \$ & 33 \\ \hline
-	\cellcolor[HTML]{FF8C00} 17 & 6800000 \$ & 237 736.322 \$ & 29 \\ \hline
-	\cellcolor[HTML]{FF8C00} 19 & 6800000 \$ & 250 131.845 \$ & 28 \\ \hline
-	\cellcolor[HTML]{FF8C00} 20 & 7000000 \$ & 260 354.264 \$ & \textbf{27} \\ \hline
-	\cellcolor[HTML]{FF4500} 22 & 9700000 \$ & 254 410.886 \$ & 39 \\ \hline
-	\cellcolor[HTML]{FF4500} 24 & 9700000 \$ & 250 140.482 \$ & 39 \\ \hline
-	\cellcolor[HTML]{FF4500} 25 & 9900000 \$ & 306 977.189 \$ & 33 \\ \hline
-	\cellcolor[HTML]{FFD700} 27 & 10100000 \$ & 275 276.298 \$ & 37 \\ \hline
-	\cellcolor[HTML]{FFD700} 28 & 10100000 \$ & 273 544.421 \$ & 37 \\ \hline
-	\cellcolor[HTML]{FFD700} 30 & 10300000 \$ & 278 378.326 \$ & 38 \\ \hline
-	\cellcolor[HTML]{2E8B57} 32 & 13000000 \$ & 300 915.695 \$ & 44 \\ \hline
-	\cellcolor[HTML]{2E8B57} 33 & 13000000 \$ & 292 363.274 \$ & 45 \\ \hline
-	\cellcolor[HTML]{2E8B57} 35 & 13200000 \$ & 303 983.183 \$ & 44 \\ \hline
-	\cellcolor[HTML]{483D8B} \textcolor{white}{38} & 13500000 \$ & 283 926.043 \$ & 48 \\ \hline
-	\cellcolor[HTML]{483D8B} \textcolor{white}{40} & \textbf{14000000 \$} & \textbf{460 925.100 \$} & 31 \\ \hline
-      \end{tabular}
-      \caption{Résultats si le joueur ne paye pas pour sortir de prison}
-      \label{table:result_tour_paye_pas}
-    \end{table}
     
-    \begin{table}
-      \centering
-      \begin{tabular}{|c|r|r|c|}
-	\hline
-	\multicolumn{1}{|c|}{{\textbf{N}}} & % Numero
-	\multicolumn{1}{p{1.5cm}|}{\rotatebox{90}{\textbf{\shortstack[l]{Prix d'achat\\(avec hotel)}}}} & %
-	\multicolumn{1}{p{1.5cm}|}{\rotatebox{90}{\textbf{\shortstack[l]{Revenu espéré\\par tour adverse}}}} &
-	\multicolumn{1}{c|}{\rotatebox{90}{\textbf{\shortstack[l]{Nombre de tour\\pour rentabiliser}}}} \\ \hline %
-	\cellcolor[HTML]{A0522D} 2 & 3100000 \$ & 60 979.848 \$ & 51 \\ \hline
-	\cellcolor[HTML]{A0522D} 4 & 3100000 \$ & 92 451.629 \$ & 34 \\ \hline
-	\cellcolor[HTML]{1E90FF} 7 & 3500000 \$ & 119 181.788 \$ & 30 \\ \hline
-	\cellcolor[HTML]{1E90FF} 9 & 3500000 \$ & 120 874.543 \$ & 29 \\ \hline
-	\cellcolor[HTML]{1E90FF} 10 & 3700000 \$ & 129 194.389 \$ & 29 \\ \hline
-	\cellcolor[HTML]{FF69B4} 12 & 6400000 \$ & 188 115.555 \$ & 35 \\ \hline
-	\cellcolor[HTML]{FF69B4} 14 & 6400000 \$ & 165 676.394 \$ & 39 \\ \hline
-	\cellcolor[HTML]{FF69B4} 15 & 6600000 \$ & 207 410.610 \$ & 32 \\ \hline
-	\cellcolor[HTML]{FF8C00} 17 & 6800000 \$ & 247 074.875 \$ & 28 \\ \hline
-	\cellcolor[HTML]{FF8C00} 19 & 6800000 \$ & 259 565.992 \$ & 27 \\ \hline
-	\cellcolor[HTML]{FF8C00} 20 & 7000000 \$ & 284 820.589 \$ & \textbf{25} \\ \hline
-	\cellcolor[HTML]{FF4500} 22 & 9700000 \$ & 275 008.614 \$ & 36 \\ \hline
-	\cellcolor[HTML]{FF4500} 24 & 9700000 \$ & 265 492.410 \$ & 37 \\ \hline
-	\cellcolor[HTML]{FF4500} 25 & 9900000 \$ & 325 141.089 \$ & 31 \\ \hline
-	\cellcolor[HTML]{FFD700} 27 & 10100000 \$ & 292 026.842 \$ & 35 \\ \hline
-	\cellcolor[HTML]{FFD700} 28 & 10100000 \$ & 289 426.834 \$ & 35 \\ \hline
-	\cellcolor[HTML]{FFD700} 30 & 10300000 \$ & 293 651.955 \$ & 36 \\ \hline
-	\cellcolor[HTML]{2E8B57} 32 & 13000000 \$ & 317 741.033 \$ & 41 \\ \hline
-	\cellcolor[HTML]{2E8B57} 33 & 13000000 \$ & 308 811.735 \$ & 43 \\ \hline
-	\cellcolor[HTML]{2E8B57} 35 & 13200000 \$ & 321 413.098 \$ & 42 \\ \hline
-	\cellcolor[HTML]{483D8B} \textcolor{white}{38} & 13500000 \$ & 300 058.049 \$ & 45 \\ \hline
-	\cellcolor[HTML]{483D8B} \textcolor{white}{40} & \textbf{14000000 \$} & \textbf{485 137.304 \$} & 29 \\ \hline
-      \end{tabular}
-      \caption{Résultats si le joueur paye pour sortir de prison}
-      \label{table:result_tour_paye}
-    \end{table}
     
     Les deux documents cité précédemment utilisent
     des chiffres d'une autre version du Monopoly.  Cependant, il est
@@ -1142,7 +1076,7 @@ rdetobel@ulb.ac.be}
     le ratio permettant de passer d'une version de Monopoly à une autre.
     Pour cela commençons par calculer le prix moyen d'une case avec un
     hotel pour chaque couleur.  Les résultats de ce calcul ce trouvent
-    dans le tableau \ref{table:result_cout_couleur}
+    dans le tableau \ref{table:result_cout_couleur}.
     
     \begin{table}
       \centering
@@ -1150,7 +1084,7 @@ rdetobel@ulb.ac.be}
       \hline
       \multicolumn{1}{|c|}{\textbf{Cases}} &
       \multicolumn{1}{c|}{\textbf{Coût moyen}} \\ \hline
-      \cellcolor[HTML]{A0522D} 2, 4 & 3100000 \$ \\ \hline
+      \cellcolor[HTML]{A0522D} 2, 4 & 3100000.00 \$ \\ \hline
       \cellcolor[HTML]{1E90FF} 7, 9, 10 & 3566666.66 \$ \\ \hline
       \cellcolor[HTML]{FF69B4} 12, 14, 15 & 6466666.66 \$ \\ \hline
       \cellcolor[HTML]{FF8C00} 17, 19, 20 & 6866666.66 \$ \\ \hline
@@ -1162,11 +1096,71 @@ rdetobel@ulb.ac.be}
       \caption{Coût moyen d'achat d'une propriété avec un hotel}
       \label{table:result_cout_couleur}
     \end{table}
-
+    
+    On peut donc se rendre compte qu'il y a un rapport de 5000 
+    ($= 3100000 / 620$) entre les résultats obtenu dans ce 
+    rapport et ceux présenté dans les document de \cite{PP_MONOPOLY}.
+    Comme dans ce document, nous allons également calculer le 
+    revenu moyen espéré lors d'un tour adverse.  On utilisera
+    donc le revenu moyen comme étant la rentabilité et on ferra
+    également la sommes des probabilités des cases appartenant 
+    à la même couleur. Ces données sont utilisées dans la 
+    formule présentée dans le point \ref{rentabilite} et le résultat
+    est affiché dans le tableau \ref{table:result_revenu_couleur_paye}
     % TODO
+    
+    \begin{table}
+      \centering
+      \begin{tabular}{|c|r|c|r|}
+      \hline
+      \multicolumn{1}{|c|}{\textbf{Cases}} &
+      \multicolumn{1}{c|}{\textbf{Revenu moyen}} & 
+      \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Probabilité Total}} & 
+      \multicolumn{1}{p{2cm}|}{\centering \textbf{Revenu moyen par tour adverse}} \\ \hline %
+      \cellcolor[HTML]{A0522D} 2, 4                      & 3500000.00 \$  & 4.242 \% & 148470.000 \$ \\ \hline
+      \cellcolor[HTML]{1E90FF} 7, 9, 10                  & 5666666.66 \$  & 6.166 \% & 349406.666 \$ \\ \hline
+      \cellcolor[HTML]{FF69B4} 12, 14. 15                & 8000000.00 \$  & 6.685 \% & 534800.000 \$ \\ \hline
+      \cellcolor[HTML]{FF8C00} 17, 19, 20                & 9666666.66 \$  & 7.739 \% & 748103.332 \$ \\ \hline
+      \cellcolor[HTML]{FF4500} 22, 24, 25                & 10666666.66 \$ & 7.187 \% & 766613.332 \$ \\ \hline
+      \cellcolor[HTML]{FFD700} 27, 28, 30                & 11666666.66 \$ & 7.093 \% & 827516.666 \$ \\ \hline
+      \cellcolor[HTML]{2E8B57} 32, 33, 35                & 13166666.66 \$ & 6.824 \% & 898493.332 \$ \\ \hline
+      \cellcolor[HTML]{483D8B} \textcolor{white}{38, 40} & 17500000.00 \$ & 4.198 \% & 734650.000 \$ \\ \hline
+      \end{tabular}
+      \caption{Revenu moyen pour un groupe de propriétés avec un hotel}
+      \label{table:result_revenu_couleur_paye}
+    \end{table}
     
     
 \section{Conclusion}
+  En conclusion, on constate qu'une chaîne de Markov est une bonne
+  structure de données pour représenter un Monopoly.  Cette structure
+  nous empêche cependant de calculer facilement le nombre de fois
+  qu'un joueur visitera une case ou le fait qu'il ai une carte chance ou non.
+  Plusieurs choix de modélisation n'ont pas eu beaucoup d'impactes
+  sur les résultats.  En effet, les cases les plus rentables restent les 
+  cases \textit{orange} que l'on considère le fait que le joueur paye
+  directement pour sortir de prison ou non.  On constate également que
+  la case la plus visitée reste bien la case prison suivie de la 25\up{ème}
+  case du plateau.  On constate également que la probabilité de tomber sur
+  une case devient très vite stable.  Après une cinquantaine de tour, la
+  majorité des cases sont correctement classée.  On a également pu 
+  constater que l'édition du Monopoly n'influençait en rien les résultats
+  et de manière plus générale les conclusions que l'on pouvait en tirer.
+  Bien que les valeurs soient différentes, elles sont toujours 
+  proportionnelles.\\
+  Les règles du Monopoly proposent une variante pour faire des parties
+  rapides.  Cette variante propose de ne payer que la construction de 3 
+  appartements pour faire un hotel.  Il serait intéressant de vérifier que
+  cela ne modifie pas la rentabilité des cases. Cette variante propose
+  également de terminer la partie lorsque deux joueurs sont en faillite.
+  C'est alors le joueur ayant le plus d'argent qui remporte la partie.
+  Cette modification impacte grandement le jeu car les joueurs devraient
+  maintenant acheter des cases ayant une grande valeur marchande.  Enfin,
+  cet article ne s'intéresse jamais aux valeurs hypothécaires des cases. 
+  Il pourrait être intéressant de regarder quelle est la carte la plus 
+  avantageuse à hypothéquer.
+  
+  
   % TODO
   
   
@@ -1377,6 +1371,76 @@ rdetobel@ulb.ac.be}
 	\end{tabular}
 	\caption{Revenu, prix et ratio de ces deux valeur pour une joueur qui ne paye pas pour sortir de prison}
 	\label{table:rentabilite_paye_pas}
+      \end{table}
+      
+      \begin{table}[h]
+	\centering
+	\begin{tabular}{|l|r|r|c|}
+	  \hline
+	  \multicolumn{1}{|c|}{{\textbf{N}}} & % Numero
+	  \multicolumn{1}{p{1.5cm}|}{\rotatebox{90}{\textbf{\shortstack[l]{Prix d'achat\\(avec hotel)}}}} & %
+	  \multicolumn{1}{p{1.5cm}|}{\rotatebox{90}{\textbf{\shortstack[l]{Revenu espéré\\par tour adverse}}}} &
+	  \multicolumn{1}{c|}{\rotatebox{90}{\textbf{\shortstack[l]{Nombre de tour\\pour rentabiliser}}}} \\ \hline %
+	  \cellcolor[HTML]{A0522D} 2 & 3100000 \$ & 57 449.676 \$ & 54 \\ \hline
+	  \cellcolor[HTML]{A0522D} 4 & 3100000 \$ & 87 488.073 \$ & 36 \\ \hline
+	  \cellcolor[HTML]{1E90FF} 7 & 3500000 \$ & 112 775.793 \$ & 32 \\ \hline
+	  \cellcolor[HTML]{1E90FF} 9 & 3500000 \$ & 114 328.207 \$ & 31 \\ \hline
+	  \cellcolor[HTML]{1E90FF} 10 & 3700000 \$ & 122 205.803 \$ & 31 \\ \hline
+	  \cellcolor[HTML]{FF69B4} 12 & 6400000 \$ & 178 610.779 \$ & 36 \\ \hline
+	  \cellcolor[HTML]{FF69B4} 14 & 6400000 \$ & 152 325.798 \$ & 43 \\ \hline
+	  \cellcolor[HTML]{FF69B4} 15 & 6600000 \$ & 204 601.833 \$ & 33 \\ \hline
+	  \cellcolor[HTML]{FF8C00} 17 & 6800000 \$ & 237 736.322 \$ & 29 \\ \hline
+	  \cellcolor[HTML]{FF8C00} 19 & 6800000 \$ & 250 131.845 \$ & 28 \\ \hline
+	  \cellcolor[HTML]{FF8C00} 20 & 7000000 \$ & 260 354.264 \$ & \textbf{27} \\ \hline
+	  \cellcolor[HTML]{FF4500} 22 & 9700000 \$ & 254 410.886 \$ & 39 \\ \hline
+	  \cellcolor[HTML]{FF4500} 24 & 9700000 \$ & 250 140.482 \$ & 39 \\ \hline
+	  \cellcolor[HTML]{FF4500} 25 & 9900000 \$ & 306 977.189 \$ & 33 \\ \hline
+	  \cellcolor[HTML]{FFD700} 27 & 10100000 \$ & 275 276.298 \$ & 37 \\ \hline
+	  \cellcolor[HTML]{FFD700} 28 & 10100000 \$ & 273 544.421 \$ & 37 \\ \hline
+	  \cellcolor[HTML]{FFD700} 30 & 10300000 \$ & 278 378.326 \$ & 38 \\ \hline
+	  \cellcolor[HTML]{2E8B57} 32 & 13000000 \$ & 300 915.695 \$ & 44 \\ \hline
+	  \cellcolor[HTML]{2E8B57} 33 & 13000000 \$ & 292 363.274 \$ & 45 \\ \hline
+	  \cellcolor[HTML]{2E8B57} 35 & 13200000 \$ & 303 983.183 \$ & 44 \\ \hline
+	  \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 13500000 \$ & 283 926.043 \$ & 48 \\ \hline
+	  \cellcolor[HTML]{483D8B} \textcolor{white}{40} & \textbf{14000000 \$} & \textbf{460 925.100 \$} & 31 \\ \hline
+	\end{tabular}
+	\caption{Résultats si le joueur ne paye pas pour sortir de prison}
+	\label{table:result_tour_paye_pas}
+      \end{table}
+    
+      \begin{table}[h]
+	\centering
+	\begin{tabular}{|c|r|r|c|}
+	  \hline
+	  \multicolumn{1}{|c|}{{\textbf{N}}} & % Numero
+	  \multicolumn{1}{p{1.5cm}|}{\rotatebox{90}{\textbf{\shortstack[l]{Prix d'achat\\(avec hotel)}}}} & %
+	  \multicolumn{1}{p{1.5cm}|}{\rotatebox{90}{\textbf{\shortstack[l]{Revenu espéré\\par tour adverse}}}} &
+	  \multicolumn{1}{c|}{\rotatebox{90}{\textbf{\shortstack[l]{Nombre de tour\\pour rentabiliser}}}} \\ \hline %
+	  \cellcolor[HTML]{A0522D} 2 & 3100000 \$ & 60 979.848 \$ & 51 \\ \hline
+	  \cellcolor[HTML]{A0522D} 4 & 3100000 \$ & 92 451.629 \$ & 34 \\ \hline
+	  \cellcolor[HTML]{1E90FF} 7 & 3500000 \$ & 119 181.788 \$ & 30 \\ \hline
+	  \cellcolor[HTML]{1E90FF} 9 & 3500000 \$ & 120 874.543 \$ & 29 \\ \hline
+	  \cellcolor[HTML]{1E90FF} 10 & 3700000 \$ & 129 194.389 \$ & 29 \\ \hline
+	  \cellcolor[HTML]{FF69B4} 12 & 6400000 \$ & 188 115.555 \$ & 35 \\ \hline
+	  \cellcolor[HTML]{FF69B4} 14 & 6400000 \$ & 165 676.394 \$ & 39 \\ \hline
+	  \cellcolor[HTML]{FF69B4} 15 & 6600000 \$ & 207 410.610 \$ & 32 \\ \hline
+	  \cellcolor[HTML]{FF8C00} 17 & 6800000 \$ & 247 074.875 \$ & 28 \\ \hline
+	  \cellcolor[HTML]{FF8C00} 19 & 6800000 \$ & 259 565.992 \$ & 27 \\ \hline
+	  \cellcolor[HTML]{FF8C00} 20 & 7000000 \$ & 284 820.589 \$ & \textbf{25} \\ \hline
+	  \cellcolor[HTML]{FF4500} 22 & 9700000 \$ & 275 008.614 \$ & 36 \\ \hline
+	  \cellcolor[HTML]{FF4500} 24 & 9700000 \$ & 265 492.410 \$ & 37 \\ \hline
+	  \cellcolor[HTML]{FF4500} 25 & 9900000 \$ & 325 141.089 \$ & 31 \\ \hline
+	  \cellcolor[HTML]{FFD700} 27 & 10100000 \$ & 292 026.842 \$ & 35 \\ \hline
+	  \cellcolor[HTML]{FFD700} 28 & 10100000 \$ & 289 426.834 \$ & 35 \\ \hline
+	  \cellcolor[HTML]{FFD700} 30 & 10300000 \$ & 293 651.955 \$ & 36 \\ \hline
+	  \cellcolor[HTML]{2E8B57} 32 & 13000000 \$ & 317 741.033 \$ & 41 \\ \hline
+	  \cellcolor[HTML]{2E8B57} 33 & 13000000 \$ & 308 811.735 \$ & 43 \\ \hline
+	  \cellcolor[HTML]{2E8B57} 35 & 13200000 \$ & 321 413.098 \$ & 42 \\ \hline
+	  \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 13500000 \$ & 300 058.049 \$ & 45 \\ \hline
+	  \cellcolor[HTML]{483D8B} \textcolor{white}{40} & \textbf{14000000 \$} & \textbf{485 137.304 \$} & 29 \\ \hline
+	\end{tabular}
+	\caption{Résultats si le joueur paye pour sortir de prison}
+	\label{table:result_tour_paye}
       \end{table}
 	
 
