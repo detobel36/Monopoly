@@ -62,11 +62,10 @@ rdetobel@ulb.ac.be}
   Les concepts principaux de ce modèle qu'est une chaîne de Markov
   seront présentés et expliqués.  Les différents choix permettant
   d'adapter le Monopoly afin qu'il puisse être modélisé comme une chaîne
-  de Markov seront également expliqués.  Enfin, une description de
+  de Markov seront également justifié.  Enfin, une description de
   l'application et des résultats récupérés par l'implémentation de cette
   modélisation sera également faite et permettra de déterminer les cases
   les plus fréquentées ainsi que les cases les plus rentables.
-  % beaucoup de répétition de ``présenter'' et ``expliqué''
 \end{abstract}
 
 %%%%%%%%%%%%%% SECTION %%%%%%%%%%%%%%
@@ -175,7 +174,7 @@ rdetobel@ulb.ac.be}
       étant un graphe dirigé (cfr point \ref{def_chaine_markov}):
       \begin{center}
 	\begin{tikzpicture}
-	  % Draw the states
+	  % Dessins des états
 	  \colornode[text width=1.7cm] (vol) {En vol};
 
 	  \colornode[below left=of vol] (att) {Atterrissage};
@@ -186,7 +185,7 @@ rdetobel@ulb.ac.be}
 	  \bigcolornode[below left=of sol] (ctr) {Contrôle};
 	  \colornode[right=of ctr] (hs) {Hors service};
 
-	  % Connect the states with arrows
+	  % Création des liens entre les états
 	  \drawedge
 	    (vol) edge[bend right, auto=right] node {1} (att)
 	    (dec) edge[bend right, auto=right] node {1} (vol)
@@ -254,7 +253,6 @@ rdetobel@ulb.ac.be}
 	0 & 0    & 0 & 0    & 0   & 1    \\
       \end{pmatrix}
     \end{align*}
-    % TODO A voir si c'est clair
     On remarque donc qu'après 2 déplacements depuis le premier état (première
     ligne), il sera possible d'atteindre le 4 et 5\up{ème} état (avec
     respectivement une probabilité de $2/3$ et $1/3$).  Ce comportement est
@@ -296,9 +294,13 @@ rdetobel@ulb.ac.be}
     (comme vu au point \ref{def_chaine_markov}) ainsi qu'un sous-ensemble $T$ de $S$.
 
     \subsubsection{Fortement connexe}
-      Ce sous-ensemble $T$ sera défini comme \textit{fortement connexe} si
+      Avant de définir la notion de fortement connexe, il faut définir la
+      notion de \textit{chemin}.  Un tuple $(s_0,~\ldots, s_n) \in T^n$ est
+      appelé \textit{chemin} si pour tout $i \in \{0,~\ldots, n-1\}$, 
+      $\mathbf P(s_i, s_{i+1}) \neq 0$.
+      Le sous-ensemble $T$ sera défini comme \textit{fortement connexe} si
       pour chaque paire d'état $(s, t)$ telle que $s, t \in T$, il existe un
-		chemin $s_0, s_1, ..., s_n$ tel que $s_i \in T$ pour $0 \leq i \leq n$,  % RMQ: Tu parles de chemin sans l'avoir défini. Voici une idée de définition : « Un tuple $(s_0, \ldots, s_n) \in T^n$ est appelé \textit{chemin} si pour tout $i \in \{0, \ldots, n-1\}$, $\mathbf P(s_i, s_{i+1}) \neq 0$. »
+      chemin $s_0, s_1, ..., s_n$ tel que $s_i \in T$ pour $0 \leq i \leq n$,
       $s_0 = s$ et $s_n = t$.\\
       Dans l'exemple présenté au point \ref{exemple}, une composante fortement
       connexe pourrait être: $\{vol, att., dec., sol\}$.
@@ -346,13 +348,13 @@ rdetobel@ulb.ac.be}
       Nous allons définir le calcul de la distribution stationnaire à travers
       un exemple.  Malheureusement, il n'est pas possible de reprendre l'exemple
       présenté en point \ref{exemple} car le calcul de la distribution stationnaire
-      de son BSCC est trivial (vu qu'il n'en existe qu'un seul) et vaut 1.  % Il n'en existe qu'un quoi ? Un seul état stationnaire ? Donc la distribution est triviale et est \delta_i^{h.s.}.
+      de son BSCC est trivial (vu qu'il n'existe qu'un seul état dans ce BSCC) et vaut 1. 
       Nous allons donc légèrement modifier cet exemple en considérant maintenant
       que tous les avions \textit{hors service} seront tous réparés (avec une
       probabilité de 1 donc) et à nouveau mis dans l'état \textit{au sol}.
       Ce nouvel exemple sera noté $\mathcal{M}'$.
       La matrice de transition de $\mathcal{M}'$ sera donc:
-      $$ \mathbf{P} =  % Peut-être la noter $\mathbf{P}' ? Parce que la notation P est déjà utilisée
+      $$ \mathbf{P}' = 
 	\begin{blockarray}{ccccccc}
 	& vol & dec. & att. & sol & ctr. & h.s. \\
 	  \begin{block}{c(cccccc)}
@@ -368,7 +370,7 @@ rdetobel@ulb.ac.be}
       et sa représentation graphique:
       \begin{center}
 	\begin{tikzpicture}
-	  % Draw the states
+	  % Dessin des états
 	  \colornode[text width=1.7cm] (vol) {En vol};
 
 	  \colornode[below left=of vol] (att) {Atterrissage};
@@ -379,7 +381,7 @@ rdetobel@ulb.ac.be}
 	  \bigcolornode[below left=of sol] (ctr) {Contrôle};
 	  \colornode[right=of ctr] (hs) {Hors service};
 
-	  % Connect the states with arrows
+	  % Dessins des liens entre les états
 	  \drawedge
 	    (vol) edge[bend right, auto=right] node {1} (att)
 	    (dec) edge[bend right, auto=right] node {1} (vol)
@@ -398,7 +400,7 @@ rdetobel@ulb.ac.be}
       La distribution stationnaire de la matrice $\mathcal{M}'$, sera donc définie
       par le vecteur $\mathbf{v}$ tel que:
       \begin{align*}
-	\mathbf{v} . \mathbf{P} &= \mathbf{v}\\
+	\mathbf{v} . \mathbf{P}' &= \mathbf{v}\\
 	\begin{blockarray}{(c)}
 	  \mathbf{v}_{vol}\\
 	  \mathbf{v}_{dec.}\\
@@ -435,10 +437,10 @@ rdetobel@ulb.ac.be}
       de \cite{IP} nous en présente quelques unes dans le chapitre 11.
       Dans cet article nous utiliserons une matrice identité $\mathbf{I}$ telle que:
       \begin{align*}
-       \mathbf{v} . \mathbf{P} &= \mathbf{v}\\
-       \mathbf{v} . \mathbf{P} &= \mathbf{v} . \mathbf{I}\\
-       \mathbf{v} . \mathbf{P} - \mathbf{v}. \mathbf{I} &= 0\\
-       \mathbf{v} . (\mathbf{P} - \mathbf{I}) &= 0
+       \mathbf{v} . \mathbf{P}' &= \mathbf{v}\\
+       \mathbf{v} . \mathbf{P}' &= \mathbf{v} . \mathbf{I}\\
+       \mathbf{v} . \mathbf{P}' - \mathbf{v}. \mathbf{I} &= 0\\
+       \mathbf{v} . (\mathbf{P}' - \mathbf{I}) &= 0
       \end{align*}
       On se retrouve donc avec un système d'équations plus ``classique'' (où chaque
       équation correspond à une constante):
@@ -489,7 +491,7 @@ rdetobel@ulb.ac.be}
 %%%%%%%%%%%%%% SECTION %%%%%%%%%%%%%%
 \section{Modélisation}
 
-  \subsection{Plateau de jeux}  % Plateaux de jeux ou jeux de plateau ?
+  \subsection{Jeux de plateau}
     Plusieurs jeux de plateau peuvent être modélisés à travers une chaîne de Markov,
     comme par exemple le jeu de l'oie ou le Monopoly.  Dans ces jeux,
     la position du pion dépend uniquement de la case où il se trouvait précédemment.
@@ -506,7 +508,8 @@ rdetobel@ulb.ac.be}
   \subsection{Modélisation}
     \label{modeliation_monopoly}
     Comme dit dans le point précédent, le Monopoly peut être modélisé par une chaîne de
-    Markov et plus particulièrement par un BSCC.  Plus concrètement, chaque case sera  % Par un BSCC ? Hasardeux : le processus de Markov n'est pas un BSCC, il s'avère que son espace d'états est un BSCC, mais la chaîne en entier ne l'est pas.
+    Markov.  On remarque également que tous les états composant cette chaîne de Markov
+    appartiennent à un BSCC.  Plus concrètement, chaque case sera 
     numérotée et représentera un état de la chaîne de Markov.  L'état 2 de la chaîne
     de Markov représente le fait que le pion se trouve sur la case \textit{caisse de
     communauté}.
@@ -687,14 +690,14 @@ rdetobel@ulb.ac.be}
     prison:
     \begin{itemize}
       \item faire un double (et avancer du résultat de ce double),
-	ce qui correspond à 6 déplacements;  % Pourquoi 6 déplacements ?
+	ce qui correspond à 6 déplacements (à savoir: 2, 4, 6, 8, 10 et 12);
       \item payer et se retrouver sur la case \textit{prison visite
 	uniquement}.
     \end{itemize}
     \textbf{Remarque:} les règles du Monopoly ne sont pas très claires
     quant au moment où l'on peut décider de payer pour sortir de prison.
-    Cette possibilité est-elle donnée uniquement avant le premier tour  % Formulation sous forme de question ?
-    passé en prison, ou bien le joueur peut reconsidérer cette offre à
+    Soit le joueur a le droit de payer uniquement avant le premier tour
+    passé en prison.  Soit le joueur peut reconsidérer cette offre à
     chaque tour passé en prison.  Dans cet article on considérera qu'il
     peut uniquement décider de payer pour sortir avant le premier tour.
     Il choisira cette option en fonction d'une probabilité définie (où
@@ -732,7 +735,7 @@ rdetobel@ulb.ac.be}
      \item se rendre à la 11\up{ème} case (où 0 est le départ);
      \item se rendre à la 15\up{ème} case;
      \item se rendre à la 24\up{ème} case;
-     \item se rendre à la 36\up{ème} case (dernière case avant l'arrivée).  % C'est la 39e la dernière avant l'arrivée
+     \item se rendre à la 39\up{ème} case (dernière case avant l'arrivée).
     \end{itemize}
     Dans les 9 autres cas on lancera simplement les dés.  Les cases
     chances ont donc beaucoup d'arêtes.
@@ -755,7 +758,7 @@ rdetobel@ulb.ac.be}
   \subsection{Probabilité de visiter une case}
     Comme introduit dans le point \ref{modeliation_monopoly}, le Monopoly
     peut être vu comme une chaîne de Markov et plus particulièrement un
-    BSCC.  On va donc utiliser la distribution stationnaire (présentée dans  % Même remarque pour le BSCC
+    BSCC.  On va donc utiliser la distribution stationnaire (présentée dans
     le point \ref{distribution_stationnaire}) afin de connaître la
     probabilité de visiter chaque case et en déduire quelle est la case la
     plus visitée.
@@ -881,7 +884,7 @@ rdetobel@ulb.ac.be}
       fonction du Monopoly): 17, 19 et 20.  De manière générale, on remarque que se sont les cases
       ``au milieu'' du plateau (si l'on considère les cases 0 et 40 comme étant des extrémités) qui
       sont le plus visitées.  Cela peut s'expliquer par le fait que ce sont ces cases qui sont visitées
-      par les joueurs sortant de prison.  Comme le case \textit{prison} a beaucoup plus de chance % Beaucoup ? M'ouais c'est plus grand mais je ne dirais pas *beaucoup*
+      par les joueurs sortant de prison.  Comme le case \textit{prison} a plus de chance
       d'être visitée dû aux nombreux moyens d'y arriver (voir le point \ref{case_prison}), il est
       normal que les cases accessibles en sortant de prison soient plus probablement visitées. Le fait
       que la case 25 soit la case achetable la plus visitée s'explique aussi par le fait qu'une
@@ -901,7 +904,7 @@ rdetobel@ulb.ac.be}
       \ref{annexe:graphe}, les figures \ref{graph_all_result_paye_pas} et \ref{graph_all_result_paye}).
       Ces tableaux mettent en relation une case avec la probabilité de tomber sur celle-ci en fonction du
       nombre de tours considéré.  Les cases sont ordonnées de la plus probable à la moins probable
-      et un symbole permet d'indiquer si le résultat obtenu dans la colonne précédente (10 tours avant donc)  % 10 ou 20 ?
+      et un symbole permet d'indiquer si le résultat obtenu dans la colonne précédente (20 tours avant donc)
       plaçait la case dans une position inférieure, supérieure ou égale (respectivement \caseUp, \caseDown~
       et \caseStable) à la position actuelle de la case.
 
