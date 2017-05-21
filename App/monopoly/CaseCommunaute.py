@@ -20,7 +20,7 @@ class CaseCommunaute(Case):
         @param position de la case sur le plateau de jeu
     """
     def __init__(self, position):
-        super().__init__("Caisse de Communauté", position, "LightYellow2", 0, False)
+        super().__init__("Caisse de Communauté", position, "LightYellow2", vendre=False)
 
 
     """

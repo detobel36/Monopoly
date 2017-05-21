@@ -8,7 +8,7 @@ import tkinter as tk
 """
 class scrollTopFrame(tk.Toplevel):
 
-    def __init__(self, width=400, height=450):
+    def __init__(self, width=400, height=450, background=None):
         tk.Toplevel.__init__(self)
 
         self._scrollCanvas = tk.Canvas(self, width=width, height=height)
@@ -23,7 +23,7 @@ class scrollTopFrame(tk.Toplevel):
         # when all widgets are in canvas
         self._scrollCanvas.bind('<Configure>', self.__scrollOnConfigure)
 
-        self._scrollFrame = tk.Frame(self._scrollCanvas)
+        self._scrollFrame = tk.Frame(self._scrollCanvas, background=background)
         self._scrollCanvas.create_window((0,0), window=self._scrollFrame, anchor='nw')
 
     def __scrollOnConfigure(self, event):

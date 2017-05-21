@@ -21,7 +21,7 @@ class CasePrison(Case):
         @param numero de la case prison (représentant le nombre de tour passé sur cette case)
     """
     def __init__(self, decalage, numero):
-        super().__init__("Prison " + str(numero+1), decalage+numero, "black", 0, False)
+        super().__init__("Prison " + str(numero+1), decalage+numero, "black", vendre=False)
         self._tourEnPrison = numero
 
 
@@ -39,30 +39,35 @@ class CasePrison(Case):
         # On récupère la prison suivante
         nextPrison = self.__getNextCasePrison(dataMonopoly)
 
-        # Avec quel proportion le joueur veut-il payer pour sortir de prison
-        proportionPayer = dataMonopoly.getProbSortirPrison()
-
-        # Case "prison visite uniquement"
+        # Case "prison visite uniquement" (qui sert de case de départ)
         casePrisonVisiteUniquement = dataMonopoly.getPrisonVisiteUniquement()
-        
-        # => Payer pour sortir
-        res[casePrisonVisiteUniquement] = proportionPayer # Retour sur "prison visite seulement"
+
+        # Définit par défaut que le joueur ne doit pas payer
+        proportionPayer = 0
+
+        # Si on est sur la première case prison, le joueur peut décider de sortir de prison
+        if(self._tourEnPrison == 0):
+            proportionPayer = dataMonopoly.getProbSortirPrison()
+            res = casePrisonVisiteUniquement.getCasesSuivanteDes(dataMonopoly, proportionPayer)
+
+        # Si c'est le dernier tour que l'on peut faire en prison, il faut payer
+        elif(nextPrison == None):
+            proportionPayer = 1
+            res = casePrisonVisiteUniquement.getCasesSuivanteDes(dataMonopoly)
+
 
         # Si on est pas obligé de payer
         if(proportionPayer < 1):
             proportionJouer = 1-proportionPayer
-            # S'il n'y a plus de case prison suivante, la case suivante est la sortir de prison 
-            # avec payement
-            if(nextPrison == None):
-                nextPrison = casePrisonVisiteUniquement
             self.__getCaseSuivanteLanceDes(res, dataMonopoly, nextPrison, \
                                 casePrisonVisiteUniquement, proportionJouer)
-            
+
         return res
 
 
     """
-        Permet de calculer la probabilité de tomber sur les cases suivante en lancant les dés
+        Permet de calculer la probabilité de faire un double et met en relation cette probabilité avec
+        la case où le joueur se trouvera
 
         @param res permet de stocker le résultat
         @param dataMonopoly les informations liées au plateau monopoly (permettant de récupérer 

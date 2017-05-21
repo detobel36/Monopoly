@@ -85,7 +85,7 @@ class viewMarkov(tk.LabelFrame):
     """
     def __initLimitAndBorder(self):
         self._width = 1200
-        self._height = viewMarkov.TAILLE_PLATEAU * (self._nbrDeDoubles+1)
+        self._height = viewMarkov.TAILLE_PLATEAU * ((1 if self._nbrDeDoubles <= 0 else self._nbrDeDoubles) +1)
         self._borderX = 150
         self._borderY = 150
 

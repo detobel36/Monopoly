@@ -35,6 +35,7 @@ class FenetrePrincipal(scrollTk):
         self._nbrTourFrame = None
         self._viewParam = None
         self._markovFrame = None
+        self._listStatistique = None
 
         # Choix des paramètres
         self.__choixParametres()
@@ -214,6 +215,8 @@ class FenetrePrincipal(scrollTk):
         newData = self.__sumSameCase(newData)
         self._dataSimulation = newData
         self._statFrame.updateCanvas(self._dataSimulation)
+        if(self._listStatistique != None):
+            self._listStatistique.updateData(self._dataSimulation)
 
 
     """
@@ -261,6 +264,11 @@ class FenetrePrincipal(scrollTk):
             self._markovFrame.updateAll(self._selectedDataMonopoly.getListeCases(), \
                                         self._selectedDataMonopoly.getNbrDeDouble(), \
                                         self._selectedMonopoly.getMatriceDeplacement())
+
+        if(self._listStatistique != None):
+            self._listStatistique.updateData(self._dataSimulation)
+
+
         self.__refreshScroll()
 
     def __refreshScroll(self):
@@ -268,8 +276,8 @@ class FenetrePrincipal(scrollTk):
 
 
     def __viewListStats(self, event = None):
-        listStatistique = ListeStatistiques(self._dataSimulation)
-        self.wait_window(listStatistique)
+        self._listStatistique = ListeStatistiques(self._dataSimulation)
+        self.wait_window(self._listStatistique)
 
     def __viewHelp(self, event = None):
         help = Help()

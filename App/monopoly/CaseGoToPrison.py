@@ -16,7 +16,7 @@ class CaseGoToPrison(Case):
         @param position de la carte sur le plateau de jeu
     """
     def __init__(self, position):
-        super().__init__("Aller en prison", position, "gray", 0, False)
+        super().__init__("Aller en prison", position, "gray", vendre=False)
 
 
     """

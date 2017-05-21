@@ -130,14 +130,14 @@ class Statistiques(tk.LabelFrame):
         nouveauCurrentResultX = currentResultX
         for case in self._stats_data:
             result = self._stats_data[case]
-            pourcent = result*100
+            valeurPourcent = result*100
 
             nouveauCurrentResultX += self._width/(len(self._stats_data))
-            hauteur = (self._height+self._borderTopY)-(pourcent*self._valeurEchelleY)
+            hauteur = (self._height+self._borderTopY)-(valeurPourcent*self._valeurEchelleY)
 
             # Ajout du pourcentage
             pourcent = self._canvas.create_text(currentResultX+2, hauteur-10, 
-                text=str(round(pourcent, 2)) + "%", anchor="nw", angle=90)
+                text=str(round(valeurPourcent, 2)) + "%", anchor="nw", angle=90)
             self._listStatCanvas.append(pourcent)
 
             # Ajout du rectangle
