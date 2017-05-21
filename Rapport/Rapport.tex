@@ -44,9 +44,6 @@ Université Libre de Bruxelles, Bruxelles, Belgique \\
 rdetobel@ulb.ac.be}
 
 
-% =-=-=-=-=-=-=-=-= TODO GENERAL =-=-=-=-=-=-=-=-=
-% - Pour l'économie, intéressant après 20 tours, 50, 100, ...
-
 
 \begin{document}
 \maketitle
@@ -78,7 +75,6 @@ rdetobel@ulb.ac.be}
   Les résultats trouvés suite à cette modélisation seront présentés afin
   de trouver, au final, les cases les plus visitées mais également les cases
   les plus rentables.
-  % TODO ajouter des informations à l'intro (peut être plus conséquent)
 
 
 %%%%%%%%%%%%%% SECTION %%%%%%%%%%%%%%
@@ -827,7 +823,7 @@ rdetobel@ulb.ac.be}
 	  \cellcolor[HTML]{2E8B57} 32 & 2.36 \%   & \cellcolor[HTML]{EEEED1}  3 & 1.909 \% \\ \hline
 	  \cellcolor[HTML]{EEEED1} 34 & 2.354 \%  & \cellcolor[HTML]{8B1A1A} 39 & 1.899 \% \\ \hline
 	  \cellcolor[HTML]{FFFFF0} 29 & 2.346 \%  & \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 1.893 \%  \\ \hline
-	  \cellcolor[HTML]{BEBEBE} 31 & 2.345 \\ \cline{1-2}
+	  \cellcolor[HTML]{BEBEBE} 31 & 2.345 \% \\ \cline{1-2}
 	\end{tabular}
 	\caption{Résultats si le joueur ne paye pas pour sortir de prison}
 	\label{result_paye_pas}
@@ -862,7 +858,7 @@ rdetobel@ulb.ac.be}
 	  \cellcolor[HTML]{FFFFF0} 29 & 2.478 \%  & \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 2.0 \%   \\ \hline
 	  \cellcolor[HTML]{BEBEBE} 31 & 2.473 \%  & \cellcolor[HTML]{000000} \textcolor{white}{42} & 0.0 \%   \\ \hline
 	  \cellcolor[HTML]{FFD700} 30 & 2.447 \%  & \cellcolor[HTML]{000000} \textcolor{white}{43} & 0.0\%    \\ \hline
-	  \cellcolor[HTML]{A0522D}  2 & 2.439 \\ \cline{1-2}
+	  \cellcolor[HTML]{A0522D}  2 & 2.439 \% \\ \cline{1-2}
 	\end{tabular}
 	\caption{Résultats si le joueur paye directement pour
 	  sortir de prison}
@@ -1044,24 +1040,26 @@ rdetobel@ulb.ac.be}
       suite à la possibilité de s'y rendre grâce à une carte \textit{Caisse de communauté}.
       De manière générale, on constate tout de même que les cases \textit{orange} et
       \textit{rouge} sont toujours au début du classement.
-      % TODO comparaison avec l'autre document
 
   \subsection{Rentabilité}
     Comme vu dans le point \ref{rentabilite}, il y a plusieurs moyens
     de caractériser la rentabilité d'une case.  Un récapitulatif des cases
     ainsi que de leur coût, leur revenu ainsi que le ratio entre ces deux nombres
     est disponible dans l'annexe \ref{annexe:economie} (dans les tableaux
-    \ref{table:rentabilite_paye} et \ref{table:rentabilite_paye_pas}).\\
+    \ref{table:rentabilite_paye} et \ref{table:rentabilite_paye_pas}).
     Ces chiffres ne tiennent pas compte de la répartition des cases décrite au
     point précédent.  Pour calculer la rentabilité d'une case, on peut
     se baser sur les calculs fait dans l'article écrit par \cite{MONOPOLY_ARTICLE} 
-    et la présentation de \cite{PP_MONOPOLY} qui donne tous les deux des chiffres
-    basé sur la couleur des cases.  En effet, ces deux articles se sont
-    concentré sur un groupement de cases ayant un comportement similaire.
-    La première étape est donc de regrouper les données utilisé dans 
-    cet article de la même manière.  Le tableau \ref{result_cout_couleur} 
-    nous montre donc le coût total d'un groupement de cases d'une certaines
+    et la présentation de \cite{PP_MONOPOLY} qui donnent tous les deux des chiffres
+    basés sur la couleur des cases.  En effet, ces deux articles se sont
+    concentrés sur un groupement de cases ayant un comportement similaire.
+    La première étape est donc de regrouper les données utilisées dans 
+    cet article de la même manière.  Le tableau \ref{table:result_cout_couleur} 
+    nous montre donc le coût total d'un groupement de cases d'une certaine
     couleur en prenant en compte l'achat des appartements et des hotels.
+    On peut se rendre compte qu'à un facteur près, les valeurs 
+    présentes dans ce tableau correspondent à celles présentes dans 
+    le document de \cite{PP_MONOPOLY}.
     
     \begin{table}
       \centering
@@ -1082,25 +1080,19 @@ rdetobel@ulb.ac.be}
       \label{table:result_cout_couleur}
     \end{table}
     
-    On peut se rendre compte qu'a un facteur près, les valeurs 
-    présente dans ce tableau corresponde à ceux présentes dans 
-    le document de \cite{PP_MONOPOLY}.
-    
-    Les deux documents cité précédemment calculent le revenu
+    Les deux documents cités précédemment calculent le revenu
     espéré par groupe de propriété en fonction du nombre de
-    tour adverse.  C'est ce qui a été fait dans le tableau
-    \ref{result_revenu_couleur_paye} 
-    
-    Il nous reste donc encore
-    à calculer le revenu moyen par tour adverse.  Pour cela on
-    calcule d'abord le revenu moyen pour une couleur donnée.
-    On additionne ensuite la somme des probabilités de chacune
-    des cases relative à cette couleur.  Ensuite, on applique la
-    formule expliqué en point \ref{rentabilite}.\\
-    Le résultat de ce calcul est disponible dans le tableau 
-    \ref{table:result_revenu_couleur_paye}.  On remarque bien
-    qu'il s'agit des cases \textit{vertes} qui sont les plus 
-    rentable et les cases 2 et 4 les moins rentables.
+    tours adverses.  C'est ce qui a été fait dans le tableau
+    \ref{table:result_revenu_couleur_paye_pas} et \ref{table:result_revenu_couleur_paye}
+    On peut remarquer que les résultats de ces deux tableaux
+    concordent bien avec nos deux documents de références.
+    Le groupement de case le plus rentable est bien composé
+    des cases vertes (numéroté 32, 33 et 35 dans cet article) 
+    et les cases situées au début du plateau (numéroté 2 et 4 dans
+    cet article) sont bien les cases les moins rentables.
+    On remarque également que le fait de payer pour sortir de 
+    prison ne change pas de manière significative la proportion de rentabilité
+    des cases mais permet tout de même d'augmenter le revenu.
     
     \begin{table}
       \centering
@@ -1113,15 +1105,60 @@ rdetobel@ulb.ac.be}
       \cellcolor[HTML]{A0522D} 2, 4                      &  3 500 000.00 \$ & 4.242 \% & 148 470.000 \$ \\ \hline
       \cellcolor[HTML]{1E90FF} 7, 9, 10                  &  5 666 666.66 \$ & 6.166 \% & 349 406.666 \$ \\ \hline
       \cellcolor[HTML]{FF69B4} 12, 14. 15                &  8 000 000.00 \$ & 6.685 \% & 534 800.000 \$ \\ \hline
-      \cellcolor[HTML]{FF8C00} 17, 19, 20                &  9 666 666.66 \$ & 7.739 \% & 748 103.332 \$ \\ \hline
+      \cellcolor[HTML]{FF8C00} 17, 19, 20                &  9 666 666.66 \$ & \textbf{7.739 \%} & 748 103.332 \$ \\ \hline
       \cellcolor[HTML]{FF4500} 22, 24, 25                & 10 666 666.66 \$ & 7.187 \% & 766 613.332 \$ \\ \hline
       \cellcolor[HTML]{FFD700} 27, 28, 30                & 11 666 666.66 \$ & 7.093 \% & 827 516.666 \$ \\ \hline
-      \cellcolor[HTML]{2E8B57} 32, 33, 35                & 13 166 666.66 \$ & 6.824 \% & 898 493.332 \$ \\ \hline
+      \cellcolor[HTML]{2E8B57} 32, 33, 35                & 13 166 666.66 \$ & 6.824 \% & \textbf{898 493.332 \$} \\ \hline
       \cellcolor[HTML]{483D8B} \textcolor{white}{38, 40} & 17 500 000.00 \$ & 4.198 \% & 734 650.000 \$ \\ \hline
       \end{tabular}
-      \caption{Revenu moyen pour un groupe de propriétés avec un hotel}
+      \caption{Revenu moyen (avec un hotel) par tour adverse lorsque le joueur ne paye pas pour sortir de prison}
+      \label{table:result_revenu_couleur_paye_pas}
+    \end{table}
+    \begin{table}
+      \centering
+      \begin{tabular}{|c|r|c|r|}
+      \hline
+      \multicolumn{1}{|c|}{\textbf{Cases}} &
+      \multicolumn{1}{c|}{\textbf{Revenu moyen}} & 
+      \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Probabilité Total}} & 
+      \multicolumn{1}{p{2cm}|}{\centering \textbf{Revenu moyen par tour adverse}} \\ \hline %
+      \cellcolor[HTML]{A0522D} 2, 4                      &  3 500 000.00 \$ & 4.493 \% & 157 255.000 \$ \\ \hline
+      \cellcolor[HTML]{1E90FF} 7, 9, 10                  &  5 666 666.66 \$ & 6.518 \% & 369 353.332 \$ \\ \hline
+      \cellcolor[HTML]{FF69B4} 12, 14. 15                &  8 000 000.00 \$ & 7.022 \% & 561 760.000 \$ \\ \hline
+      \cellcolor[HTML]{FF8C00} 17, 19, 20                &  9 666 666.66 \$ & \textbf{8.181 \%} & 790 829.999 \$ \\ \hline
+      \cellcolor[HTML]{FF4500} 22, 24, 25                & 10 666 666.66 \$ & 8.103 \% & 864 319.999 \$ \\ \hline
+      \cellcolor[HTML]{FFD700} 27, 28, 30                & 11 666 666.66 \$ & 7.503 \% & 875 349.999 \$ \\ \hline
+      \cellcolor[HTML]{2E8B57} 32, 33, 35                & 13 166 666.66 \$ & 7.210 \% & \textbf{949 316.666 \$} \\ \hline
+      \cellcolor[HTML]{483D8B} \textcolor{white}{38, 40} & 17 500 000.00 \$ & 4.426 \% & 774 550.000 \$ \\ \hline
+      \end{tabular}
+      \caption{Revenu moyen (avec un hotel) par tour adverse lorsque le joueur paye pour sortir de prison}
       \label{table:result_revenu_couleur_paye}
     \end{table}
+    
+    \begin{table}
+      \centering
+      \begin{tabular}{|c|c|c|}
+      \hline
+      \multicolumn{1}{|c|}{\textbf{Cases}} &
+      \multicolumn{1}{p{2cm}|}{\centering \textbf{Nbr. de tour pour rentabiliser (paye pas)}} & 
+      \multicolumn{1}{p{2cm}|}{\centering \textbf{Nbr. de tour pour rentabiliser (paye)}} \\ \hline %
+      \cellcolor[HTML]{A0522D} 2, 4                      &  41 & 39 \\ \hline
+      \cellcolor[HTML]{1E90FF} 7, 9, 10                  &  30 & 28 \\ \hline
+      \cellcolor[HTML]{FF69B4} 12, 14. 15                &  36 & 34 \\ \hline
+      \cellcolor[HTML]{FF8C00} 17, 19, 20                &  \textbf{27} & \textbf{26} \\ \hline
+      \cellcolor[HTML]{FF4500} 22, 24, 25                &  38 & 33 \\ \hline
+      \cellcolor[HTML]{FFD700} 27, 28, 30                &  36 & 34 \\ \hline
+      \cellcolor[HTML]{2E8B57} 32, 33, 35                &  43 & 41 \\ \hline
+      \cellcolor[HTML]{483D8B} \textcolor{white}{38, 40} &  37 & 35 \\ \hline
+      \end{tabular}
+      \caption{Nombre de tour nécessaire pour rentabiliser l'achat d'un ensemble de case d'une couleur}
+      \label{table:result_revenu_couleur_rentabilite}
+    \end{table}
+    
+    Enfin, le tableau \ref{table:result_revenu_couleur_rentabilite}
+    nous montre que les cases \textit{orange} possèdent le meilleur rapport prix/bénéfices.
+    Notons tout de même que ces valeurs ne sont valables qu'après
+    un nombre conséquent de tours.
     
     
 \section{Conclusion}
