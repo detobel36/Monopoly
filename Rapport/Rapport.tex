@@ -45,12 +45,7 @@ rdetobel@ulb.ac.be}
 
 
 % =-=-=-=-=-=-=-=-= TODO GENERAL =-=-=-=-=-=-=-=-=
-% - Résultats
-% - Conclusion
-%--------------------------------
-% - Pour les résultats: 2 sous points: résultat par rapport au Monopoly, résultat par rapport à l'économie
 % - Pour l'économie, intéressant après 20 tours, 50, 100, ...
-% - Pour la conclusion: uniquement pour la forme.  Résumer le rapport mais également exprimer des idées pour la suite.
 
 
 \begin{document}
@@ -61,7 +56,7 @@ rdetobel@ulb.ac.be}
   Les concepts principaux de ce modèle qu'est une chaîne de Markov
   seront présentés et expliqués.  Les différents choix permettant
   d'adapter le Monopoly afin qu'il puisse être modélisé comme une chaîne
-  de Markov seront également justifié.  Enfin, une description de
+  de Markov seront également justifiés.  Enfin, une description de
   l'application et des résultats récupérés par l'implémentation de cette
   modélisation sera également faite et permettra de déterminer les cases
   les plus fréquentées ainsi que les cases les plus rentables.
@@ -76,7 +71,7 @@ rdetobel@ulb.ac.be}
   le Monopoly à travers les chaînes de Markov.  Mais avant cela, il est
   important de bien définir les chaînes de Markov ainsi que leurs propriétés.
   Les explications concernant ce modèle sont en grande partie basées
-  sur le cours de \citet{COURS}.
+  sur le cours de M. \citet{COURS}.
   Pour pouvoir modéliser le Monopoly comme étant une chaîne de Markov,
   les règles du jeu doivent être clairement définies et des choix doivent
   être faits.  Ceux-ci seront donc expliqués et justifiés dans cet article.
@@ -99,7 +94,7 @@ rdetobel@ulb.ac.be}
     par une certaine probabilité de passer d'un état A à un état B.
     Cette probabilité sera décrite plus en détail dans le point \ref{probabilite}.
     Il est possible de représenter une chaîne de Markov de plusieurs manières différentes.
-    Dans la littérature (comme par exemple dans le cours \citet{COURS}), on utilisera
+    Dans la littérature (comme par exemple dans le cours de M. \citet{COURS}), on utilisera
     plus souvent la notation matricielle, qui définit la chaîne de Markov $\mathcal{M}$
     telle que:
     $$\mathcal{M} = (S, \mathbf{P}, \iota_{init})$$
@@ -118,7 +113,6 @@ rdetobel@ulb.ac.be}
     dans un temps discret ou dans un temps continu.  Cependant, la modélisation
     du Monopoly n’inclura pas de temps continu et cet article traitera donc uniquement
     du temps discret.
-    % TODO voir pour définir AP et L en 2 phrases
 
   \subsection{Exemple de chaîne de Markov}
     \label{exemple}
@@ -136,7 +130,7 @@ rdetobel@ulb.ac.be}
     \textit{hors service}.  On considérera également que tous les avions commencent
     avec l'état \textit{au sol}.
 
-    \subsubsection{Représentation matriciel}
+    \subsubsection{Représentation matricielle}
       Comme vu au point \ref{def_chaine_markov}, il est possible de représenter une
       chaîne de Markov comme étant:
       $$\mathcal{M} = (S, \mathbf{P}, \iota_{init})$$
@@ -212,7 +206,7 @@ rdetobel@ulb.ac.be}
     comportement comme $X$ étant une expérience aléatoire ayant
     $$\left\{X_i \mid i \in I\right\}$$
     pour résultats possibles, avec $I$ un ensemble d'indices (qui peuvent
-    être fini, infini dénombrable ou infini non-dénombrable).  On définit
+    être finis, infinis dénombrables ou infinis non-dénombrables).  On définit
     la probabilité du résultat $X_i$ pour $i \in I$ par:
     $$\lim_{n \to \infty}\frac {X_i(n)}n,$$
     avec $X_i(n)$, le nombre d'occurrence du résultat $X_i$ lors de
@@ -222,7 +216,6 @@ rdetobel@ulb.ac.be}
     L'évolution de cet état dépend d'événements aléatoires.  Il est donc tout
     a fait possible de définir une probabilité sur chacun des changements
     d'état possible dans la chaîne de Markov.
-    % TODO relier cette partie du texte avec le reste de l'article
 
   \subsection{Simuler les changements d'état}
     Une chaîne de Markov permet donc d'estimer la probabilité de l'état
@@ -253,9 +246,9 @@ rdetobel@ulb.ac.be}
       \end{pmatrix}
     \end{align*}
     On remarque donc qu'après 2 déplacements depuis le premier état (première
-    ligne), il sera possible d'atteindre le 4 et 5\up{ème} état (avec
+    ligne), il sera possible d'atteindre le 4\up{ème} et 5\up{ème} état (avec
     respectivement une probabilité de $2/3$ et $1/3$).  Ce comportement est
-    très simple à voir dans cet exemple, car l'état succédant l'état 1 est
+    très simple à voir dans cet exemple, car l'état succédant à l'état 1 est
     obligatoirement le 3\up{ème} état.  Il est donc normal qu'après 2 tours,
     on retrouve les probabilités de déplacement du troisième état.
 
@@ -287,8 +280,8 @@ rdetobel@ulb.ac.be}
     sous-ensembles d'états possèdent des caractéristiques particulières.
     Ces ensembles sont donc notés via différentes abréviations.  Ces différentes
     abréviations et concepts sont utilisés dans plusieurs articles scientifiques
-    comme par exemple dans le livre de \citet{ModelChecking} ou dans le cours
-    \citet{COURS}.  Pour formaliser ces différents concepts, on définit
+    comme par exemple dans le livre de MM. \citet{ModelChecking} ou dans le cours
+    M. \citet{COURS}.  Pour formaliser ces différents concepts, on définit
     une chaîne de Markov $\mathcal{M}(S, \mathbf{P}, \iota_{init})$
     (comme vu au point \ref{def_chaine_markov}) ainsi qu'un sous-ensemble $T$ de $S$.
 
@@ -298,7 +291,7 @@ rdetobel@ulb.ac.be}
       appelé \textit{chemin} si pour tout $i \in \{0,~\ldots, n-1\}$, 
       $\mathbf P(s_i, s_{i+1}) \neq 0$.
       Le sous-ensemble $T$ sera défini comme \textit{fortement connexe} si
-      pour chaque paire d'état $(s, t)$ telle que $s, t \in T$, il existe un
+      pour chaque paire d'états $(s, t)$ telle que $s, t \in T$, il existe un
       chemin $s_0, s_1, ..., s_n$ tel que $s_i \in T$ pour $0 \leq i \leq n$,
       $s_0 = s$ et $s_n = t$.\\
       Dans l'exemple présenté au point \ref{exemple}, une composante fortement
@@ -322,17 +315,17 @@ rdetobel@ulb.ac.be}
       est donc uniquement composé d'un seul état).
       La propriété précédente nous apprend donc que lorsqu'un avion sera
       considéré comme \textit{hors service}, il n'y a aucun moyen de quitter
-      cet état.  En effet, comme définit ci-dessus, tous les changements
+      cet état.  En effet, comme défini ci-dessus, tous les changements
       d'états pouvant être fait depuis un état présent dans un BSCC sont dirigés
-      vers état étant lui même présent dans ce BSCC.
+      vers un état étant lui même présent dans ce BSCC.
 
   \subsection{Distribution stationnaire}
     \label{distribution_stationnaire}
     Comme vu au point \ref{bscc}, la probabilité de se retrouver dans un état
-    présent dans un BSCC après un nombre fini ou infini dénombrable d'étape est
+    présent dans un BSCC après un nombre fini ou infini dénombrable d'étapes est
     toujours de 1 (pour autant que l'on ait commencé dans un état lui-même présent
     dans ce BSCC).  Remarquons cependant que chaque état présent dans ce BSCC n'a
-    pas la même probabilité d'être visité.  En effet, certains états seront
+    pas la même probabilité d'être visitée.  En effet, certains états seront
     visités plus souvent que d'autres.
     On définit la distribution stationnaire comme étant un vecteur de probabilité
     $\mathbf{v}$ tel que:
@@ -395,7 +388,7 @@ rdetobel@ulb.ac.be}
       \end{center}
       Le BSCC de la matrice $\mathcal{M}'$ contiendra donc tous les états de cette
       chaîne de Markov.  Le calcul de la distribution stationnaire nous permet
-      de savoir la probabilité de chaque état (présent dans ce BSCC) à être visité.
+      de connaître la probabilité de chaque état (présent dans ce BSCC) à être visité.
       La distribution stationnaire de la matrice $\mathcal{M}'$, sera donc définie
       par le vecteur $\mathbf{v}$ tel que:
       \begin{align*}
@@ -510,7 +503,7 @@ rdetobel@ulb.ac.be}
     Markov.  On remarque également que tous les états composant cette chaîne de Markov
     appartiennent à un BSCC.  Plus concrètement, chaque case sera 
     numérotée et représentera un état de la chaîne de Markov.  L'état 2 de la chaîne
-    de Markov représente le fait que le pion se trouve sur la case \textit{caisse de
+    de Markov représente le fait que le pion se trouve sur la case \textit{Caisse de
     communauté}.
     \begin{figure}[h]
       \centering
@@ -522,12 +515,12 @@ rdetobel@ulb.ac.be}
     Chaque déplacement du pion (c'est-à-dire à chaque fois que l'on lance le dé) sera
     traduit par un changement d'état.
     Dans un premier temps, on modélise donc le Monopoly par 40 cases où chaque case est
-    reliée aux $6*n-(n-1)$ cases suivantes à partir de la case $n-1$, où $n$ est le
+    reliée aux $6 \times n-(n-1)$ cases suivantes à partir de la case $n-1$, où $n$ est le
     nombre de dé.  Dans le cas précis des règles du Monopoly (donc lorsque $n = 2$),
     chaque case pourra donc accéder à 11 autres cases.  En effet, le résultat le plus
     petit pouvant être produit par $n$ dés est de $n$ (tous les dé à 1).
     On devra donc éliminer toutes les $n-1$ cases juste après la case actuelle et le résultat
-    le plus grand pouvant être produit par $n$ dés sera de $6*n$ (pour un dé à 6 faces).
+    le plus grand pouvant être produit par $n$ dés sera de $6 \times n$ (pour un dé à 6 faces).
     \begin{center}
       \begin{tikzpicture}
         \colornode[text width=1cm] at (0, 0) (c0) {Départ};
@@ -546,9 +539,9 @@ rdetobel@ulb.ac.be}
       \end{tikzpicture}
     \end{center}
     Cependant, certaines cases ont un comportement particulier comme par exemple la
-    case \textit{aller en prison}, la case \textit{chance} ou encore la case
-    \textit{caisse de communauté}.  Les déplacements possibles à partir de ces cases
-    ne sont pas les mêmes que pour les autres cases et seront donc étudiées dans les
+    case \textit{aller en prison}, la case \textit{Chance} ou encore la case
+    \textit{Caisse de communauté}.  Les déplacements possibles à partir de ces cases
+    ne sont pas les mêmes que pour les autres cases et seront donc étudiés dans les
     points suivants.
 
   \subsection{Répartition des dés}
@@ -627,8 +620,8 @@ rdetobel@ulb.ac.be}
       fait un double, on se retrouve à un niveau ``plus bas'' (sur l'image).
       On a donc 3 niveaux: 0 où aucun double n'a encore été fait, 1 où le coup
       précédent était un double et le niveau 2 où les deux coups précédents
-      étaient des doubles. Lorsque l'on faire un 3\up{ème} double, on se
-      retrouve directement en prison.  Les flèches en rouges sur la figure nous
+      étaient des doubles. Lorsque l'on fait un 3\up{ème} double, on se
+      retrouve directement en prison.  Les flèches rouges sur la figure nous
       montrent les déplacements faits lorsque l'on obtient trois doubles
       consécutifs, à savoir dans le cas présent: $1+1$, $2+2$ et $6+6$.  Les
       flèches bleues nous montrent ce qui se passe lorsque l'on obtient un
@@ -642,7 +635,7 @@ rdetobel@ulb.ac.be}
 	  \label{representation_double}
       \end{figure}
       Dans cet article on considérera que le déplacement induit par une carte
-      \textit{chance} ou \textit{caisse de communauté} fera redescendre le nombre
+      \textit{Chance} ou \textit{Caisse de communauté} fera redescendre le nombre
       de double à zéro.
 
     \subsubsection{Probabilité de faire un double}
@@ -652,7 +645,7 @@ rdetobel@ulb.ac.be}
       définir ce qu'est un \textit{double}.  Dans cet article, on va
       considérer que le joueur aura fait un double (au sens du Monopoly)
       si tous les nombres indiqués par les dés sont les mêmes. En d'autres
-      mots, ce nombre est donc définit tel que $i*n$ où $i$ est le nombre
+      mots, ce nombre est donc défini tel que $i \times n$ où $i$ est le nombre
       indiqué par tous les dés.  Par définition ce nombre est donc
       divisible par le nombre de dés.
       Il faut cependant bien tenir compte du fait qu'il y a plusieurs
@@ -700,8 +693,8 @@ rdetobel@ulb.ac.be}
     chaque tour passé en prison.  Dans cet article on considérera qu'il
     peut uniquement décider de payer pour sortir avant le premier tour.
     Il choisira cette option en fonction d'une probabilité définie (où
-    1 correspondra au fait de tout le temps payer pour sortir et 0 de
-    tout le temps attendre en espérant faire un double).
+    1 correspondra au fait de payer à chaque fois pour sortir et 0
+    d'attendre en espérant faire un double).
 
   \subsection{Case \textit{Aller en prison}}
     \label{aller_en_prison}
@@ -711,9 +704,9 @@ rdetobel@ulb.ac.be}
     comme toutes les autres cases sauf qu'il y a une probabilité 1
     de se retrouver en prison le tour suivant.
 
-  \subsection{Cases \textit{chance}}
-    Les cases \textit{chance} font piocher une carte dans le paquet des
-    cartes \textit{chance}.  On suppose que chaque carte a la
+  \subsection{Cases \textit{Chance}}
+    Les cases \textit{Chance} font piocher une carte dans le paquet des
+    cartes \textit{Chance}.  On suppose que chaque carte a la
     même probabilité d'être piochée. Ces cartes peuvent faire gagner de
     l'argent mais également déplacer les pions présents sur le plateau
     de jeu.  C'est évidemment ce second comportement qui sera étudié
@@ -725,7 +718,7 @@ rdetobel@ulb.ac.be}
      \item 7 cartes faisant référence à un déplacement.
     \end{itemize}
     On peut donc en déduire que lorsqu'un joueur pioche une carte
-    chance, il aura une 7 chance sur 16 de devoir déplacer son pion.
+    chance, il aura 7 chance sur 16 de devoir déplacer son pion.
     Ces déplacements sont les suivants:
     \begin{itemize}
      \item reculer de 3 cases;
@@ -739,11 +732,11 @@ rdetobel@ulb.ac.be}
     Dans les 9 autres cas on lancera simplement les dés.  Les cases
     chances ont donc beaucoup d'arêtes.
 
-  \subsection{Cases \textit{caisse de communauté}}
-    Comme les cases \textit{chance}, les cases \textit{caisse de
+  \subsection{Cases \textit{Caisse de communauté}}
+    Comme les cases \textit{Chance}, les cases \textit{Caisse de
     communauté} font piocher une carte du même nom dans les mêmes
-    condition que les cartes \textit{chance}.  Les cartes
-    \textit{caisse de communauté} sont plus axées sur l'aspect
+    condition que les cartes \textit{Chance}.  Les cartes
+    \textit{Caisse de communauté} sont plus axées sur l'aspect
     financier du jeu. Cependant 3 cartes provoquent également des
     déplacements des pions:
     \begin{itemize}
@@ -751,8 +744,8 @@ rdetobel@ulb.ac.be}
      \item aller en prison;
      \item se rendre sur le première case.
     \end{itemize}
-    La modélisation des cases \textit{caisse de communauté} se fait de la
-    même manière que les cases \textit{chance}.
+    La modélisation des cases \textit{Caisse de communauté} se fait de la
+    même manière que les cases \textit{Chance}.
 
   \subsection{Probabilité de visiter une case}
     Comme introduit dans le point \ref{modeliation_monopoly}, le Monopoly
@@ -766,11 +759,11 @@ rdetobel@ulb.ac.be}
     \label{rentabilite}
     Il y a plusieurs moyen de calculer la rentabilité d'une case.  Tout
     d'abord on peut simplement s'intéresser au nombre de fois que cette case
-    devra être visitée pour permettre de la rentabilisée.  Cette information
-    nous permettra juste de savoir quel est la case qui a le plus haut revenu en
+    devra être visitée pour permettre de la rentabiliser.  Cette information
+    nous permettra juste de savoir quelle est la case qui a le plus haut revenu en
     fonction de son prix.\\
     Pour prendre en compte la probabilité qu'a un joueur de tomber sur cette
-    case, il suffit de multiplié le revenu $r$ par la probabilité $p$ qu'elle soit
+    case, il suffit de multiplier le revenu $r$ par la probabilité $p$ qu'elle soit
     visitée.  On a donc la formule suivante:
     $$r \times p = s$$
     Où $s$ est le revenu espéré par tour adverse.  C'est à dire qu'a chaque tour
@@ -779,7 +772,7 @@ rdetobel@ulb.ac.be}
     pour l'adversaire).
 
 \section{Résultats}
-  Pour réduire la taille des tableaux et ne pas se baser sur les nom d'un seul
+  Pour réduire la taille des tableaux et ne pas se baser sur les noms d'un seul
   Monopoly, les cases seront représentées par leur numéro.  Afin de tout de même 
   faciliter la lecture, les couleurs du Monopoly \monopolyEditionAnni
   seront appliquées.  Pour savoir plus précisément quel numéro
@@ -879,15 +872,15 @@ rdetobel@ulb.ac.be}
       2\up{ème} et 3\up{ème} tour sont à zéro, au profit de la 25\up{ème} case qui as
       encore plus de chance d'être visitée.  On peut remarque que ces deux tableaux
       mettent en évidence le fait que les cases prisons sont les plus visitées.
-      Vient ensuite la case numéro 25 suivit des cases \textit{orange} (la couleur peut changer en
+      Vient ensuite la case numéro 25 suivie des cases \textit{orange} (la couleur peut changer en
       fonction du Monopoly): 17, 19 et 20.  De manière générale, on remarque que se sont les cases
       ``au milieu'' du plateau (si l'on considère les cases 0 et 40 comme étant des extrémités) qui
       sont le plus visitées.  Cela peut s'expliquer par le fait que ce sont ces cases qui sont visitées
-      par les joueurs sortant de prison.  Comme le case \textit{prison} a plus de chance
+      par les joueurs sortant de prison.  Comme la case \textit{prison} a plus de chance
       d'être visitée dû aux nombreux moyens d'y arriver (voir le point \ref{case_prison}), il est
       normal que les cases accessibles en sortant de prison soient plus probablement visitées. Le fait
       que la case 25 soit la case achetable la plus visitée s'explique aussi par le fait qu'une
-      cartes \textit{chance} envoie directement le joueur sur ladite case.
+      cartes \textit{Chance} envoie directement le joueur sur ladite case.
 
     \subsubsection{Tour par tour}
       Le point précédent s'intéressait uniquement à la répartition des cases dans un état
@@ -1038,7 +1031,7 @@ rdetobel@ulb.ac.be}
       ne distingue pas le nombre de tour passés en prison.  On remarque également
       que l'auteur a décidé de ne pas modéliser la case \textit{Aller en prison}
       contrairement au choix fait dans cet article en point \ref{aller_en_prison}.
-      Dans cette même idée, les cases \textit{chance} et \textit{caisse de communauté}
+      Dans cette même idée, les cases \textit{Chance} et \textit{Caisse de communauté}
       ont des probabilités plus faibles car l'auteur n'a compté aucune étape entre
       le fait que le pion tombe sur cette case et le fait que celui-ci doit être
       déplacé en fonction de l'action demandée par la carte.\\
@@ -1047,8 +1040,8 @@ rdetobel@ulb.ac.be}
       du classement sont les mêmes: \textit{prison}, la 25\up{ème} case et la case départ.
       La case la moins chère du Monopoly, la 2\up{ème} case, se trouve au milieu du classement
       fait dans cet article alors que les résultats présents dans le document
-      place cette case tout en bas du classement.  Elle est pourtant visitée plus régulièrement
-      suite à la possibilité de s'y rendre grâce à une carte \textit{caisse de communauté}.
+      placent cette case tout en bas du classement.  Elle est pourtant visitée plus régulièrement
+      suite à la possibilité de s'y rendre grâce à une carte \textit{Caisse de communauté}.
       De manière générale, on constate tout de même que les cases \textit{orange} et
       \textit{rouge} sont toujours au début du classement.
       % TODO comparaison avec l'autre document
@@ -1060,52 +1053,54 @@ rdetobel@ulb.ac.be}
     est disponible dans l'annexe \ref{annexe:economie} (dans les tableaux
     \ref{table:rentabilite_paye} et \ref{table:rentabilite_paye_pas}).\\
     Ces chiffres ne tiennent pas compte de la répartition des cases décrite au
-    point précédent.  L'article écrit par \cite{MONOPOLY_ARTICLE} et la
-    présentation de \cite{PP_MONOPOLY} donnent tous les deux des chiffres
-    calculés simplement en multipliant la probabilité de tomber sur une
-    case lorsque l'on est dans un état stationnaire avec le revenu de la case
-    en question.  Ces valeurs ont également été calculées dans le tableau
-    \ref{table:result_tour_paye_pas} et \ref{table:result_tour_paye} 
-    (présent dans l'annexe \ref{annexe:economie}) pour le \monopolyEditionAnni.
-    
-    Les deux documents cité précédemment utilisent
-    des chiffres d'une autre version du Monopoly.  Cependant, il est
-    tout a fait possible de comparer les résultats obtenus en calculant
-    le ratio permettant de passer d'une version de Monopoly à une autre.
-    Pour cela commençons par calculer le prix moyen d'une case avec un
-    hotel pour chaque couleur.  Les résultats de ce calcul ce trouvent
-    dans le tableau \ref{table:result_cout_couleur}.
+    point précédent.  Pour calculer la rentabilité d'une case, on peut
+    se baser sur les calculs fait dans l'article écrit par \cite{MONOPOLY_ARTICLE} 
+    et la présentation de \cite{PP_MONOPOLY} qui donne tous les deux des chiffres
+    basé sur la couleur des cases.  En effet, ces deux articles se sont
+    concentré sur un groupement de cases ayant un comportement similaire.
+    La première étape est donc de regrouper les données utilisé dans 
+    cet article de la même manière.  Le tableau \ref{result_cout_couleur} 
+    nous montre donc le coût total d'un groupement de cases d'une certaines
+    couleur en prenant en compte l'achat des appartements et des hotels.
     
     \begin{table}
       \centering
       \begin{tabular}{|c|r|}
-      \hline
-      \multicolumn{1}{|c|}{\textbf{Cases}} &
-      \multicolumn{1}{c|}{\textbf{Coût moyen}} \\ \hline
-      \cellcolor[HTML]{A0522D} 2, 4 & 3100000.00 \$ \\ \hline
-      \cellcolor[HTML]{1E90FF} 7, 9, 10 & 3566666.66 \$ \\ \hline
-      \cellcolor[HTML]{FF69B4} 12, 14, 15 & 6466666.66 \$ \\ \hline
-      \cellcolor[HTML]{FF8C00} 17, 19, 20 & 6866666.66 \$ \\ \hline
-      \cellcolor[HTML]{FF4500} 22, 24, 25 & 9766666.66 \$ \\ \hline
-      \cellcolor[HTML]{FFD700} 27, 28, 30 & 10166666.66 \$ \\ \hline
-      \cellcolor[HTML]{2E8B57} 32, 33, 35 & 13066666.66 \$ \\ \hline
-      \cellcolor[HTML]{483D8B} \textcolor{white}{38, 40} & 13750000.00 \$ \\ \hline
+	\hline
+	\multicolumn{1}{|c|}{\textbf{Cases}} &
+	\multicolumn{1}{c|}{\textbf{Coût total}} \\ \hline
+	\cellcolor[HTML]{A0522D} 2, 4                      &  6200000 \$ \\ \hline
+	\cellcolor[HTML]{1E90FF} 7, 9, 10                  & 10700000 \$ \\ \hline
+	\cellcolor[HTML]{FF69B4} 12, 14, 15                & 19400000 \$ \\ \hline
+	\cellcolor[HTML]{FF8C00} 17, 19, 20                & 20600000 \$ \\ \hline
+	\cellcolor[HTML]{FF4500} 22, 24, 25                & 29300000 \$ \\ \hline
+	\cellcolor[HTML]{FFD700} 27, 28, 30                & 30500000 \$ \\ \hline
+	\cellcolor[HTML]{2E8B57} 32, 33, 35                & 39200000 \$ \\ \hline
+	\cellcolor[HTML]{483D8B} \textcolor{white}{38, 40} & 27500000 \$ \\ \hline
       \end{tabular}
-      \caption{Coût moyen d'achat d'une propriété avec un hotel}
+      \caption{Coût total d'achat des propriétés d'une même couleur avec des hotels}
       \label{table:result_cout_couleur}
     \end{table}
     
-    On peut donc se rendre compte qu'il y a un rapport de 5000 
-    ($= 3100000 / 620$) entre les résultats obtenu dans ce 
-    rapport et ceux présenté dans les document de \cite{PP_MONOPOLY}.
-    Comme dans ce document, nous allons également calculer le 
-    revenu moyen espéré lors d'un tour adverse.  On utilisera
-    donc le revenu moyen comme étant la rentabilité et on ferra
-    également la sommes des probabilités des cases appartenant 
-    à la même couleur. Ces données sont utilisées dans la 
-    formule présentée dans le point \ref{rentabilite} et le résultat
-    est affiché dans le tableau \ref{table:result_revenu_couleur_paye}
-    % TODO
+    On peut se rendre compte qu'a un facteur près, les valeurs 
+    présente dans ce tableau corresponde à ceux présentes dans 
+    le document de \cite{PP_MONOPOLY}.
+    
+    Les deux documents cité précédemment calculent le revenu
+    espéré par groupe de propriété en fonction du nombre de
+    tour adverse.  C'est ce qui a été fait dans le tableau
+    \ref{result_revenu_couleur_paye} 
+    
+    Il nous reste donc encore
+    à calculer le revenu moyen par tour adverse.  Pour cela on
+    calcule d'abord le revenu moyen pour une couleur donnée.
+    On additionne ensuite la somme des probabilités de chacune
+    des cases relative à cette couleur.  Ensuite, on applique la
+    formule expliqué en point \ref{rentabilite}.\\
+    Le résultat de ce calcul est disponible dans le tableau 
+    \ref{table:result_revenu_couleur_paye}.  On remarque bien
+    qu'il s'agit des cases \textit{vertes} qui sont les plus 
+    rentable et les cases 2 et 4 les moins rentables.
     
     \begin{table}
       \centering
@@ -1115,14 +1110,14 @@ rdetobel@ulb.ac.be}
       \multicolumn{1}{c|}{\textbf{Revenu moyen}} & 
       \multicolumn{1}{p{1.5cm}|}{\centering \textbf{Probabilité Total}} & 
       \multicolumn{1}{p{2cm}|}{\centering \textbf{Revenu moyen par tour adverse}} \\ \hline %
-      \cellcolor[HTML]{A0522D} 2, 4                      & 3500000.00 \$  & 4.242 \% & 148470.000 \$ \\ \hline
-      \cellcolor[HTML]{1E90FF} 7, 9, 10                  & 5666666.66 \$  & 6.166 \% & 349406.666 \$ \\ \hline
-      \cellcolor[HTML]{FF69B4} 12, 14. 15                & 8000000.00 \$  & 6.685 \% & 534800.000 \$ \\ \hline
-      \cellcolor[HTML]{FF8C00} 17, 19, 20                & 9666666.66 \$  & 7.739 \% & 748103.332 \$ \\ \hline
-      \cellcolor[HTML]{FF4500} 22, 24, 25                & 10666666.66 \$ & 7.187 \% & 766613.332 \$ \\ \hline
-      \cellcolor[HTML]{FFD700} 27, 28, 30                & 11666666.66 \$ & 7.093 \% & 827516.666 \$ \\ \hline
-      \cellcolor[HTML]{2E8B57} 32, 33, 35                & 13166666.66 \$ & 6.824 \% & 898493.332 \$ \\ \hline
-      \cellcolor[HTML]{483D8B} \textcolor{white}{38, 40} & 17500000.00 \$ & 4.198 \% & 734650.000 \$ \\ \hline
+      \cellcolor[HTML]{A0522D} 2, 4                      &  3 500 000.00 \$ & 4.242 \% & 148 470.000 \$ \\ \hline
+      \cellcolor[HTML]{1E90FF} 7, 9, 10                  &  5 666 666.66 \$ & 6.166 \% & 349 406.666 \$ \\ \hline
+      \cellcolor[HTML]{FF69B4} 12, 14. 15                &  8 000 000.00 \$ & 6.685 \% & 534 800.000 \$ \\ \hline
+      \cellcolor[HTML]{FF8C00} 17, 19, 20                &  9 666 666.66 \$ & 7.739 \% & 748 103.332 \$ \\ \hline
+      \cellcolor[HTML]{FF4500} 22, 24, 25                & 10 666 666.66 \$ & 7.187 \% & 766 613.332 \$ \\ \hline
+      \cellcolor[HTML]{FFD700} 27, 28, 30                & 11 666 666.66 \$ & 7.093 \% & 827 516.666 \$ \\ \hline
+      \cellcolor[HTML]{2E8B57} 32, 33, 35                & 13 166 666.66 \$ & 6.824 \% & 898 493.332 \$ \\ \hline
+      \cellcolor[HTML]{483D8B} \textcolor{white}{38, 40} & 17 500 000.00 \$ & 4.198 \% & 734 650.000 \$ \\ \hline
       \end{tabular}
       \caption{Revenu moyen pour un groupe de propriétés avec un hotel}
       \label{table:result_revenu_couleur_paye}
@@ -1130,18 +1125,18 @@ rdetobel@ulb.ac.be}
     
     
 \section{Conclusion}
-  En conclusion, on constate qu'une chaîne de Markov est une bonne
+  On constate qu'une chaîne de Markov est une bonne
   structure de données pour représenter un Monopoly.  Cette structure
   nous empêche cependant de calculer facilement le nombre de fois
-  qu'un joueur visitera une case ou le fait qu'il ai une carte chance ou non.
-  Plusieurs choix de modélisation n'ont pas eu beaucoup d'impactes
+  qu'un joueur visitera une case ou le fait qu'il ait une carte chance ou non.
+  Plusieurs choix de modélisation n'ont pas eu beaucoup d'impact
   sur les résultats.  En effet, les cases les plus rentables restent les 
-  cases \textit{orange} que l'on considère le fait que le joueur paye
+  cases \textit{orange} que l'on considère que le joueur paye
   directement pour sortir de prison ou non.  On constate également que
   la case la plus visitée reste bien la case prison suivie de la 25\up{ème}
   case du plateau.  On constate également que la probabilité de tomber sur
-  une case devient très vite stable.  Après une cinquantaine de tour, la
-  majorité des cases sont correctement classée.  On a également pu 
+  une case devient très vite stable.  Après une cinquantaine de tours, la
+  majorité des cases sont correctement classées.  On a également pu 
   constater que l'édition du Monopoly n'influençait en rien les résultats
   et de manière plus générale les conclusions que l'on pouvait en tirer.
   Bien que les valeurs soient différentes, elles sont toujours 
@@ -1172,7 +1167,7 @@ rdetobel@ulb.ac.be}
 
   \section{Liste des cases}
     \label{liste_case}
-    Les cases \textit{prison} sont numérotée à partir de 41 (la case \textit{prison} 2\up{ème} tour sera donc numéroté 42).\\
+    Les cases \textit{prison} sont numérotées à partir de 41 (la case \textit{prison} 2\up{ème} tour sera donc numérotée 42).\\
     \rotatebox{90}{
       \centering
       \begin{tabular}{|l|l|l|l|l|l|l|l|l|}
@@ -1308,7 +1303,7 @@ rdetobel@ulb.ac.be}
 	  \cellcolor[HTML]{483D8B} \textcolor{white}{40} & 4000000 \$ & 500000 \$ & \textbf{0.125} & 14000000 \$ & 20000000 \$ & 1.429 \\ \hline
 	\end{tabular}
 
-	\caption{Revenu, prix et ratio de ces deux valeur pour une joueur qui paye pour sortir de prison}
+	\caption{Revenu, prix et ratio de ces deux valeurs pour un joueur qui paye pour sortir de prison}
 	\label{table:rentabilite_paye}
       \end{table}
 
@@ -1364,80 +1359,9 @@ rdetobel@ulb.ac.be}
 	  \cellcolor[HTML]{8B1A1A} 39  & 1000000 \$ & - & - & - & - & - \\ \hline
 	  \cellcolor[HTML]{483D8B} \textcolor{white}{40} & 4000000 \$ & 500000 \$ & 0.125 & 14000000 \$ & 20000000 \$ & 1.429 \\ \hline
 	\end{tabular}
-	\caption{Revenu, prix et ratio de ces deux valeur pour une joueur qui ne paye pas pour sortir de prison}
+	\caption{Revenu, prix et ratio de ces deux valeurs pour un joueur qui ne paye pas pour sortir de prison}
 	\label{table:rentabilite_paye_pas}
       \end{table}
       
-      \begin{table}[h]
-	\centering
-	\begin{tabular}{|l|r|r|c|}
-	  \hline
-	  \multicolumn{1}{|c|}{{\textbf{N}}} & % Numero
-	  \multicolumn{1}{p{1.5cm}|}{\rotatebox{90}{\textbf{\shortstack[l]{Prix d'achat\\(avec hotel)}}}} & %
-	  \multicolumn{1}{p{1.5cm}|}{\rotatebox{90}{\textbf{\shortstack[l]{Revenu espéré\\par tour adverse}}}} &
-	  \multicolumn{1}{c|}{\rotatebox{90}{\textbf{\shortstack[l]{Nombre de tour\\pour rentabiliser}}}} \\ \hline %
-	  \cellcolor[HTML]{A0522D} 2 & 3100000 \$ & 57 449.676 \$ & 54 \\ \hline
-	  \cellcolor[HTML]{A0522D} 4 & 3100000 \$ & 87 488.073 \$ & 36 \\ \hline
-	  \cellcolor[HTML]{1E90FF} 7 & 3500000 \$ & 112 775.793 \$ & 32 \\ \hline
-	  \cellcolor[HTML]{1E90FF} 9 & 3500000 \$ & 114 328.207 \$ & 31 \\ \hline
-	  \cellcolor[HTML]{1E90FF} 10 & 3700000 \$ & 122 205.803 \$ & 31 \\ \hline
-	  \cellcolor[HTML]{FF69B4} 12 & 6400000 \$ & 178 610.779 \$ & 36 \\ \hline
-	  \cellcolor[HTML]{FF69B4} 14 & 6400000 \$ & 152 325.798 \$ & 43 \\ \hline
-	  \cellcolor[HTML]{FF69B4} 15 & 6600000 \$ & 204 601.833 \$ & 33 \\ \hline
-	  \cellcolor[HTML]{FF8C00} 17 & 6800000 \$ & 237 736.322 \$ & 29 \\ \hline
-	  \cellcolor[HTML]{FF8C00} 19 & 6800000 \$ & 250 131.845 \$ & 28 \\ \hline
-	  \cellcolor[HTML]{FF8C00} 20 & 7000000 \$ & 260 354.264 \$ & \textbf{27} \\ \hline
-	  \cellcolor[HTML]{FF4500} 22 & 9700000 \$ & 254 410.886 \$ & 39 \\ \hline
-	  \cellcolor[HTML]{FF4500} 24 & 9700000 \$ & 250 140.482 \$ & 39 \\ \hline
-	  \cellcolor[HTML]{FF4500} 25 & 9900000 \$ & 306 977.189 \$ & 33 \\ \hline
-	  \cellcolor[HTML]{FFD700} 27 & 10100000 \$ & 275 276.298 \$ & 37 \\ \hline
-	  \cellcolor[HTML]{FFD700} 28 & 10100000 \$ & 273 544.421 \$ & 37 \\ \hline
-	  \cellcolor[HTML]{FFD700} 30 & 10300000 \$ & 278 378.326 \$ & 38 \\ \hline
-	  \cellcolor[HTML]{2E8B57} 32 & 13000000 \$ & 300 915.695 \$ & 44 \\ \hline
-	  \cellcolor[HTML]{2E8B57} 33 & 13000000 \$ & 292 363.274 \$ & 45 \\ \hline
-	  \cellcolor[HTML]{2E8B57} 35 & 13200000 \$ & 303 983.183 \$ & 44 \\ \hline
-	  \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 13500000 \$ & 283 926.043 \$ & 48 \\ \hline
-	  \cellcolor[HTML]{483D8B} \textcolor{white}{40} & \textbf{14000000 \$} & \textbf{460 925.100 \$} & 31 \\ \hline
-	\end{tabular}
-	\caption{Résultats si le joueur ne paye pas pour sortir de prison}
-	\label{table:result_tour_paye_pas}
-      \end{table}
-    
-      \begin{table}[h]
-	\centering
-	\begin{tabular}{|c|r|r|c|}
-	  \hline
-	  \multicolumn{1}{|c|}{{\textbf{N}}} & % Numero
-	  \multicolumn{1}{p{1.5cm}|}{\rotatebox{90}{\textbf{\shortstack[l]{Prix d'achat\\(avec hotel)}}}} & %
-	  \multicolumn{1}{p{1.5cm}|}{\rotatebox{90}{\textbf{\shortstack[l]{Revenu espéré\\par tour adverse}}}} &
-	  \multicolumn{1}{c|}{\rotatebox{90}{\textbf{\shortstack[l]{Nombre de tour\\pour rentabiliser}}}} \\ \hline %
-	  \cellcolor[HTML]{A0522D} 2 & 3100000 \$ & 60 979.848 \$ & 51 \\ \hline
-	  \cellcolor[HTML]{A0522D} 4 & 3100000 \$ & 92 451.629 \$ & 34 \\ \hline
-	  \cellcolor[HTML]{1E90FF} 7 & 3500000 \$ & 119 181.788 \$ & 30 \\ \hline
-	  \cellcolor[HTML]{1E90FF} 9 & 3500000 \$ & 120 874.543 \$ & 29 \\ \hline
-	  \cellcolor[HTML]{1E90FF} 10 & 3700000 \$ & 129 194.389 \$ & 29 \\ \hline
-	  \cellcolor[HTML]{FF69B4} 12 & 6400000 \$ & 188 115.555 \$ & 35 \\ \hline
-	  \cellcolor[HTML]{FF69B4} 14 & 6400000 \$ & 165 676.394 \$ & 39 \\ \hline
-	  \cellcolor[HTML]{FF69B4} 15 & 6600000 \$ & 207 410.610 \$ & 32 \\ \hline
-	  \cellcolor[HTML]{FF8C00} 17 & 6800000 \$ & 247 074.875 \$ & 28 \\ \hline
-	  \cellcolor[HTML]{FF8C00} 19 & 6800000 \$ & 259 565.992 \$ & 27 \\ \hline
-	  \cellcolor[HTML]{FF8C00} 20 & 7000000 \$ & 284 820.589 \$ & \textbf{25} \\ \hline
-	  \cellcolor[HTML]{FF4500} 22 & 9700000 \$ & 275 008.614 \$ & 36 \\ \hline
-	  \cellcolor[HTML]{FF4500} 24 & 9700000 \$ & 265 492.410 \$ & 37 \\ \hline
-	  \cellcolor[HTML]{FF4500} 25 & 9900000 \$ & 325 141.089 \$ & 31 \\ \hline
-	  \cellcolor[HTML]{FFD700} 27 & 10100000 \$ & 292 026.842 \$ & 35 \\ \hline
-	  \cellcolor[HTML]{FFD700} 28 & 10100000 \$ & 289 426.834 \$ & 35 \\ \hline
-	  \cellcolor[HTML]{FFD700} 30 & 10300000 \$ & 293 651.955 \$ & 36 \\ \hline
-	  \cellcolor[HTML]{2E8B57} 32 & 13000000 \$ & 317 741.033 \$ & 41 \\ \hline
-	  \cellcolor[HTML]{2E8B57} 33 & 13000000 \$ & 308 811.735 \$ & 43 \\ \hline
-	  \cellcolor[HTML]{2E8B57} 35 & 13200000 \$ & 321 413.098 \$ & 42 \\ \hline
-	  \cellcolor[HTML]{483D8B} \textcolor{white}{38} & 13500000 \$ & 300 058.049 \$ & 45 \\ \hline
-	  \cellcolor[HTML]{483D8B} \textcolor{white}{40} & \textbf{14000000 \$} & \textbf{485 137.304 \$} & 29 \\ \hline
-	\end{tabular}
-	\caption{Résultats si le joueur paye pour sortir de prison}
-	\label{table:result_tour_paye}
-      \end{table}
-	
-
 
 \end{document}
