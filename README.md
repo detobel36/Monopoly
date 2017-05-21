@@ -1,7 +1,7 @@
 # Etude du Monopoly via les chaînes de Markov
 Ce projet comporte un rapport écrit décrivant les chaines de Markov, la modélisation
-du Monopoly à travers des chaines de Markov et également les résultats obtenu grace à ce
-"simulateur".
+du Monopoly à travers des chaines de Markov et également les résultats obtenus grâce à ce
+programme.
 
 ### Structure des fichiers
 [![Folder](http://findicons.com/files/icons/1156/fugue/16/folder_horizontal_open.png) **App**](App)            
@@ -18,7 +18,7 @@ pour la réalisation de ce projet (les autres références se trouvent dans le r
 
 **Python**               
 Pour que le projet `Python` fonctionne il faut posséder la libraire `Tkinter` et également `numpy`
-utilisé respectivement pour l'interface graphique et les calculs matriciel.
+utilisé respectivement pour l'interface graphique et les calculs matriciels.
 
 
 ### Compliation
