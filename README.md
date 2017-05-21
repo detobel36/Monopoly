@@ -1,6 +1,6 @@
 # Etude du Monopoly via les chaînes de Markov
-Ce projet comporte un rapport écrit décrivant les chaines de Markov, la modélisation
-du Monopoly à travers des chaines de Markov et également les résultats obtenus grâce à ce
+Ce projet comporte un rapport écrit décrivant les chaînes de Markov, la modélisation
+du Monopoly à travers des chaînes de Markov et également les résultats obtenus grâce à ce
 programme.
 
 ### Structure des fichiers
